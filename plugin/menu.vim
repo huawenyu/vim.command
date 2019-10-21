@@ -602,14 +602,20 @@ augroup END
     " Section 'Execute'
         nnoremap <leader>mk :Make -i -s -j6 -C daemon/wad <CR>
         nnoremap <leader>ma :Make -i -s -j6 -C sysinit <CR>
+        nnoremap <leader>mw :R! ~/tools/dict <C-R>=expand('<cword>') <cr>
+        nnoremap <leader>mf :call utilquickfix#QuickFixFilter() <CR>
+        nnoremap <leader>mc :call utilquickfix#QuickFixFunction() <CR>
 
     " new section: empty action with text starts with "#" represent a new section
     call quickmenu#append("# Execute", '')
         "call quickmenu#append(text="Run %{expand('%:t')}", action='!./%', help="Run current file", ft="c,cpp,objc,objcpp")
         call quickmenu#append("Update TAGs",          "NeomakeSh! tagme", "")
+        call quickmenu#append("(mw) dict <word>",     'call MyMenuExec("R! ~/tools/dict ", expand("<cword>"))', "")
         call quickmenu#append("Run %{expand('%:t')}", '!./%', "Run current file")
         call quickmenu#append("(ma) make init",       "Make -j6 -i -s  -C sysinit", "")
         call quickmenu#append("(mk) make wad",        "Make -i -s -j6 -C daemon/wad", "")
+        call quickmenu#append("(mf) qfix filter",     "call utilquickfix#QuickFixFilter()", "")
+        call quickmenu#append("(mc) qfix function",   "call utilquickfix#QuickFixFunction()", "")
 
 
     call quickmenu#append("# View", '')

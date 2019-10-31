@@ -580,19 +580,17 @@ augroup END
     endfunc
 
     function! SelectedReplace()
-        let l:save_cursor = getcurpos()
         let sel_str = utils#GetSelected('')
+
         let nr = winnr()
         if getwinvar(nr, '&syntax') == 'qf'
             call setpos('.', l:save_cursor)
             return "%s/\\<". sel_str. '\>/'. sel_str. '/gI'
         else
-            exec 'delmark un'
-            normal vaf
-            call utils#MarkSelected()
+            delmarks un
+            normal [[mu%mn
             call signature#sign#Refresh(1)
             redraw
-            call setpos('.', l:save_cursor)
             return "'u,'ns/\\<". sel_str. '\>/'. sel_str. '/gI'
         endif
     endfunction

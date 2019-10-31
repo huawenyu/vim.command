@@ -516,6 +516,8 @@ augroup END
 
     nnoremap gf :<c-u>call utils#GotoFileWithLineNum()<CR>
     nnoremap <silent> <leader>gf :<c-u>call utils#GotoFileWithPreview()<CR>
+
+    vnoremap <silent> mm :<c-u>call utils#MarkSelected()<CR>
 "}}}
 
 " Commands {{{2
@@ -585,11 +587,13 @@ augroup END
             call setpos('.', l:save_cursor)
             return "%s/\\<". sel_str. '\>/'. sel_str. '/gI'
         else
-            normal [[ma%mb
+            exec 'delmark un'
+            normal vaf
+            call utils#MarkSelected()
             call signature#sign#Refresh(1)
             redraw
             call setpos('.', l:save_cursor)
-            return "'a,'bs/\\<". sel_str. '\>/'. sel_str. '/gI'
+            return "'u,'ns/\\<". sel_str. '\>/'. sel_str. '/gI'
         endif
     endfunction
 

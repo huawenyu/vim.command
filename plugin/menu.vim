@@ -644,6 +644,7 @@ augroup END
         call quickmenu#append("git diff",   'Gvdiff',  "use fugitive's Gvdiff on current document")
         call quickmenu#append("git status", 'Gstatus', "use fugitive's Gstatus on current document")
         call quickmenu#append("git blame",  'Gblame',  "use fugitive's Gblame on current document")
+        call quickmenu#append("git log",    'GV',      "")
 
     " Section 'String'
         "map <leader>ds :call Asm() <CR>

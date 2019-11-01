@@ -620,10 +620,13 @@ augroup END
         call quickmenu#append("(mf) qfix filter",     "call utilquickfix#QuickFixFilter()", "")
         call quickmenu#append("(mc) qfix function",   "call utilquickfix#QuickFixFunction()", "")
 
-    call quickmenu#append("# Tmux marked pane", '')
+    call quickmenu#append("# Tmux(mark from 'u' to 'n')", '')
         call quickmenu#append("(tf) Exec file",     'VtrSendFile',  "Execute the file itself bin: python, awk")
         call quickmenu#append("(tt) Send mark/sel", 'call VtrSendCommandEx("n")', "only execute the command")
         call quickmenu#append("(tw) Exec mark/sel", 'call VtrExecuteCommand("n")', "execute the command, also insert the output")
+        call quickmenu#append("(tl) Send current",  'VtrSendLinesToRunner', "")
+        call quickmenu#append("(tj) Copy buffer",   'VtrBufferPasteHere', "copy the marked pane's output")
+        call quickmenu#append("(tg) reset-command", 'VtrFlushCommand', "If no lines, repeat last-command, so this will flush last-command")
         call quickmenu#append("(tc) clear",         'VtrClearRunner', "")
 
     call quickmenu#append("# View", '')

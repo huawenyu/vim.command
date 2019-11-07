@@ -543,6 +543,12 @@ augroup END
     "command! -nargs=+ -bang -complete=shellcmd R call s:R(<bang>1, <q-args>)
     command! -nargs=+ -bang -complete=shellcmd R execute ':NeomakeRun! '.<q-args>
 
+    "Misc
+    command! -bang -nargs=* -complete=file Grep call utilgrep#_Grep('grep<bang>',<q-args>)
+    command! -bang -nargs=* -complete=file GrepAdd call utilgrep#_Grep('grepadd<bang>', <q-args>)
+    command! -bang -nargs=* -complete=file LGrep call utilgrep#_Grep('lgrep<bang>', <q-args>)
+    command! -bang -nargs=* -complete=file LGrepAdd call utilgrep#_Grep('lgrepadd<bang>', <q-args>)
+    "command! -bang -nargs=* -complete=file Replace call utilgrep#ReplaceAll(<f-args>)
 "}}}
 
 

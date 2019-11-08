@@ -587,6 +587,7 @@ augroup END
     endfunc
 
     function! SelectedReplace()
+        let l:save_cursor = getcurpos()
         let sel_str = utils#GetSelected('')
 
         let nr = winnr()

@@ -678,7 +678,8 @@ augroup END
         "vnoremap <leader>vr :<C-\>e tmp#CurrentReplace() <CR>
         "nnoremap <leader>vr :Replace <C-R>=expand('<cword>') <CR> <C-R>=expand('<cword>') <cr>
 
-    call quickmenu#append("# String", '')
+    call quickmenu#append("# Format|String", '')
+        call quickmenu#append("(F3) Autoformat",                            "Autoformat", "")
         call quickmenu#append("Replace last search",                        "execute '%s///gc'", "")
         call quickmenu#append("Replace search with `%{expand('<cword>')}`", 'call MyMenuExec("%s//", expand("<cword>"), "/gc")', "")
         call quickmenu#append("Replace last search",                        "execute '%s///gc'", "")

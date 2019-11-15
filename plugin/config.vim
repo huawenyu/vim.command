@@ -1,9 +1,9 @@
 " Version:      1.0
 
-if exists('g:loaded_mymenu1') || &compatible
+if exists('g:loaded_myself_after') || &compatible
   finish
 else
-  let g:loaded_mymenu1 = 'yes'
+  let g:loaded_myself_after = 'yes'
 endif
 
 

@@ -692,7 +692,7 @@ augroup END
     call quickmenu#append("# Misc", '')
         "call quickmenu#append("Turn paste %{&paste? 'off':'on'}",           "set paste!", "enable/disable paste mode (:set paste!)")
         "call quickmenu#append("Turn spell %{&spell? 'off':'on'}",           "set spell!", "enable/disable spell check (:set spell!)")
-        call quickmenu#append("Count of selected",            "g Ctrl-G", "Show the number of lines, words and bytes selected")
+        call quickmenu#append("(g Ctrl-g) Count of selected",            "g Ctrl-g", "the selected words and bytes")
         call quickmenu#append("Count `%{expand('<cword>')}`", 'call MyMenuExec("%s/", expand("<cword>"), "//gn")', '')
         call quickmenu#append("Convert number",               "normal gA", "")
 

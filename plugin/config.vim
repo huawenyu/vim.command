@@ -432,7 +432,7 @@ augroup END
 "}}}
 
 
-" vim-venu: depend Plug 'Timoses/vim-venu' {{{1
+if CheckPlug('vim-venu', 0)
     let s:menu1 = venu#create('My first V̂enu')
     call venu#addItem(s:menu1, 'Item of first menu', 'echo "Called first item"')
     call venu#register(s:menu1)
@@ -451,10 +451,11 @@ augroup END
     " Add the submenu to the second menu
     call venu#addItem(s:menu2, 'Sub menu', s:submenu)
     call venu#register(s:menu2)
-"}}}
+endif
 
-" Quickmenu & KeyMap: depend Plug 'daniel-samson/quickmenu.vim' {{{1
-    noremap <silent><F1> :call quickmenu#toggle(0)<cr>
+
+if CheckPlug('quickmenu.vim', 0)
+    nnoremap <silent><F1> :call quickmenu#toggle(0)<cr>
     "noremap <silent><F1> :call quickmenu#bottom(0)<cr>
 
     "noremap <silent> <leader><space> :call quickmenu#bottom(0)<cr>
@@ -576,6 +577,6 @@ augroup END
         call quickmenu#append("Count `%{expand('<cword>')}`", 'call MyMenuExec("%s/", expand("<cword>"), "//gn")', '')
         call quickmenu#append("Convert number",               "normal gA", "")
 
-"}}}
+endif
 
 " vim:set ft=vim et sw=4:

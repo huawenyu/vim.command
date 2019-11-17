@@ -7,52 +7,7 @@ else
 endif
 
 
-" Restore cursor when enter buffer {{{2
-function! ResCur()
-    let save_cursor = getcurpos()
-
-    let text = getline('.')
-    normal! be
-    let end_pos = getcurpos()
-    call search('\s\|[,;\(\)]','b')
-    call search('\S')
-    let start_pos = getcurpos()
-
-    call setpos('.', save_cursor)
-endfunction
-
-function! ResCur()
-    if line("'\"") <= line("$")
-        normal! g`"
-        return 1
-    endif
-endfunction
-
-augroup resCur
-    autocmd!
-    autocmd BufWinEnter * silent! call ResCur()
-augroup END
-"}}}
-
-
 " Autocmd {{{2
-
-    function! AdjustWindowHeight(minheight, maxheight)
-        let l = 1
-        let n_lines = 0
-        let w_width = winwidth(0)
-        while l <= line('$')
-            " number to float for division
-            let l_len = strlen(getline(l)) + 0.0
-            let line_width = l_len/w_width
-            let n_lines += float2nr(ceil(line_width))
-            let l += 1
-        endw
-        let exp_height = max([min([n_lines, a:maxheight]), a:minheight])
-        if (abs(winheight(0) - exp_height)) > 2
-            exe max([min([n_lines, a:maxheight]), a:minheight]) . "wincmd _"
-        endif
-    endfunction
 
     " Maximizes the current window if it is not the quickfix window.
     function! SetIndentTabForCfiletype()
@@ -79,50 +34,47 @@ augroup END
         endif
     endfunction
 
-    function! OnEventBufEnter()
-        " auto into terminal-mode
-        if &buftype == 'terminal'
-            startinsert
-        else
-            stopinsert
-        endif
-
-        "call SetIndentTabForCfiletype()
+    function! s:plug_note_getname(beginwith)
+        " |/\zs|	\zs	\zs	anything, sets start of match
+        " |/\ze|	\ze	\ze	anything, sets end of match
+        " echo matchlist("Plug 'tpope/vim-sensible'", 'Plug\s\+''\(.*\)/\(.*\)''')
+        let user_plug = matchstr(getline('.'), a:beginwith. '\s\+''\zs[^'']\+\ze''\{-\}')
+        if empty(user_plug) | return '' | endif
+        let items = split(user_plug, '/')
+        if len(items) < 2 | return '' | endif
+        return items[1]
     endfunction
 
-    "" Easier and better than plugin 'autotag'
-    "let s:retag_time = localtime()
-    "function! RetagFile()
-    "    if   (!filereadable(g:autotagTagsFile))
-    "       \ || (localtime() - s:retag_time) < s:autotag_inter
-    "        return
-    "    endif
-    "    let cdir = getcwd()
-    "    let file = expand('%:p')
-    "    let ext = expand('%:e')
-    "    if g:asyncrun_status =~ 'running' || empty(ext) || file !~ cdir. '/'
-    "        return
-    "    elseif index(g:autotagExcSuff, ext) < 0
-    "        execute ":AsyncRun tagme ". expand('%:p')
-    "    endif
-    "endfunction
+    function! s:plug_note()
+        "if &ft ==# 'notes' | q | return | endif
 
-    function! ToggleCalendar()
-        execute ":Calendar"
-        if exists("g:calendar_open")
-            if g:calendar_open == 1
-                execute "q"
-                unlet g:calendar_open
+        let name = s:plug_note_getname("Plug")
+        if empty(name) | let name = s:plug_note_getname("Note") | endif
+        if empty(name) | return | endif
+        echo name
+        "if has_key(g:plugs, name)
+            if CheckPlug('vim-notes', 0)
+                if g:notes_dir_order != g:notes_dir_order_type.vim
+                    let g:notes_directories = reverse(g:notes_directories)
+                endif
+
+                vsp | exec 'Note' name
+
+                if g:notes_dir_order != g:notes_dir_order_type.vim
+                    let g:notes_directories = reverse(g:notes_directories)
+                endif
+            elseif CheckPlug(g:vim_confi_option.plug_note, 0)
+                let dir = GetPlugDir(g:vim_confi_option.plug_note)
+                exec 'tabe '. dir. 'docs/'. name. '.note'
             else
-                g:calendar_open = 1
-            end
-        else
-            let g:calendar_open = 1
-        end
+                for doc in split(globpath(g:plugs[name].dir, 'doc/*.txt'), '\n')
+                    exec 'tabe' doc
+                endfor
+            endif
+        "endif
     endfunction
 
-
-    augroup fieltype_automap
+    augroup filetype_auto
         " Voom/VOom:
         " <Enter>             selects node the cursor is on and then cycles between Tree and Body.
         " <Tab>               cycles between Tree and Body windows without selecting node.
@@ -139,8 +91,6 @@ augroup END
         " current position in jumplist
         autocmd CursorHold * normal! m'
 
-        autocmd BufEnter * call OnEventBufEnter()
-
         " Always show sign column
         autocmd BufEnter * sign define dummy
         autocmd BufEnter * execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
@@ -156,12 +106,10 @@ augroup END
         autocmd filetype vimwiki  nnoremap <buffer> <a-'> :VoomToggle markdown<CR>
         "autocmd filetype vimwiki  nnoremap <a-n> :VimwikiMakeDiaryNote<CR>
         "autocmd filetype vimwiki  nnoremap <a-i> :VimwikiDiaryGenerateLinks<CR>
-        "autocmd filetype vimwiki  nnoremap <a-c> :call ToggleCalendar()<CR>
 
         autocmd filetype markdown nnoremap <buffer> <a-'> :VoomToggle markdown<CR>
         autocmd filetype python   nnoremap <buffer> <a-'> :VoomToggle python<CR>
 
-        autocmd filetype qf call AdjustWindowHeight(2, 10)
         autocmd filetype c,cpp,diff C8
         autocmd filetype zsh,bash C2
         autocmd filetype vim,markdown C08
@@ -186,6 +134,22 @@ augroup END
 
         autocmd FileType javascript nnoremap <buffer> <leader>ee  :DB mongodb:///test < %
         autocmd FileType javascript vnoremap <buffer> <leader>ee  :'<,'>w! /tmp/vim.js<cr><cr> \| :DB mongodb:///test < /tmp/vim.js<cr><cr>
+
+        " :help K  (powerman/vim-plugin-viewdoc)
+        if g:vim_confi_option.keywordprg_filetype
+            autocmd FileType python setlocal keywordprg=pydoc
+            " sudo apt-get install cppman   (https://github.com/aitjcize/cppman)
+            autocmd FileType cpp setlocal keywordprg=:te\ cppman
+
+        endif
+
+        if !empty(g:vim_confi_option.plug_note)
+           autocmd FileType vim nnoremap <buffer> <silent> K :call <sid>plug_note()<cr>
+           "autocmd FileType notes nnoremap <buffer> <silent> K :call <sid>plug_note()<cr>
+           "
+           "command! ShowPlugNote call <sid>plug_note()
+           "autocmd FileType vim setlocal keywordprg=:ShowPlugNote
+        endif
 
     augroup END
 
@@ -311,10 +275,13 @@ augroup END
     endfunction
 
     "nnoremap <f3> :VimwikiFollowLink
-    nnoremap <silent> <a-w> :MaximizerToggle<CR>
+    "nnoremap <silent> <a-w> :MaximizerToggle<CR>
+    nnoremap <silent> <a-w> :MaximizeWindow<CR>
     nnoremap <silent> <a-e> :NERDTreeTabsToggle<cr>
     nnoremap <silent> <a-f> :NERDTreeFind<cr>
     nnoremap <silent> <a-u> :GundoToggle<CR>
+    " Paste under insert-mode
+    inoremap <silent> <a-p> <c-r>0
 
     nnoremap <silent> <a-'> :VoomToggle<cr>
     nnoremap <silent> <a-;> :<c-u>call <SID>ToggleTagbar()<CR>
@@ -455,8 +422,8 @@ endif
 
 
 if CheckPlug('quickmenu.vim', 0)
-    nnoremap <silent><F1> :call quickmenu#toggle(0)<cr>
-    "noremap <silent><F1> :call quickmenu#bottom(0)<cr>
+    "nnoremap <silent><F1> :call quickmenu#toggle(0)<cr>
+    nnoremap <silent><F1> :call quickmenu#bottom(0)<cr>
 
     "noremap <silent> <leader><space> :call quickmenu#bottom(0)<cr>
     "noremap <silent> <leader>1 :call quickmenu#bottom(1)<cr>
@@ -576,6 +543,16 @@ if CheckPlug('quickmenu.vim', 0)
         call quickmenu#append("(g Ctrl-g) Count of selected",            "g Ctrl-g", "the selected words and bytes")
         call quickmenu#append("Count `%{expand('<cword>')}`", 'call MyMenuExec("%s/", expand("<cword>"), "//gn")', '')
         call quickmenu#append("Convert number",               "normal gA", "")
+
+    function s:qm_append_branch()
+        call quickmenu#append('# Branches', '')
+
+        let branches = systemlist("git branch --list --format='%(refname:short)'")
+        for branch in branches
+            call quickmenu#append('' . branch, 'silent !git checkout ' . branch)
+        endfor
+    endfunction
+    call s:qm_append_branch()
 
 endif
 

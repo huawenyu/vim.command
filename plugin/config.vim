@@ -50,6 +50,8 @@ endif
 
         let name = s:plug_note_getname("Plug")
         if empty(name) | let name = s:plug_note_getname("Note") | endif
+
+        " Forwardto K's handler
         if empty(name) | call feedkeys("K", 'n') | return | endif
 
         "if has_key(g:plugs, name)

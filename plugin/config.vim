@@ -50,8 +50,8 @@ endif
 
         let name = s:plug_note_getname("Plug")
         if empty(name) | let name = s:plug_note_getname("Note") | endif
-        if empty(name) | return | endif
-        echo name
+        if empty(name) | call feedkeys("K", 'n') | return | endif
+
         "if has_key(g:plugs, name)
             if CheckPlug('vim-notes', 0)
                 if g:notes_dir_order != g:notes_dir_order_type.vim

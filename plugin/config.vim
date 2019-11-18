@@ -64,7 +64,7 @@ endif
                     let g:notes_directories = reverse(g:notes_directories)
                 endif
             elseif CheckPlug(g:vim_confi_option.plug_note, 0)
-                let dir = GetPlugDir(g:vim_confi_option.plug_note)
+                let dir = PlugGetDir(g:vim_confi_option.plug_note)
                 exec 'tabe '. dir. 'docs/'. name. '.note'
             else
                 for doc in split(globpath(g:plugs[name].dir, 'doc/*.txt'), '\n')

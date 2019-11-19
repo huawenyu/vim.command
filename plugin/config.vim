@@ -6,6 +6,27 @@ else
   let g:loaded_myself_after = 'yes'
 endif
 
+" Configure {{{1
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+"}}}
+
+
+"set dictionary-=/usr/share/dict/words dictionary+=/usr/share/dict/words
+
+" tags {{{2
+
+    " # Issue using tags:
+    "   olddir/tags
+    "   newdir/tags
+    "   cd newdir; vi ../olddir/file1 and 'ptag func'		# which will open the file in olddir
+    " # If using 'set cscopetag', this issue not exist.
+    " But if auto-update the tags with current file, we must using tags not 'set cscopetag'.
+    " And the follow one-line can fix the issue.
+    set notagrelative
+
+    " http://arjanvandergaag.nl/blog/combining-vim-and-ctags.html
+    set tags=./tags,tags,./.tags,.tags;$HOME
+"}}}
 
 " Autocmd {{{2
 
@@ -34,15 +55,34 @@ endif
         endif
     endfunction
 
+    " Support:
+    "   - Plug 'tpope/vim-sensible'
+    "   - Note 'tpope/vim-sensible'
+    "   - note:readme
+    "   - @note readme
     function! s:plug_note_getname(beginwith)
         " |/\zs|	\zs	\zs	anything, sets start of match
         " |/\ze|	\ze	\ze	anything, sets end of match
-        " echo matchlist("Plug 'tpope/vim-sensible'", 'Plug\s\+''\(.*\)/\(.*\)''')
-        let user_plug = matchstr(getline('.'), a:beginwith. '\s\+''\zs[^'']\+\ze''\{-\}')
-        if empty(user_plug) | return '' | endif
-        let items = split(user_plug, '/')
-        if len(items) < 2 | return '' | endif
-        return items[1]
+        "
+        " echo matchstr("Plug 'tpope/vim-sensible'", 'Plug\s\+''\zs[^'']\+\ze''\{-\}')
+        " echo matchstr("note:readme", 'note:\zs\w\+\ze[\s|$]\{-\}')
+        " echo matchstr("@note readme", '@note\s\+\zs\w\+\ze[\s|$]\{-\}')
+        "
+        let curline = getline('.')
+        let notename = matchstr(curline, a:beginwith. '\s\+''\zs[^'']\+\ze''\{-\}')
+        if empty(notename)
+            let notename = matchstr(curline, 'note:\zs\w\+\ze[\s|$]\{-\}')
+            if empty(notename)
+                let notename = matchstr(curline, '@note\s\+\zs\w\+\ze[\s|$]\{-\}')
+            endif
+        endif
+
+        let items = split(notename, '/')
+        if len(items) < 2
+          return notename
+        else
+          return items[1]
+        endif
     endfunction
 
     function! s:plug_note()
@@ -556,6 +596,16 @@ if CheckPlug('quickmenu.vim', 0)
     endfunction
     call s:qm_append_branch()
 
+endif
+
+if CheckPlug('vimlogger', 0)
+    " note:readme
+    silent! call logger#init('ALL', ['/tmp/vim.log'])
+    "silent! call logger#init('ERROR', ['/tmp/vim.log'])
+
+    "silent! let s:log = logger#getLogger(expand('<sfile>:t'))
+    "silent! call s:log.info(l:__func__, " args=", string(g:gdb.args))
+    "$ tail -f /tmp/vim.log
 endif
 
 " vim:set ft=vim et sw=4:

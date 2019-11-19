@@ -132,18 +132,28 @@ endif
 
         " current position in jumplist
         autocmd CursorHold * normal! m'
+        autocmd BufEnter term://* startinsert
+
+        if has('nvim')
+            autocmd BufNew,BufEnter term://* startinsert
+            "autocmd BufEnter,BufEnter * if &buftype == 'terminal' | :startinsert | endif
+        endif
 
         " Always show sign column
         autocmd BufEnter * sign define dummy
         autocmd BufEnter * execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
 
         autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/
+
+        " Set filetype base on extension
         autocmd BufNewFile,BufRead *.c.rej,*.c.orig,h.rej,*.h.orig,patch.*,*.diff,*.patch set ft=diff
         autocmd BufNewFile,BufRead *.c,*.c,*.h,*.cpp,*.C,*.CXX,*.CPP set ft=c
-        autocmd BufNewFile,BufRead *.wiki set syntax=markdown
-        "autocmd BufNewFile,BufRead *.wiki set ft=markdown
+        "autocmd BufNewFile,BufRead *.md  setfiletype markdown
+        "autocmd BufNewFile,BufRead *.wiki,*.md  setfiletype vimwiki.markdown
+
         autocmd BufWritePre [\,:;'"\]\)\}]* throw 'Forbidden file name: ' . expand('<afile>')
 
+        "autocmd FileType vimwiki set syntax=markdown
         "autocmd filetype vimwiki  nnoremap <buffer> <a-o> :VoomToggle vimwiki<CR>
         autocmd filetype vimwiki  nnoremap <buffer> <a-'> :VoomToggle markdown<CR>
         "autocmd filetype vimwiki  nnoremap <a-n> :VimwikiMakeDiaryNote<CR>
@@ -152,10 +162,10 @@ endif
         autocmd filetype markdown nnoremap <buffer> <a-'> :VoomToggle markdown<CR>
         autocmd filetype python   nnoremap <buffer> <a-'> :VoomToggle python<CR>
 
-        autocmd filetype c,cpp,diff C8
-        autocmd filetype zsh,bash C2
-        autocmd filetype vim,markdown C08
-        autocmd filetype vimwiki,txt C0
+        autocmd filetype vim,vimwiki,txt  C0
+        "autocmd filetype c,cpp,diff      C8
+        "autocmd filetype zsh,bash        C2
+        "autocmd filetype vim,markdown    C08
 
         "autocmd filetype log nnoremap <buffer> <leader>la :call log#filter(expand('%'), 'all')<CR>
         "autocmd filetype log nnoremap <buffer> <leader>le :call log#filter(expand('%'), 'error')<CR>
@@ -182,7 +192,6 @@ endif
             autocmd FileType python setlocal keywordprg=pydoc
             " sudo apt-get install cppman   (https://github.com/aitjcize/cppman)
             autocmd FileType cpp setlocal keywordprg=:te\ cppman
-
         endif
 
         if !empty(g:vim_confi_option.plug_note)
@@ -403,8 +412,8 @@ endif
           \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
     onoremap s :normal vs<CR>
 
-    nnoremap gf :<c-u>call utils#GotoFileWithLineNum()<CR>
-    nnoremap <silent> <leader>gf :<c-u>call utils#GotoFileWithPreview()<CR>
+    "nnoremap gf :<c-u>call utils#GotoFileWithLineNum()<CR>
+    "nnoremap <silent> <leader>gf :<c-u>call utils#GotoFileWithPreview()<CR>
 
     nnoremap <silent> mm :<c-u>call utils#MarkSelected('n')<CR>
     vnoremap <silent> mm :<c-u>call utils#MarkSelected('v')<CR>

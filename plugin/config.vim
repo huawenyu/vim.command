@@ -329,10 +329,13 @@ endif
     "nnoremap <silent> <a-w> :MaximizerToggle<CR>
     nnoremap <silent> <a-w> :MaximizeWindow<CR>
     nnoremap <silent> <a-e> :NERDTreeTabsToggle<cr>
-    nnoremap <silent> <a-f> :NERDTreeFind<cr>
-    nnoremap <silent> <a-u> :GundoToggle<CR>
-    " Paste under insert-mode
-    inoremap <silent> <a-p> <c-r>0
+    nnoremap <silent> <a-f> :FileCat<cr>
+    nnoremap <silent> <a-F> :Files<cr>
+    nnoremap <silent> <a-g> :RgType <C-R>=printf("%s", expand('<cword>'))<cr><cr>
+    nnoremap <silent> <a-q> :BLines<cr>
+
+    " Paste in insert mode: set again, don't who reset this
+    inoremap <silent> <a-p> <c-r>"
 
     nnoremap <silent> <a-'> :VoomToggle<cr>
     nnoremap <silent> <a-;> :<c-u>call <SID>ToggleTagbar()<CR>
@@ -357,7 +360,7 @@ endif
     " Lint: -i ignore-error and continue, -s --silent --quiet
 
     "bookmark
-    nnoremap <silent> <leader>mm :silent! call mark#MarkCurrentWord(expand('cword'))<CR>
+    nnoremap <silent> <leader>mm :silent! call mark#MarkCurrentWord(expand('<cword>'))<CR>
     "nnoremap <leader>mf :echo(statusline#GetFuncName())<CR>
     "nnoremap <leader>mo :BookmarkLoad Default
     "nnoremap <leader>ma :BookmarkShowAll <CR>

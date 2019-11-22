@@ -206,7 +206,8 @@ endif
 
 "}}}
 
-" Quick Jump {{{1
+" Quick Jump
+if CheckPlug('neovim-fuzzy', 0)
     function! s:JumpI(mode)
         if v:count == 0
             if a:mode
@@ -267,10 +268,16 @@ endif
     "vnoremap          <leader>h  :<c-u>call <SID>JumpH(1)<cr>
     "nnoremap <silent> <leader>j  :<c-u>call <SID>JumpJ(0)<cr>
     "vnoremap          <leader>j  :<c-u>call <SID>JumpJ(1)<cr>
-    nnoremap          <leader>f  :ls<cr>:b<Space>
+    "nnoremap          <leader>f  :ls<cr>:b<Space>
     nnoremap <silent> <leader>;  :<c-u>call <SID>JumpComma(0)<cr>
     vnoremap          <leader>;  :<c-u>call <SID>JumpComma(1)<cr>
-"}}}
+
+endif
+
+
+if CheckPlug('syntastic', 0)
+    let g:syntastic_vim_checkers = ['vint']
+endif
 
 
 " View keymap {{{1
@@ -329,10 +336,9 @@ endif
     "nnoremap <silent> <a-w> :MaximizerToggle<CR>
     nnoremap <silent> <a-w> :MaximizeWindow<CR>
     nnoremap <silent> <a-e> :NERDTreeTabsToggle<cr>
-    nnoremap <silent> <a-f> :FileCat<cr>
-    nnoremap <silent> <a-F> :Files<cr>
-    nnoremap <silent> <a-g> :RgType <C-R>=printf("%s", expand('<cword>'))<cr><cr>
-    nnoremap <silent> <a-q> :BLines<cr>
+    "nnoremap <silent> <a-f> :Null<CR>
+    "nnoremap <silent> <a-g> :Null<CR>
+    "nnoremap <silent> <a-q> :Null<CR>
 
     " Paste in insert mode: set again, don't who reset this
     inoremap <silent> <a-p> <c-r>"

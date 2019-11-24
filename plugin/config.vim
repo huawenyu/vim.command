@@ -6,37 +6,13 @@ else
   let g:loaded_myself_after = 'yes'
 endif
 
-" Configure {{{1
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-"}}}
-
-
-"set dictionary-=/usr/share/dict/words dictionary+=/usr/share/dict/words
-
-" tags {{{2
-
-    " # Issue using tags:
-    "   olddir/tags
-    "   newdir/tags
-    "   cd newdir; vi ../olddir/file1 and 'ptag func'		# which will open the file in olddir
-    " # If using 'set cscopetag', this issue not exist.
-    " But if auto-update the tags with current file, we must using tags not 'set cscopetag'.
-    " And the follow one-line can fix the issue.
-    set notagrelative
-
-    " http://arjanvandergaag.nl/blog/combining-vim-and-ctags.html
-    set tags=./tags,tags,./.tags,.tags;$HOME
-"}}}
 
 " Autocmd {{{2
 
     " Maximizes the current window if it is not the quickfix window.
     function! SetIndentTabForCfiletype()
         " auto into terminal-mode
-        if &buftype == 'terminal'
-            startinsert
-            return
-        elseif &buftype == 'quickfix'
+        if &buftype == 'quickfix'
             call AdjustWindowHeight(2, 10)
             return
         endif
@@ -65,16 +41,18 @@ endif
         " |/\ze|	\ze	\ze	anything, sets end of match
         "
         " echo matchstr("Plug 'tpope/vim-sensible'", 'Plug\s\+''\zs[^'']\+\ze''\{-\}')
-        " echo matchstr("note:readme", 'note:\zs\w\+\ze[\s|$]\{-\}')
+        " echo matchstr("note:z.lua", 'note[.: @]\zs\S\+\ze[\s|$]\{-\}')
         " echo matchstr("@note readme", '@note\s\+\zs\w\+\ze[\s|$]\{-\}')
+        " echo matchstr("@note z.lua ", '@note\s\+\zs\S\+\ze[\s|$]\{-\}')
+        " echo matchstr("@note:z.lua ", '@note\s\+\zs\w\+\ze[\s|$]\{-\}')
         "
+        echo 'wilson:'. a:beginwith
         let curline = getline('.')
         let notename = matchstr(curline, a:beginwith. '\s\+''\zs[^'']\+\ze''\{-\}')
         if empty(notename)
-            let notename = matchstr(curline, 'note:\zs\w\+\ze[\s|$]\{-\}')
-            if empty(notename)
-                let notename = matchstr(curline, '@note\s\+\zs\w\+\ze[\s|$]\{-\}')
-            endif
+            let notename = matchstr(curline, 'note[.: @]\zs\S\+\ze[\s|$]\{-\}')
+        echo 'wilson:'.notename
+            if empty(notename) | return "" | endif
         endif
 
         let items = split(notename, '/')
@@ -132,11 +110,11 @@ endif
 
         " current position in jumplist
         autocmd CursorHold * normal! m'
-        autocmd BufEnter term://* startinsert
+        "autocmd BufEnter term://* startinsert
 
         if has('nvim')
-            autocmd BufNew,BufEnter term://* startinsert
-            "autocmd BufEnter,BufEnter * if &buftype == 'terminal' | :startinsert | endif
+            "autocmd BufNew,BufEnter term://* startinsert
+            autocmd BufEnter,BufEnter * if &buftype == 'terminal' | :startinsert | endif
         endif
 
         " Always show sign column
@@ -195,7 +173,7 @@ endif
         endif
 
         if !empty(g:vim_confi_option.plug_note)
-           autocmd FileType vim nnoremap <buffer> <silent> K :call <sid>plug_note()<cr>
+           autocmd FileType vim,zsh nnoremap <buffer> <silent> K :call <sid>plug_note()<cr>
            "autocmd FileType notes nnoremap <buffer> <silent> K :call <sid>plug_note()<cr>
            "
            "command! ShowPlugNote call <sid>plug_note()
@@ -480,6 +458,48 @@ if CheckPlug('vim-venu', 0)
     call venu#register(s:menu2)
 endif
 
+
+if CheckPlug('c-utils.vim', 0)
+    if g:vim_confi_option.auto_install_tools
+        if LINUX()
+            if UBUNTU()
+                if !executable('cscope')
+                    call system("sudo apt install cscope")
+                endif
+                if !executable('ctags')
+                    call system("sudo apt install ctags")
+                endif
+            elseif CENTOS() || FEDORA()
+                if !executable('cscope')
+                    call system("sudo yum install cscope")
+                endif
+                if !executable('ctags')
+                    call system("sudo yum install ctags")
+                endif
+            endif
+        endif
+    endif
+endif
+
+
+if CheckPlug('vim-workspace', 0)
+    nnoremap <C-s> :ToggleWorkspace<cr>
+    " restore-session: vim -S
+    "nnoremap <C-s> :Obsess
+    "nnoremap <C-s> :Savews<cr>
+endif
+
+if CheckPlug('accelerated-jk', 0)
+    " Accelerated_jk
+    " when wrap, move by virtual row
+    "let g:accelerated_jk_enable_deceleration = 1
+    let g:accelerated_jk_acceleration_table = [1,2,3]
+
+    nmap j <Plug>(accelerated_jk_gj)
+    nmap k <Plug>(accelerated_jk_gk)
+    "nmap j <Plug>(accelerated_jk_gj_position)
+    "nmap k <Plug>(accelerated_jk_gk_position)
+endif
 
 if CheckPlug('quickmenu.vim', 0)
     "nnoremap <silent><F1> :call quickmenu#toggle(0)<cr>

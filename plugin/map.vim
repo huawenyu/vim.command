@@ -6,12 +6,14 @@ else
   let g:loaded_local_map = 'yes'
 endif
 
-" <Ctl-*>       Move around vim-windows/tmux-panes
-" <Alt-*>       Move around tmux-panes
+
+"=========================================================
+" <Ctl-*>       Move around vim-windows/tmux-panes [hjkl]
+" <Alt-*>       Move around tmux-panes [hjkl], View toggle
 " <leader>*     View open
-" z*            Show info
-
-
+" z*            View open 2 / Show info
+" q*            List
+"=========================================================
 
 
 " Key maps {{{1
@@ -243,7 +245,6 @@ endif
         endif
     endfunction
 
-    nmap ql :Buffers<cr>
     nmap qw :R! ~/tools/dict <C-R>=expand('<cword>') <cr>
 
     "nnoremap <f3> :VimwikiFollowLink
@@ -631,6 +632,8 @@ if CheckPlug('fzf.vim', 0)
     "nnoremap          <leader>f  :ls<cr>:b<Space>
     nnoremap <silent> <leader>;  :<c-u>call <SID>JumpComma(0)<cr>
     vnoremap          <leader>;  :<c-u>call <SID>JumpComma(1)<cr>
+
+    nnoremap ql :Buffers<cr>
 endif
 
 

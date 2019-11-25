@@ -106,10 +106,8 @@ endif
     vnoremap <silent> p p`]
     nnoremap <silent> p p`]
     " Paste in insert mode
-    inoremap <silent> <a-p> <c-r>"
+    inoremap <silent> <a-i> <c-r>"
 
-    "nnoremap <silent> <a-n> :lnext<cr>
-    "nnoremap <silent> <a-p> :lpre<cr>
     nnoremap <silent> <c-n> :cn<cr>
     nnoremap <silent> <c-p> :cp<cr>
 
@@ -254,7 +252,7 @@ endif
     "nnoremap <silent> <a-q> :Null<CR>
 
     " Paste in insert mode: set again, don't who reset this
-    inoremap <silent> <a-p> <c-r>"
+    inoremap <silent> <a-i> <c-r>"
 
     nnoremap <silent> <a-'> :VoomToggle<cr>
     nnoremap <silent> <a-;> :<c-u>call <SID>ToggleTagbar()<CR>
@@ -536,11 +534,11 @@ if CheckPlug('fzf.vim', 1)
 
         let command = ""
         if filereadable(expand(cwd. "/.cscope.files"))
-            let command = 'cat ./.cscope.files'. "| awk '($1~/". a:args . "/) {print $0\":\t\t0:0:0\"}' "
+            let command = 'cat ./.cscope.files'. "| awk '($1~/". a:args . "/) {print $0\":\033[30m0:0:0\033[0m\"}' "
         elseif executable('rg')
-            let command = 'rg --no-heading --files --color=never --fixed-strings'. "| awk '($1~/". a:args . "/){print $0\":\t\t0:0:0\"}' "
+            let command = 'rg --no-heading --files --color=never --fixed-strings'. "| awk '($1~/". a:args . "/){print $0\":\033[30m0:0:0\033[0m\"}' "
         elseif executable('ag')
-            let command = "ag -l --silent --nocolor -g '' ". "| awk '($1~/". a:args . "/) {print $0\":\t\t0:0:0\"}' "
+            let command = "ag -l --silent --nocolor -g '' ". "| awk '($1~/". a:args . "/) {print $0\":\033[30m0:0:0\033[0m\"}' "
         endif
 
         if empty(command)
@@ -573,11 +571,11 @@ if CheckPlug('fzf.vim', 1)
             return
         endif
 
-        " <bang>1 symbol, <bang>0 function
+        " <bang>0 function, <bang>1 symbol
         if a:bang
-            let command = "awk '($2 != \"function\" && $1~/". a:args. "/) {$1=$2=\"\"; print $4\":\"$3\":\"$5}' ". tagfile
+            let command = "awk '($2 != \"function\" && $1~/". a:args. "/) {$1=$2=\"\"; print $4\"\033[30m:\"$3\":\033[0m\033[32m\"$5\" \"$6\" \"$7\" \033[0m\"$8}' ". tagfile
         else
-            let command = "awk '($2 == \"function\" && $1~/". a:args. "/) {$1=$2=\"\"; print $4\":\"$3\":\"$5}' ". tagfile
+            let command = "awk '($2 == \"function\" && $1~/". a:args. "/) {$1=$2=\"\"; print $4\"\033[30m:\"$3\":\033[0m\033[32m\"$5\" \"$6\" \"$7\" \033[0m\"$8}' ". tagfile
         endif
 
         if !empty(command)
@@ -607,20 +605,28 @@ if CheckPlug('fzf.vim', 1)
     command! -bang -nargs=* TagCatPreN  call <sid>TagCat(0,  <q-args>, <bang>0, 1)
     command! -bang -nargs=* TagCatPreV  call <sid>TagCat(1,  <q-args>, <bang>0, 1)
 
-    nnoremap <leader>i  :TagCatN 
-    vnoremap <leader>i  :TagCatV 
+    nnoremap zi  :TagCatN <C-R>=printf("%s", expand('<cword>'))<cr>
+    nnoremap zI  :TagCatPreN <C-R>=printf("%s", expand('<cword>'))<cr>
 
-    nnoremap <leader>I  :TagCatPreN 
-    vnoremap <leader>I  :TagCatPreV 
+    xnoremap zi  :<c-u>TagCatV <C-R>=printf("%s", tlib#selection#GetSelection('o')[0])<cr>
+    xnoremap zI  :<c-u>TagCatPreV <C-R>=printf("%s", tlib#selection#GetSelection('o')[0])<cr>
+
+    nnoremap zl :Buffers<cr>
 
     "nnoremap <silent> <a-g> :RgType <C-R>=printf("%s", expand('<cword>'))<cr><cr>
     "nnoremap <silent> <a-q> :BLines<cr>
 
     nnoremap <silent> <leader>o  :FileCatN<cr>
-    vnoremap <silent> <leader>o  :FileCatV<cr>
+    xnoremap <silent> <leader>o  :FileCatV<cr>
 
     nnoremap <silent> <leader>O  :FileCatPreN<cr>
-    vnoremap <silent> <leader>O  :FileCatPreV<cr>
+    xnoremap <silent> <leader>O  :FileCatPreV<cr>
+
+    nnoremap <silent> zo  :FileCatN<cr>
+    xnoremap <silent> zo  :FileCatV<cr>
+
+    nnoremap <silent> zO  :FileCatPreN<cr>
+    xnoremap <silent> zO  :FileCatPreV<cr>
 
     "vnoremap          <leader>o  :<c-u>call <SID>JumpO(1)<cr>
     "nnoremap <silent> <leader>h  :<c-u>call <SID>JumpH(0)<cr>
@@ -630,8 +636,6 @@ if CheckPlug('fzf.vim', 1)
     "nnoremap          <leader>f  :ls<cr>:b<Space>
     nnoremap <silent> <leader>;  :<c-u>call <SID>JumpComma(0)<cr>
     vnoremap          <leader>;  :<c-u>call <SID>JumpComma(1)<cr>
-
-    nnoremap ql :Buffers<cr>
 endif
 
 

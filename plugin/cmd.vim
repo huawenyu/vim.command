@@ -129,7 +129,7 @@ endif
         if empty(name) | call feedkeys("K", 'n') | return | endif
 
         "if has_key(g:plugs, name)
-            if CheckPlug('vim-notes', 0)
+            if CheckPlug('vim-notes', 1)
                 if g:notes_dir_order != g:notes_dir_order_type.vim
                     let g:notes_directories = reverse(g:notes_directories)
                 endif
@@ -139,7 +139,7 @@ endif
                 if g:notes_dir_order != g:notes_dir_order_type.vim
                     let g:notes_directories = reverse(g:notes_directories)
                 endif
-            elseif CheckPlug(g:vim_confi_option.plug_note, 0)
+            elseif CheckPlug(g:vim_confi_option.plug_note, 1)
                 let dir = PlugGetDir(g:vim_confi_option.plug_note)
                 exec 'tabe '. dir. 'docs/'. name. '.note'
             else
@@ -272,7 +272,7 @@ endif
 "}}}
 
 
-if CheckPlug('vim-venu', 0)
+if CheckPlug('vim-venu', 1)
     let s:menu1 = venu#create('My first V̂enu')
     call venu#addItem(s:menu1, 'Item of first menu', 'echo "Called first item"')
     call venu#register(s:menu1)
@@ -294,7 +294,7 @@ if CheckPlug('vim-venu', 0)
 endif
 
 
-if CheckPlug('accelerated-jk', 0)
+if CheckPlug('accelerated-jk', 1)
     " Accelerated_jk
     " when wrap, move by virtual row
     "let g:accelerated_jk_enable_deceleration = 1
@@ -307,7 +307,7 @@ if CheckPlug('accelerated-jk', 0)
 endif
 
 
-if CheckPlug('quickmenu.vim', 0)
+if CheckPlug('quickmenu.vim', 1)
     "nnoremap <silent><F1> :call quickmenu#toggle(0)<cr>
     "nnoremap <silent><F1> :call quickmenu#bottom(0)<cr>
     nnoremap <silent> <leader><space> :call quickmenu#bottom(0)<cr>
@@ -443,7 +443,7 @@ if CheckPlug('quickmenu.vim', 0)
 
 endif
 
-if CheckPlug('vimlogger', 0)
+if CheckPlug('vimlogger', 1)
     " note:readme
     silent! call logger#init('ALL', ['/tmp/vim.log'])
     "silent! call logger#init('ERROR', ['/tmp/vim.log'])

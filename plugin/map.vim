@@ -117,7 +117,7 @@ endif
     nnoremap <silent> <leader>p :cp<cr>
 " }}}
 
-if CheckPlug('vim-workspace', 0)
+if CheckPlug('vim-workspace', 1)
     nnoremap <C-s> :ToggleWorkspace<cr>
     " restore-session: vim -S
     "nnoremap <C-s> :Obsess
@@ -126,7 +126,7 @@ endif
 
 
 " Quick Jump
-if CheckPlug('neovim-fuzzy', 0)
+if CheckPlug('neovim-fuzzy', 1)
     function! s:JumpI(mode)
         if v:count == 0
             if a:mode
@@ -341,7 +341,7 @@ endif
 "}}}
 
 
-if CheckPlug('c-utils.vim', 0)
+if CheckPlug('c-utils.vim', 1)
     function! s:JumpComma(mode)
         if v:count == 0
             "silent call utils#Declaration()
@@ -354,7 +354,7 @@ if CheckPlug('c-utils.vim', 0)
 endif
 
 
-if CheckPlug('vim-tmux-navigator', 0)
+if CheckPlug('vim-tmux-navigator', 1)
     "let g:tmux_navigator_no_mappings = 1
     "nnoremap <silent> <a-h> :TmuxNavigateLeft<cr>
     "nnoremap <silent> <a-j> :TmuxNavigateDown<cr>
@@ -364,7 +364,7 @@ if CheckPlug('vim-tmux-navigator', 0)
 endif
 
 
-if CheckPlug('vim-easy-align', 0)
+if CheckPlug('vim-easy-align', 1)
     " Start interactive EasyAlign in visual mode (e.g. vipga)
     xmap ga <Plug>(EasyAlign)
     " Start interactive EasyAlign for a motion/text object (e.g. gaip)
@@ -372,19 +372,19 @@ if CheckPlug('vim-easy-align', 0)
 endif
 
 
-if CheckPlug('deoplete.nvim', 0)
+if CheckPlug('deoplete.nvim', 1)
     imap <C-k>     <Plug>(neosnippet_expand_or_jump)
     smap <C-k>     <Plug>(neosnippet_expand_or_jump)
     xmap <C-k>     <Plug>(neosnippet_expand_target)
 endif
 
 
-if CheckPlug('vim-autoformat', 0)
+if CheckPlug('vim-autoformat', 1)
     noremap <F3> :Autoformat<CR>
 endif
 
 
-if CheckPlug('vim-go', 0)
+if CheckPlug('vim-go', 1)
     au FileType go nmap <leader>gr <Plug>(go-run)
     au FileType go nmap <leader>gb <Plug>(go-build)
     au FileType go nmap <leader>gt <Plug>(go-test)
@@ -396,7 +396,7 @@ if CheckPlug('vim-go', 0)
 endif
 
 
-if CheckPlug('tabularize', 0)
+if CheckPlug('tabularize', 1)
     if exists(":Tabularize")
         "nnoremap <leader>t= :Tabularize /=<CR>
         "vnoremap <leader>t= :Tabularize /=<CR>
@@ -406,7 +406,7 @@ if CheckPlug('tabularize', 0)
 endif
 
 
-if CheckPlug('vim-yoink', 0)
+if CheckPlug('vim-yoink', 1)
     "nmap <c-n> <plug>(YoinkPostPasteSwapBack)
     "nmap <c-p> <plug>(YoinkPostPasteSwapForward)
 
@@ -423,8 +423,8 @@ if CheckPlug('vim-yoink', 0)
 endif
 
 
-if CheckPlug('vim-gutentags', 0)
-    if !CheckPlug('c-utils.vim', 0)
+if CheckPlug('vim-gutentags', 1)
+    if !CheckPlug('c-utils.vim', 1)
         " gutentags_plus
         let g:cutils_cscope_map = 0
         let g:gutentags_plus_nomap = 1
@@ -452,7 +452,7 @@ if CheckPlug('vim-gutentags', 0)
 endif
 
 
-if CheckPlug('coc.nvim', 0)
+if CheckPlug('coc.nvim', 1)
     " using coc.vim/ale with ccls-cache which base on clang
     nmap <silent> <a-]> <Plug>(coc-definition)
     nmap <silent> <a-\> <Plug>(coc-references)
@@ -467,7 +467,7 @@ if CheckPlug('coc.nvim', 0)
 endif
 
 
-if CheckPlug('ale.vim', 0)
+if CheckPlug('ale.vim', 1)
     nmap <silent> <a-]> :ALEGoToDefinition<cr>
     nmap <silent> <a-\> :ALEFindReferences<cr>
     "nmap <silent> <a-h> :ALESymbolSearch<cr>
@@ -477,12 +477,12 @@ if CheckPlug('ale.vim', 0)
 endif
 
 
-if CheckPlug('vim-prettier', 0)
+if CheckPlug('vim-prettier', 1)
     nmap <Leader>fm <Plug>(Prettier)
 endif
 
 
-if CheckPlug('vim-qf', 0)
+if CheckPlug('vim-qf', 1)
     ""nnoremap <leader>mn :QFAddNote note:
     "nnoremap <leader>ms :SaveList
     "nnoremap <leader>mS :SaveListAdd
@@ -500,7 +500,7 @@ if CheckPlug('vim-qf', 0)
 endif
 
 
-if CheckPlug('vim-tmux-runner', 0)
+if CheckPlug('vim-tmux-runner', 1)
     nnoremap <silent> <leader>tf :exec "VtrLoad" \| exec "VtrSendFile"<CR>
     nnoremap <silent> <leader>tl :exec "VtrLoad" \| exec "VtrSendLinesToRunner"<CR>
     nnoremap <silent> <leader>tt :exec "VtrLoad" \| exec "call vtr#SendCommandEx('n')"<CR>
@@ -513,18 +513,18 @@ if CheckPlug('vim-tmux-runner', 0)
 endif
 
 
-if CheckPlug('vim-notes', 0)
+if CheckPlug('vim-notes', 1)
     " :edit note:<name>
     vnoremap <F1> :SplitNoteFromSelectedText<Cr>
 endif
 
 
-if CheckPlug('ctrlp.vim', 0)
+if CheckPlug('ctrlp.vim', 1)
     "nnoremap <leader>b :CtrlPBuffer<cr>
 endif
 
 
-if CheckPlug('fzf.vim', 0)
+if CheckPlug('fzf.vim', 1)
     function! s:FileCat(mode, args, bang, preview)
         if a:bang
             Files
@@ -635,7 +635,7 @@ if CheckPlug('fzf.vim', 0)
 endif
 
 
-if CheckPlug('vim-repl', 0)
+if CheckPlug('vim-repl', 1)
     noremap <leader>rr :REPLToggle<Cr>
     noremap <leader>rr :Repl<Cr>
 
@@ -645,7 +645,7 @@ if CheckPlug('vim-repl', 0)
 endif
 
 
-if CheckPlug('vim-youdao-translater', 0)
+if CheckPlug('vim-youdao-translater', 1)
     vnoremap <silent> qw :<C-u>Ydv<CR>
     nnoremap <silent> qw :<C-u>Ydc<CR>
     "noremap <leader>yd :<C-u>Yde<CR>
@@ -654,7 +654,7 @@ else
 endif
 
 
-if CheckPlug('vim-lookup', 0)
+if CheckPlug('vim-lookup', 1)
     autocmd FileType vim nnoremap <buffer><silent> <c-]>  :call lookup#lookup()<cr>
 endif
 

@@ -245,8 +245,6 @@ endif
         endif
     endfunction
 
-    nmap qw :R! ~/tools/dict <C-R>=expand('<cword>') <cr>
-
     "nnoremap <f3> :VimwikiFollowLink
     "nnoremap <silent> <a-w> :MaximizerToggle<CR>
     nnoremap <silent> <a-w> :MaximizeWindow<CR>
@@ -644,5 +642,19 @@ if CheckPlug('vim-repl', 0)
     autocmd Filetype python nnoremap <F12> <Esc>:REPLDebugStopAtCurrentLine<Cr>
     autocmd Filetype python nnoremap <F10> <Esc>:REPLPDBN<Cr>
     autocmd Filetype python nnoremap <F11> <Esc>:REPLPDBS<Cr>
+endif
+
+
+if CheckPlug('vim-youdao-translater', 0)
+    vnoremap <silent> qw :<C-u>Ydv<CR>
+    nnoremap <silent> qw :<C-u>Ydc<CR>
+    "noremap <leader>yd :<C-u>Yde<CR>
+else
+    nmap qw :R! ~/tools/dict <C-R>=expand('<cword>') <cr>
+endif
+
+
+if CheckPlug('vim-lookup', 0)
+    autocmd FileType vim nnoremap <buffer><silent> <c-]>  :call lookup#lookup()<cr>
 endif
 

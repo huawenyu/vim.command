@@ -11,7 +11,8 @@ endif
 " <Ctl-*>       Move around vim-windows/tmux-panes [hjkl]
 " <Alt-*>       Move around tmux-panes [hjkl], View toggle
 " <leader>*     View open
-" z*            View open 2 / Show info
+" ;*            View open 2
+" z*            Show info
 " q*            List
 "=========================================================
 
@@ -524,16 +525,8 @@ endif
 
 if CheckPlug('fzf.vim', 1)
     function! s:FileCat(mode, args, bang, preview)
-        if a:bang
-            Files
-            return
-        endif
-
-        let current_file =expand("%")
-        let cwd = fnamemodify(current_file, ':p:h')
-
         let command = ""
-        if filereadable(expand(cwd. "/.cscope.files"))
+        if !a:bang && filereadable("./.cscope.files")
             let command = 'cat ./.cscope.files'. "| awk '($1~/". a:args . "/) {print $0\":\033[30m0:0:0\033[0m\"}' "
         elseif executable('rg')
             let command = 'rg --no-heading --files --color=never --fixed-strings'. "| awk '($1~/". a:args . "/){print $0\":\033[30m0:0:0\033[0m\"}' "
@@ -605,14 +598,18 @@ if CheckPlug('fzf.vim', 1)
     command! -bang -nargs=* TagCatPreN  call <sid>TagCat(0,  <q-args>, <bang>0, 1)
     command! -bang -nargs=* TagCatPreV  call <sid>TagCat(1,  <q-args>, <bang>0, 1)
 
-    nnoremap zi  :TagCatN <C-R>=printf("%s", expand('<cword>'))<cr>
-    nnoremap zI  :TagCatPreN <C-R>=printf("%s", expand('<cword>'))<cr>
+    nnoremap ;i  :TagCatN! <C-R>=printf("%s", expand('<cword>'))<cr>
+    nnoremap ;I  :TagCatPreN! <C-R>=printf("%s", expand('<cword>'))<cr>
+    xnoremap ;i  :<c-u>TagCatV! <C-R>=printf("%s", tlib#selection#GetSelection('o')[0])<cr>
+    xnoremap ;I  :<c-u>TagCatPreV! <C-R>=printf("%s", tlib#selection#GetSelection('o')[0])<cr>
 
-    xnoremap zi  :<c-u>TagCatV <C-R>=printf("%s", tlib#selection#GetSelection('o')[0])<cr>
-    xnoremap zI  :<c-u>TagCatPreV <C-R>=printf("%s", tlib#selection#GetSelection('o')[0])<cr>
+    nnoremap ;f  :TagCatN <C-R>=printf("%s", expand('<cword>'))<cr>
+    nnoremap ;F  :TagCatPreN <C-R>=printf("%s", expand('<cword>'))<cr>
+    xnoremap ;f  :<c-u>TagCatV <C-R>=printf("%s", tlib#selection#GetSelection('o')[0])<cr>
+    xnoremap ;F  :<c-u>TagCatPreV <C-R>=printf("%s", tlib#selection#GetSelection('o')[0])<cr>
 
-    nnoremap zj :Buffers<cr>
-    nnoremap zl :BLines<cr>
+    nnoremap ;j :Buffers<cr>
+    nnoremap ;l :BLines<cr>
 
     "nnoremap <silent> <a-g> :RgType <C-R>=printf("%s", expand('<cword>'))<cr><cr>
     "nnoremap <silent> <a-q> :BLines<cr>
@@ -620,14 +617,15 @@ if CheckPlug('fzf.vim', 1)
     nnoremap <silent> <leader>o  :FileCatN<cr>
     xnoremap <silent> <leader>o  :FileCatV<cr>
 
-    nnoremap <silent> <leader>O  :FileCatPreN<cr>
-    xnoremap <silent> <leader>O  :FileCatPreV<cr>
+    nnoremap <silent> <leader>O  :FileCatN!<cr>
+    xnoremap <silent> <leader>O  :FileCatV!<cr>
 
-    nnoremap <silent> zo  :FileCatN<cr>
-    xnoremap <silent> zo  :FileCatV<cr>
-
-    nnoremap <silent> zO  :FileCatPreN<cr>
-    xnoremap <silent> zO  :FileCatPreV<cr>
+    nnoremap <silent> ;o  :FileCatN<cr>
+    xnoremap <silent> ;o  :FileCatV<cr>
+    nnoremap <silent> ;O  :FileCatN!<cr>
+    xnoremap <silent> ;O  :FileCatV!<cr>
+    "nnoremap <silent> ;O  :FileCatPreN<cr>
+    "xnoremap <silent> ;O  :FileCatPreV<cr>
 
     "vnoremap          <leader>o  :<c-u>call <SID>JumpO(1)<cr>
     "nnoremap <silent> <leader>h  :<c-u>call <SID>JumpH(0)<cr>

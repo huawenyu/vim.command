@@ -611,7 +611,8 @@ if CheckPlug('fzf.vim', 1)
     xnoremap zi  :<c-u>TagCatV <C-R>=printf("%s", tlib#selection#GetSelection('o')[0])<cr>
     xnoremap zI  :<c-u>TagCatPreV <C-R>=printf("%s", tlib#selection#GetSelection('o')[0])<cr>
 
-    nnoremap zl :Buffers<cr>
+    nnoremap zj :Buffers<cr>
+    nnoremap zl :BLines<cr>
 
     "nnoremap <silent> <a-g> :RgType <C-R>=printf("%s", expand('<cword>'))<cr><cr>
     "nnoremap <silent> <a-q> :BLines<cr>

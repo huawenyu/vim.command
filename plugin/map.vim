@@ -395,16 +395,6 @@ if CheckPlug('vim-go', 1)
 endif
 
 
-if CheckPlug('tabularize', 1)
-    if exists(":Tabularize")
-        "nnoremap <leader>t= :Tabularize /=<CR>
-        "vnoremap <leader>t= :Tabularize /=<CR>
-        "nnoremap <leader>t: :Tabularize /:\zs<CR>
-        "vnoremap <leader>t: :Tabularize /:\zs<CR>
-    endif
-endif
-
-
 if CheckPlug('vim-yoink', 1)
     "nmap <c-n> <plug>(YoinkPostPasteSwapBack)
     "nmap <c-p> <plug>(YoinkPostPasteSwapForward)
@@ -499,6 +489,16 @@ if CheckPlug('vim-qf', 1)
 endif
 
 
+if CheckPlug('tabularize', 1)
+    if exists(":Tabularize")
+        "nnoremap <leader>t= :Tabularize /=<CR>
+        "vnoremap <leader>t= :Tabularize /=<CR>
+        "nnoremap <leader>t: :Tabularize /:\zs<CR>
+        "vnoremap <leader>t: :Tabularize /:\zs<CR>
+    endif
+endif
+
+
 if CheckPlug('vim-tmux-runner', 1)
     nnoremap <silent> <leader>tf :exec "VtrLoad" \| exec "VtrSendFile"<CR>
     nnoremap <silent> <leader>tl :exec "VtrLoad" \| exec "VtrSendLinesToRunner"<CR>
@@ -509,6 +509,13 @@ if CheckPlug('vim-tmux-runner', 1)
     nnoremap <silent> <leader>tj :exec "VtrLoad" \| exec "VtrBufferPasteHere"<CR>
     nnoremap <silent> <leader>tg :exec "VtrLoad" \| exec "VtrFlushCommand"<CR>
     nnoremap <silent> <leader>tc :exec "VtrLoad" \| exec "VtrClearRunner"<CR>
+endif
+
+
+if CheckPlug('taboo.vim', 1)
+    nnoremap <silent> ;tt :TabooOpen new-tab<CR>
+    nnoremap <silent> ;tc :tabclose<CR>
+    nnoremap          ;tr :TabooRename 
 endif
 
 

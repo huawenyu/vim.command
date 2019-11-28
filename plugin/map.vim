@@ -203,25 +203,40 @@ endif
         endif
 
         if nerdtree_open
-            let g:tagbar_left = 0
-            "let g:tagbar_vertical = 25
-            "let NERDTreeWinPos = 'left'
-        else
-            if utils#IsLeftMostWindow()
-                let g:tagbar_left = 1
-            else
+            if CheckPlug('tagbar', 1)
                 let g:tagbar_left = 0
+            elseif CheckPlug('vista.vim', 1)
+                let g:vista_sidebar_position = 'vertical botright'
             endif
-            "let g:tagbar_vertical = 0
+        else
+            " left
+            if utils#IsLeftMostWindow()
+                if CheckPlug('tagbar', 1)
+                    let g:tagbar_left = 1
+                elseif CheckPlug('vista.vim', 1)
+                    let g:vista_sidebar_position = 'vertical topleft'
+                endif
+            " right
+            else
+                if CheckPlug('tagbar', 1)
+                    let g:tagbar_left = 0
+                elseif CheckPlug('vista.vim', 1)
+                    let g:vista_sidebar_position = 'vertical botright'
+                endif
+            endif
         endif
 
-        TagbarToggle
-        "let tagbar_open = bufwinnr('__Tagbar__') != -1
-        "if tagbar_open
-        "  TagbarClose
-        "else
-        "  TagbarOpen
-        "endif
+        if CheckPlug('tagbar', 1)
+            TagbarToggle
+        elseif CheckPlug('vista.vim', 1)
+            let tagbar_open = bufwinnr('__vista__') != -1
+            if tagbar_open
+                Vista! ctags
+            else
+                Vista ctags
+            endif
+        endif
+
 
         "" Jump back to the original window
         "let w:jumpbacktohere = 1

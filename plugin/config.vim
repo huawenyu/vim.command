@@ -66,6 +66,10 @@ set listchars=tab:»\ ,trail:~,extends:<,nbsp:.
     " And the follow one-line can fix the issue.
     set notagrelative
 
+    "if filereadable("./cscope.out")
+    "    set cscopetag
+    "endif
+
     " http://arjanvandergaag.nl/blog/combining-vim-and-ctags.html
     set tags=./tags,tags,./.tags,.tags;$HOME
 "}}}

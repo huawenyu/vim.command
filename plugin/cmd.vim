@@ -216,8 +216,6 @@ endif
         autocmd FileType python nnoremap <buffer> <leader>tt :<c-u>R <C-R>=printf("python -m doctest %s \| tee log.test", expand('%:p'))<cr><cr>
         autocmd FileType python nnoremap <buffer> <leader>tr :<c-u>R <C-R>=printf("python -m trace --trace %s \|  grep %s", expand('%:p'), expand('%'))<cr><cr>
 
-        autocmd FileType c nnoremap <buffer> <leader>tt :<c-u>AsyncRun! tagme<cr>
-
         autocmd FileType javascript nnoremap <buffer> <leader>ee  :DB mongodb:///test < %
         autocmd FileType javascript vnoremap <buffer> <leader>ee  :'<,'>w! /tmp/vim.js<cr><cr> \| :DB mongodb:///test < /tmp/vim.js<cr><cr>
 

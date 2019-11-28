@@ -513,9 +513,13 @@ endif
 
 
 if CheckPlug('taboo.vim', 1)
+    nnoremap <silent> ;1   1gt
+    nnoremap <silent> ;2   2gt
+    nnoremap <silent> ;3   3gt
+
     nnoremap <silent> ;tt :TabooOpen new-tab<CR>
     nnoremap <silent> ;tc :tabclose<CR>
-    nnoremap          ;tr :TabooRename 
+    nnoremap          ;tr :TabooRename <C-R>=expand('%:t:r')<CR>
 endif
 
 

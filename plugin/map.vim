@@ -8,8 +8,8 @@ endif
 
 
 "=========================================================
-" <Ctl-*>       Move around vim-windows/tmux-panes [hjkl]
-" <Alt-*>       Move around tmux-panes [hjkl], View toggle
+" <Ctl-*>       Jump vim-windows/tmux-panes [hjkl]
+" <Alt-*>       Jump tmux-panes [hjkl], View toggle
 " <leader>*     View open
 " ;*            View open 2
 " z*            Show info

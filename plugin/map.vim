@@ -23,7 +23,7 @@ endif
 
     "" Disable F1 built-in help key by: re-replace last search
     "map <F1> :<c-u>%s///gc<cr>
-    "imap <F1> :<c-u>%s//<C-R>0/gc<cr>
+    map <F1> :<c-u>%s//<C-R>"/gc<cr>
 
     " map <leader><Esc> :AnsiEsc<cr>
     nnoremap <C-c> <silent> <C-c>
@@ -363,6 +363,13 @@ if CheckPlug('c-utils.vim', 1)
         else
         endif
     endfunction
+
+    "vnoremap          <leader>o  :<c-u>call <SID>JumpO(1)<cr>
+    "nnoremap <silent> <leader>h  :<c-u>call <SID>JumpH(0)<cr>
+    "vnoremap          <leader>h  :<c-u>call <SID>JumpH(1)<cr>
+    "nnoremap <silent> <leader>j  :<c-u>call <SID>JumpJ(0)<cr>
+    "vnoremap          <leader>j  :<c-u>call <SID>JumpJ(1)<cr>
+    "nnoremap          <leader>f  :ls<cr>:b<Space>
     nnoremap <silent> <leader>;  :<c-u>call <SID>JumpComma(0)<cr>
     vnoremap          <leader>;  :<c-u>call <SID>JumpComma(1)<cr>
 endif
@@ -549,119 +556,6 @@ if CheckPlug('ctrlp.vim', 1)
 endif
 
 
-if CheckPlug('fzf.vim', 1)
-    function! s:FileCat(mode, args, bang, preview)
-        let command = ""
-        if !a:bang && filereadable("./.cscope.files")
-            let command = "awk '($1~/". a:args . "/) {print $0\":\033[30m0:0:0\033[0m\"}' ./.cscope.files"
-        elseif executable('rg')
-            let command = 'rg --no-heading --files --color=never --fixed-strings'. "| awk '($1~/". a:args . "/){print $0\":\033[30m0:0:0\033[0m\"}' "
-        elseif executable('ag')
-            let command = "ag -l --silent --nocolor -g '' ". "| awk '($1~/". a:args . "/) {print $0\":\033[30m0:0:0\033[0m\"}' "
-        endif
-
-        if empty(command)
-            Files
-            return
-        endif
-
-        call fzf#vim#grep(
-                    \   command, 1,
-                    \   a:preview ? fzf#vim#with_preview('up:60%')
-                    \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-                    \   a:preview)
-    endfunction
-
-
-    function! s:TagCat(mode, args, bang, preview)
-        let tagfile = ''
-        if !exists('g:fuzzy_file_tag')
-            let g:fuzzy_file_tag = ["tagx", ".tagx"]
-        endif
-        for i in g:fuzzy_file_tag
-            if filereadable(i)
-                let tagfile = i
-                break
-            endif
-        endfor
-
-        if empty(tagfile)
-            echomsg "tagx file not exist!"
-            return
-        endif
-
-        " <bang>0 function, <bang>1 symbol
-        if a:bang
-            let command = "awk '($2 != \"function\" && $1~/". a:args. "/) {$1=$2=\"\"; print $4\"\033[30m:\"$3\":\033[0m\033[32m\"$5\" \"$6\" \"$7\" \033[0m\"$8}' ". tagfile
-        else
-            let command = "awk '($2 == \"function\" && $1~/". a:args. "/) {$1=$2=\"\"; print $4\"\033[30m:\"$3\":\033[0m\033[32m\"$5\" \"$6\" \"$7\" \033[0m\"$8}' ". tagfile
-        endif
-
-        if !empty(command)
-            call fzf#vim#grep(
-                        \   command, 0,
-                        \   a:preview ? fzf#vim#with_preview('up:60%')
-                        \          : fzf#vim#with_preview('right:50%:hidden', '?'),
-                        \   a:preview)
-
-            "call fzf#run({
-            "            \ 'source': command,
-            "            \ 'sink':   'e',
-            "            \ 'options': '-m -x +s',
-            "            \ 'window':  'enew' })
-        endif
-    endfunction
-
-    command! -bang -nargs=* FileCatN    call <sid>FileCat(0, <q-args>, <bang>0, 0)
-    command! -bang -nargs=* FileCatV    call <sid>FileCat(1, <q-args>, <bang>0, 0)
-
-    command! -bang -nargs=* FileCatPreN call <sid>FileCat(0, <q-args>, <bang>0, 1)
-    command! -bang -nargs=* FileCatPreV call <sid>FileCat(1, <q-args>, <bang>0, 1)
-
-    command! -bang -nargs=* TagCatN     call <sid>TagCat(0,  <q-args>, <bang>0, 0)
-    command! -bang -nargs=* TagCatV     call <sid>TagCat(1,  <q-args>, <bang>0, 0)
-
-    command! -bang -nargs=* TagCatPreN  call <sid>TagCat(0,  <q-args>, <bang>0, 1)
-    command! -bang -nargs=* TagCatPreV  call <sid>TagCat(1,  <q-args>, <bang>0, 1)
-
-    nnoremap ;i  :TagCatN! <C-R>=printf("%s", expand('<cword>'))<cr>
-    nnoremap ;I  :TagCatPreN! <C-R>=printf("%s", expand('<cword>'))<cr>
-    xnoremap ;i  :<c-u>TagCatV! <C-R>=printf("%s", tlib#selection#GetSelection('o')[0])<cr>
-    xnoremap ;I  :<c-u>TagCatPreV! <C-R>=printf("%s", tlib#selection#GetSelection('o')[0])<cr>
-
-    nnoremap ;f  :TagCatN <C-R>=printf("%s", expand('<cword>'))<cr>
-    nnoremap ;F  :TagCatPreN <C-R>=printf("%s", expand('<cword>'))<cr>
-    xnoremap ;f  :<c-u>TagCatV <C-R>=printf("%s", tlib#selection#GetSelection('o')[0])<cr>
-    xnoremap ;F  :<c-u>TagCatPreV <C-R>=printf("%s", tlib#selection#GetSelection('o')[0])<cr>
-
-    nnoremap ;j :Buffers<cr>
-    nnoremap ;l :BLines<cr>
-
-    "nnoremap <silent> <a-g> :RgType <C-R>=printf("%s", expand('<cword>'))<cr><cr>
-    "nnoremap <silent> <a-q> :BLines<cr>
-
-    nnoremap <silent> <leader>o  :FileCatN<cr>
-    xnoremap <silent> <leader>o  :FileCatV<cr>
-
-    nnoremap <silent> <leader>O  :FileCatN!<cr>
-    xnoremap <silent> <leader>O  :FileCatV!<cr>
-
-    nnoremap <silent> ;o  :FileCatN<cr>
-    xnoremap <silent> ;o  :FileCatV<cr>
-    nnoremap <silent> ;O  :FileCatN!<cr>
-    xnoremap <silent> ;O  :FileCatV!<cr>
-    "nnoremap <silent> ;O  :FileCatPreN<cr>
-    "xnoremap <silent> ;O  :FileCatPreV<cr>
-
-    "vnoremap          <leader>o  :<c-u>call <SID>JumpO(1)<cr>
-    "nnoremap <silent> <leader>h  :<c-u>call <SID>JumpH(0)<cr>
-    "vnoremap          <leader>h  :<c-u>call <SID>JumpH(1)<cr>
-    "nnoremap <silent> <leader>j  :<c-u>call <SID>JumpJ(0)<cr>
-    "vnoremap          <leader>j  :<c-u>call <SID>JumpJ(1)<cr>
-    "nnoremap          <leader>f  :ls<cr>:b<Space>
-    nnoremap <silent> <leader>;  :<c-u>call <SID>JumpComma(0)<cr>
-    vnoremap          <leader>;  :<c-u>call <SID>JumpComma(1)<cr>
-endif
 
 
 if CheckPlug('vim-repl', 1)

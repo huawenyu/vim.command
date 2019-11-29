@@ -428,9 +428,9 @@ endif
 
 
 if CheckPlug('vim-gutentags', 1)
-    if !CheckPlug('c-utils.vim', 1)
+    if !CheckPlug('fzf-cscope.vim', 1)
         " gutentags_plus
-        let g:cutils_cscope_map = 0
+        let g:fzf_cscope_map = 0
         let g:gutentags_plus_nomap = 1
         noremap <silent> <leader>fs :GscopeFind s <C-R><C-W><cr>
         noremap <silent> <leader>fg :GscopeFind g <C-R><C-W><cr>
@@ -553,7 +553,7 @@ if CheckPlug('fzf.vim', 1)
     function! s:FileCat(mode, args, bang, preview)
         let command = ""
         if !a:bang && filereadable("./.cscope.files")
-            let command = 'cat ./.cscope.files'. "| awk '($1~/". a:args . "/) {print $0\":\033[30m0:0:0\033[0m\"}' "
+            let command = "awk '($1~/". a:args . "/) {print $0\":\033[30m0:0:0\033[0m\"}' ./.cscope.files"
         elseif executable('rg')
             let command = 'rg --no-heading --files --color=never --fixed-strings'. "| awk '($1~/". a:args . "/){print $0\":\033[30m0:0:0\033[0m\"}' "
         elseif executable('ag')

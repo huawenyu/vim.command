@@ -417,6 +417,12 @@ if CheckPlug('vim-go', 1)
 endif
 
 
+if CheckPlug('fzf.vim', 1)
+    nnoremap ;j     :Buffers<cr>
+    nnoremap ;l     :BLines<cr>
+endif
+
+
 if CheckPlug('vim-yoink', 1)
     "nmap <c-n> <plug>(YoinkPostPasteSwapBack)
     "nmap <c-p> <plug>(YoinkPostPasteSwapForward)

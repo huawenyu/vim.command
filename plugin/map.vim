@@ -54,12 +54,11 @@ endif
     nnoremap <silent> <a-i> <C-i>
 
 
-    " Reserve to quick-jump
     " Substitue for MaboXterm diable <c-h>
-    "nnoremap <leader>h <c-w>h
-    "nnoremap <leader>j <c-w>j
-    "nnoremap <leader>k <c-w>k
-    "nnoremap <leader>l <c-w>l
+    nnoremap <leader>h <c-w>h
+    nnoremap <leader>j <c-w>j
+    nnoremap <leader>k <c-w>k
+    nnoremap <leader>l <c-w>l
 
     " Replace by vim-tmux-navigator
     "nnoremap <c-h> <c-w>h

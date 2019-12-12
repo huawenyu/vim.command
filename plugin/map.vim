@@ -562,6 +562,14 @@ if CheckPlug('ctrlp.vim', 1)
 endif
 
 
+if CheckPlug('ultisnips', 1)
+    let g:UltiSnipsExpandTrigger="<tab>"
+    "let g:UltiSnipsJumpForwardTrigger="<c-n>"
+    "let g:UltiSnipsJumpBackwardTrigger="<c-p>"
+    let g:UltiSnipsJumpForwardTrigger="<tab>"
+    let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+    let g:UltiSnipsEditSplit="vertical"
+endif
 
 
 if CheckPlug('vim-repl', 1)

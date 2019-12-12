@@ -321,7 +321,10 @@ if CheckPlug('quickmenu.vim', 1)
 
     function! SelectedReplace()
         let l:save_cursor = getcurpos()
-        let sel_str = utils#GetSelected('')
+        let sel_str = hw#misc#GetSelection('')
+        if empty(sel_str)
+            let sel_str = expand('<cword>')
+        endif
 
         let nr = winnr()
         if getwinvar(nr, '&syntax') == 'qf'

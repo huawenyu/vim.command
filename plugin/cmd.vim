@@ -100,6 +100,9 @@ endif
         "
         " echo matchstr("Plug 'tpope/vim-sensible'", 'Plug\s\+''\zs[^'']\+\ze''\{-\}')
         " echo matchstr("note:z.lua", 'note[.: @]\zs\S\+\ze[\s|$]\{-\}')
+        " echo matchstr("'@note:z.lua'", '\([''"]\)\zs.\{-}\ze\1')
+        " echo matchstr("@note:nvim", 'note[.: @]\zs.\{-}\ze[\}\]\) ,;''"]\{-\}$')
+        "
         " echo matchstr("@note readme", '@note\s\+\zs\w\+\ze[\s|$]\{-\}')
         " echo matchstr("@note z.lua ", '@note\s\+\zs\S\+\ze[\s|$]\{-\}')
         " echo matchstr("@note:z.lua ", '@note\s\+\zs\w\+\ze[\s|$]\{-\}')
@@ -107,7 +110,7 @@ endif
         let curline = getline('.')
         let notename = matchstr(curline, a:beginwith. '\s\+''\zs[^'']\+\ze''\{-\}')
         if empty(notename)
-            let notename = matchstr(curline, 'note[.: @]\zs\S\+\ze[\s|$]\{-\}')
+            let notename = matchstr(curline, 'note[.: @]\zs.\{-}\ze[\}\]\) ,;''"]\{-\}$')
             if empty(notename) | return "" | endif
         endif
 
@@ -227,7 +230,7 @@ endif
         endif
 
         if !empty(g:vim_confi_option.plug_note)
-           autocmd FileType vim,zsh nnoremap <buffer> <silent> K :call <sid>plug_note()<cr>
+           autocmd FileType vim,zsh,vimwiki,markdown nnoremap <buffer> <silent> K :call <sid>plug_note()<cr>
            "autocmd FileType notes nnoremap <buffer> <silent> K :call <sid>plug_note()<cr>
            "
            "command! ShowPlugNote call <sid>plug_note()

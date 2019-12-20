@@ -262,8 +262,11 @@ endif
     endfunction
 
     "nnoremap <f3> :VimwikiFollowLink
-    "nnoremap <silent> <a-w> :MaximizerToggle<CR>
+  if CheckPlug('vim-maximizer', 1)
+    nnoremap <silent> <a-w> :MaximizerToggle<CR>
+  elseif CheckPlug('maximize', 1)
     nnoremap <silent> <a-w> :MaximizeWindow<CR>
+  endif
     nnoremap <silent> <a-e> :NERDTreeTabsToggle<cr>
     "nnoremap <silent> <a-f> :Null<CR>
     "nnoremap <silent> <a-g> :Null<CR>

@@ -11,6 +11,7 @@ endif
 " <Ctl-*>       Jump vim-windows/tmux-panes [hjkl]
 " <Alt-*>       Jump tmux-panes [hjkl], View toggle
 " <leader>*     View open
+" <leader>j*    Open/format current selection
 " ;*            View open 2
 " z*            Show info
 " q*            List
@@ -55,10 +56,10 @@ endif
 
 
     " Substitue for MaboXterm diable <c-h>
-    nnoremap <leader>h <c-w>h
-    nnoremap <leader>j <c-w>j
-    nnoremap <leader>k <c-w>k
-    nnoremap <leader>l <c-w>l
+    nnoremap <leader>jh <c-w>h
+    nnoremap <leader>jj <c-w>j
+    nnoremap <leader>jk <c-w>k
+    nnoremap <leader>jl <c-w>l
 
     " Replace by vim-tmux-navigator
     "nnoremap <c-h> <c-w>h
@@ -74,10 +75,10 @@ endif
         " But so far conflict with gdb mode
         "tnoremap <Esc> <C-\><C-n>
         "
-        "tnoremap <leader>h <C-\><C-n><c-w>h
-        "tnoremap <leader>j <C-\><C-n><c-w>j
-        "tnoremap <leader>k <C-\><C-n><c-w>k
-        "tnoremap <leader>l <C-\><C-n><c-w>l
+        "tnoremap <leader>jh <C-\><C-n><c-w>h
+        "tnoremap <leader>jj <C-\><C-n><c-w>j
+        "tnoremap <leader>jk <C-\><C-n><c-w>k
+        "tnoremap <leader>jl <C-\><C-n><c-w>l
 
         tnoremap <c-h> <C-\><C-n><C-w>h
         tnoremap <c-j> <C-\><C-n><C-w>j
@@ -188,8 +189,10 @@ if CheckPlug('neovim-fuzzy', 1)
     "nnoremap          <leader>f  :ls<cr>:b<Space>
     nnoremap <silent> <leader>;  :<c-u>call <SID>JumpComma(0)<cr>
     vnoremap          <leader>;  :<c-u>call <SID>JumpComma(1)<cr>
+elseif CheckPlug('fzf-cscope.vim', 1)
+    nnoremap <silent> <Leader>o          :FileCatN<cr>
+    nnoremap <silent> <Leader><leader>o  :FileCatN!<cr>
 endif
-
 
 " View keymap {{{1
     "autocmd WinEnter * if !utils#IsLeftMostWindow() | let g:tagbar_left = 0 | else | let g:tagbar_left = 1 | endif
@@ -280,95 +283,14 @@ endif
 
 "}}}
 
-" Other Keymaps {{{2
-    " Toggle source/header
-    "nnoremap <silent> <leader>a  :<c-u>FuzzyOpen <C-R>=printf("%s\\.", expand('%:t:r'))<cr><cr>
-    nnoremap <silent> <leader>a  :<c-u>call CurtineIncSw()<cr>
-
-    " Set log
-    "nnoremap <silent> <leader>ll :<c-u>call log#log(expand('%'))<CR>
-    "vnoremap <silent> <leader>ll :<c-u>call log#log(expand('%'))<CR>
-    " Lint: -i ignore-error and continue, -s --silent --quiet
-
-    "bookmark
-    nnoremap <silent> <leader>mm :silent! call mark#MarkCurrentWord(expand('<cword>'))<CR>
-    "nnoremap <leader>mf :echo(statusline#GetFuncName())<CR>
-    "nnoremap <leader>mo :BookmarkLoad Default
-    "nnoremap <leader>ma :BookmarkShowAll <CR>
-    "nnoremap <leader>mg :BookmarkGoto <C-R><c-w>
-    "nnoremap <leader>mc :BookmarkDel <C-R><c-w>
-    "
-    map W <Plug>(expand_region_expand)
-    map B <Plug>(expand_region_shrink)
-
-    nnoremap <silent> <leader>v] :NeomakeSh! tagme<cr>
-    nnoremap <silent> <leader>vi :call utils#VoomInsert(0) <CR>
-    vnoremap <silent> <leader>vi :call utils#VoomInsert(1) <CR>
-
-    nnoremap <silent> <leader>gg :<C-\>e utilgrep#Grep(2,0)<cr><cr>
-    vnoremap <silent> <leader>gg :<C-\>e utilgrep#Grep(2,1)<cr><cr>
-    nnoremap <silent> <leader>vv :<C-\>e utilgrep#Grep(1,0)<cr><cr>
-    vnoremap <silent> <leader>vv :<C-\>e utilgrep#Grep(1,1)<cr><cr>
-
-    " script-eval
-    "vnoremap <silent> <leader>ee :<c-u>call vimuxscript#ExecuteSelection(1)<CR>
-    "nnoremap <silent> <leader>ee :<c-u>call vimuxscript#ExecuteSelection(0)<CR>
-    "nnoremap <silent> <leader>eg :<c-u>call vimuxscript#ExecuteGroup()<CR>
-
-    "" execute file that I'm editing in Vi(m) and get output in split window
-    "nnoremap <silent> <leader>x :w<CR>:silent !chmod 755 %<CR>:silent !./% > /tmp/vim.tmpx<CR>
-    "            \ :tabnew<CR>:r /tmp/vim.tmpx<CR>:silent !rm /tmp/vim.tmpx<CR>:redraw!<CR>
-    nnoremap <silent> <leader>ee :call SingleCompileSplit() \| SCCompileRun<CR>
-    nnoremap <silent> <leader>eo :SCViewResult<CR>
-    "vnoremap <silent> <unique> <leader>ee :NR<CR> \| :w! /tmp/1.c<cr> \| :e /tmp/1.c<cr>
-
-    function! SingleCompileSplit()
-        if winwidth(0) > 200
-            let g:SingleCompile_split = "vsplit"
-            let g:SingleCompile_resultsize = winwidth(0)/2
-        else
-            let g:SingleCompile_split = "split"
-            let g:SingleCompile_resultsize = winheight(0)/3
-        endif
-    endfunction
-
-    vnoremap <silent> <leader>yy :<c-u>call utils#GetSelected("/tmp/vim.yank")<CR>
-    nnoremap <silent> <leader>yy  :<c-u>call vimuxscript#Copy() <CR>
-    nnoremap <silent> <leader>yp :r! cat /tmp/vim.yank<CR>
-
-    xnoremap * :<C-u>call utils#VSetSearch('/')<CR>/<C-R>=@/<CR>
-    xnoremap # :<C-u>call utils#VSetSearch('?')<CR>?<C-R>=@/<CR>
-    vnoremap // y:vim /\<<C-R>"\C/gj %
-
-    " Search-mode: hit cs, replace first match, and hit <Esc>
-    "   then hit n to review and replace
-    vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
-          \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
-    onoremap s :normal vs<CR>
-
-    "nnoremap gf :<c-u>call utils#GotoFileWithLineNum()<CR>
-    "nnoremap <silent> <leader>gf :<c-u>call utils#GotoFileWithPreview()<CR>
-
-    nnoremap <silent> mm :<c-u>call utils#MarkSelected('n')<CR>
-    vnoremap <silent> mm :<c-u>call utils#MarkSelected('v')<CR>
-"}}}
-
-
 if CheckPlug('c-utils.vim', 1)
     function! s:JumpComma(mode)
         if v:count == 0
-            "silent call utils#Declaration()
             call utils#Declaration()
         else
         endif
     endfunction
 
-    "vnoremap          <leader>o  :<c-u>call <SID>JumpO(1)<cr>
-    "nnoremap <silent> <leader>h  :<c-u>call <SID>JumpH(0)<cr>
-    "vnoremap          <leader>h  :<c-u>call <SID>JumpH(1)<cr>
-    "nnoremap <silent> <leader>j  :<c-u>call <SID>JumpJ(0)<cr>
-    "vnoremap          <leader>j  :<c-u>call <SID>JumpJ(1)<cr>
-    "nnoremap          <leader>f  :ls<cr>:b<Space>
     nnoremap <silent> <leader>;  :<c-u>call <SID>JumpComma(0)<cr>
     vnoremap          <leader>;  :<c-u>call <SID>JumpComma(1)<cr>
 endif
@@ -586,7 +508,7 @@ if CheckPlug('vim-youdao-translater', 1)
     vnoremap <silent> qw :<C-u>Ydv<CR>
     nnoremap <silent> qw :<C-u>Ydc<CR>
     "noremap <leader>yd :<C-u>Yde<CR>
-else
+elseif executable('~/tools/dict')
     nmap qw :R! ~/tools/dict <C-R>=expand('<cword>') <cr>
 endif
 
@@ -594,4 +516,112 @@ endif
 if CheckPlug('vim-lookup', 1)
     autocmd FileType vim nnoremap <buffer><silent> <c-]>  :call lookup#lookup()<cr>
 endif
+
+
+if CheckPlug('w3m.vim', 1)
+    if WINDOWS()
+        let $PATH = $PATH . ';c:\Programs\FireFox1.5'
+    endif
+
+    " Evoke a web browser
+    function! W3mBrowser()
+        let line0 = getline(".")
+        let aUrl = matchstr(line0, 'http[^ ].\{-}\ze[\}\]\) ,;''"]\{-\}$')
+
+        if empty(aUrl)
+            let aUrl = matchstr(line0, 'ftp[^ ].\{-}\ze[\}\]\) ,;''"]\{-\}$')
+        endif
+
+        if empty(aUrl)
+            let aUrl = matchstr(line0, 'file[^ ].\{-}\ze[\}\]\) ,;''"]\{-\}$')
+        endif
+
+        let aUrl = escape(aUrl, "#?&;|%")
+        "return printf("W3mSplit %s", aUrl)
+        exec "W3mSplit ". aUrl
+    endfunction
+
+    "nnoremap <leader>jo :<c-u><C-R>=W3mBrowser()<cr>
+    nnoremap <leader>jo :call W3mBrowser()<cr>
+endif
+
+
+
+" Keymaps {{{2
+    " Toggle source/header
+    "nnoremap <silent> <leader>a  :<c-u>FuzzyOpen <C-R>=printf("%s\\.", expand('%:t:r'))<cr><cr>
+    nnoremap <silent> <leader>a  :<c-u>call CurtineIncSw()<cr>
+
+    " Most UNIX-like programming environments offer generic tools for formatting text. These include fmt, fold, sed, perl, and par. 
+    " vnoremap qq c<C-R>=system('wc -c | perl -pe chomp', @")<CR><ESC>
+    vnoremap <leader>jf :!fmt -c -w 100 -u -s <cr>
+
+    " Set log
+    "nnoremap <silent> <leader>ll :<c-u>call log#log(expand('%'))<CR>
+    "vnoremap <silent> <leader>ll :<c-u>call log#log(expand('%'))<CR>
+    " Lint: -i ignore-error and continue, -s --silent --quiet
+
+    "bookmark
+    nnoremap <silent> <leader>mm :silent! call mark#MarkCurrentWord(expand('<cword>'))<CR>
+    "nnoremap <leader>mf :echo(statusline#GetFuncName())<CR>
+    "nnoremap <leader>mo :BookmarkLoad Default
+    "nnoremap <leader>ma :BookmarkShowAll <CR>
+    "nnoremap <leader>mg :BookmarkGoto <C-R><c-w>
+    "nnoremap <leader>mc :BookmarkDel <C-R><c-w>
+    "
+    map W <Plug>(expand_region_expand)
+    map B <Plug>(expand_region_shrink)
+
+    nnoremap <silent> <leader>v] :NeomakeSh! tagme<cr>
+    nnoremap <silent> <leader>vi :call utils#VoomInsert(0) <CR>
+    vnoremap <silent> <leader>vi :call utils#VoomInsert(1) <CR>
+
+    nnoremap <silent> <leader>gg :<C-\>e utilgrep#Grep(2,0)<cr><cr>
+    vnoremap <silent> <leader>gg :<C-\>e utilgrep#Grep(2,1)<cr><cr>
+    nnoremap <silent> <leader>vv :<C-\>e utilgrep#Grep(1,0)<cr><cr>
+    vnoremap <silent> <leader>vv :<C-\>e utilgrep#Grep(1,1)<cr><cr>
+
+    " script-eval
+    "vnoremap <silent> <leader>ee :<c-u>call vimuxscript#ExecuteSelection(1)<CR>
+    "nnoremap <silent> <leader>ee :<c-u>call vimuxscript#ExecuteSelection(0)<CR>
+    "nnoremap <silent> <leader>eg :<c-u>call vimuxscript#ExecuteGroup()<CR>
+
+    "" execute file that I'm editing in Vi(m) and get output in split window
+    "nnoremap <silent> <leader>x :w<CR>:silent !chmod 755 %<CR>:silent !./% > /tmp/vim.tmpx<CR>
+    "            \ :tabnew<CR>:r /tmp/vim.tmpx<CR>:silent !rm /tmp/vim.tmpx<CR>:redraw!<CR>
+    nnoremap <silent> <leader>ee :call SingleCompileSplit() \| SCCompileRun<CR>
+    nnoremap <silent> <leader>eo :SCViewResult<CR>
+    "vnoremap <silent> <unique> <leader>ee :NR<CR> \| :w! /tmp/1.c<cr> \| :e /tmp/1.c<cr>
+
+    function! SingleCompileSplit()
+        if winwidth(0) > 200
+            let g:SingleCompile_split = "vsplit"
+            let g:SingleCompile_resultsize = winwidth(0)/2
+        else
+            let g:SingleCompile_split = "split"
+            let g:SingleCompile_resultsize = winheight(0)/3
+        endif
+    endfunction
+
+    vnoremap <silent> <leader>yy :<c-u>call utils#GetSelected("/tmp/vim.yank")<CR>
+    nnoremap <silent> <leader>yy  :<c-u>call vimuxscript#Copy() <CR>
+    nnoremap <silent> <leader>yp :r! cat /tmp/vim.yank<CR>
+
+    xnoremap * :<C-u>call utils#VSetSearch('/')<CR>/<C-R>=@/<CR>
+    xnoremap # :<C-u>call utils#VSetSearch('?')<CR>?<C-R>=@/<CR>
+    vnoremap // y:vim /\<<C-R>"\C/gj %
+
+    " Search-mode: hit cs, replace first match, and hit <Esc>
+    "   then hit n to review and replace
+    vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
+          \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
+    onoremap s :normal vs<CR>
+
+    "nnoremap gf :<c-u>call utils#GotoFileWithLineNum()<CR>
+    "nnoremap <silent> <leader>gf :<c-u>call utils#GotoFileWithPreview()<CR>
+
+    nnoremap <silent> mm :<c-u>call utils#MarkSelected('n')<CR>
+    vnoremap <silent> mm :<c-u>call utils#MarkSelected('v')<CR>
+"}}}
+
 

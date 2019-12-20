@@ -266,7 +266,7 @@ endif
     "nnoremap <silent> <a-g> :Null<CR>
     "nnoremap <silent> <a-q> :Null<CR>
 
-    " Paste in insert mode: set again, don't who reset this
+    " Paste in insert mode: don't know who reset this, set again here
     inoremap <silent> <a-i> <c-r>"
 
     nnoremap <silent> <a-'> :VoomToggle<cr>

@@ -186,7 +186,7 @@ endif
         autocmd BufNewFile,BufRead *.c.rej,*.c.orig,h.rej,*.h.orig,patch.*,*.diff,*.patch set ft=diff
         autocmd BufNewFile,BufRead *.c,*.c,*.h,*.cpp,*.C,*.CXX,*.CPP set ft=c
         "autocmd BufNewFile,BufRead *.md  setfiletype markdown
-        "autocmd BufNewFile,BufRead *.wiki,*.md  setfiletype vimwiki.markdown
+        autocmd BufNewFile,BufRead,BufEnter *.wiki  set ft=markdown
 
         autocmd BufWritePre [\,:;'"\]\)\}]* throw 'Forbidden file name: ' . expand('<afile>')
 

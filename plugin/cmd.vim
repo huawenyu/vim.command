@@ -329,6 +329,9 @@ if CheckPlug('quickmenu.vim', 1)
             let sel_str = expand('<cword>')
         else
             let sel_str = sel_str[0]
+            if empty(sel_str)
+                let sel_str = expand('<cword>')
+            endif
         endif
 
         let nr = winnr()

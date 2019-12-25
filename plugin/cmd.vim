@@ -48,6 +48,9 @@ if g:vim_confi_option.auto_qf_height
     augroup END
 endif
 
+autocmd BufWinEnter,WinEnter term://* startinsert
+autocmd BufEnter * if &buftype == 'terminal' | silent! normal A | endif
+autocmd BufWinEnter,WinEnter * if &buftype == 'terminal' | silent! normal A | endif
 
 if g:vim_confi_option.upper_keyfixes
     if has("user_commands")

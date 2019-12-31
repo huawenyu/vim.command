@@ -63,6 +63,9 @@ if g:vim_confi_option.auto_qf_height
     augroup END
 endif
 
+autocmd BufWinEnter,WinEnter term://* startinsert
+autocmd BufEnter * if &buftype == 'terminal' | silent! normal A | endif
+autocmd BufWinEnter,WinEnter * if &buftype == 'terminal' | silent! normal A | endif
 
 if g:vim_confi_option.upper_keyfixes
     if has("user_commands")
@@ -331,15 +334,7 @@ if CheckPlug('quickmenu.vim', 1)
 
     function! SelectedReplace()
         let l:save_cursor = getcurpos()
-        let sel_str = hw#misc#GetSelection('')
-        if empty(sel_str)
-            let sel_str = expand('<cword>')
-        else
-            let sel_str = sel_str[0]
-            if empty(sel_str)
-                let sel_str = expand('<cword>')
-            endif
-        endif
+        let sel_str = hw#misc#GetWord()
 
         let nr = winnr()
         if getwinvar(nr, '&syntax') == 'qf'

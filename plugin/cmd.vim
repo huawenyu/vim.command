@@ -203,12 +203,13 @@ endif
         " Set filetype base on extension
         autocmd BufNewFile,BufRead *.c.rej,*.c.orig,h.rej,*.h.orig,patch.*,*.diff,*.patch set ft=diff
         autocmd BufNewFile,BufRead *.c,*.c,*.h,*.cpp,*.C,*.CXX,*.CPP set ft=c
+
         "autocmd BufNewFile,BufRead *.md  setfiletype markdown
-        autocmd BufNewFile,BufRead,BufEnter *.wiki  set ft=markdown
+        "autocmd BufNewFile,BufRead,BufEnter *.wiki  set ft=markdown    | " Cause vimwiki file navigator keymap fail
+        "autocmd FileType vimwiki set syntax=markdown                   | " Please config g:vimwiki_ext2syntax
 
         autocmd BufWritePre [\,:;'"\]\)\}]* throw 'Forbidden file name: ' . expand('<afile>')
 
-        "autocmd FileType vimwiki set syntax=markdown
         "autocmd filetype vimwiki  nnoremap <buffer> <a-o> :VoomToggle vimwiki<CR>
         autocmd filetype vimwiki  nnoremap <buffer> <a-'> :VoomToggle markdown<CR>
         "autocmd filetype vimwiki  nnoremap <a-n> :VimwikiMakeDiaryNote<CR>
@@ -240,7 +241,7 @@ endif
         endif
 
         if !empty(g:vim_confi_option.plug_note)
-           autocmd FileType vim,zsh,vimwiki,markdown nnoremap <buffer> <silent> K :call <sid>plug_note()<cr>
+           autocmd FileType vim,zsh,vimwiki,markdown,media nnoremap <buffer> <silent> K :call <sid>plug_note()<cr>
            "autocmd FileType notes nnoremap <buffer> <silent> K :call <sid>plug_note()<cr>
            "
            "command! ShowPlugNote call <sid>plug_note()

@@ -28,7 +28,7 @@ endif
 
     " map <leader><Esc> :AnsiEsc<cr>
     nnoremap <C-c> <silent> <C-c>
-    nnoremap <buffer> <Enter> <C-W><Enter>
+    "nnoremap <buffer> <Enter> <C-W><Enter>     | " vimwiki use this to create a new link
     nnoremap <C-q> :<c-u>qa!<cr>
 
     inoremap <S-Tab> <C-V><Tab>

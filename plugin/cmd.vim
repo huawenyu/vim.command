@@ -24,6 +24,21 @@ if g:vim_confi_option.auto_restore_cursor
 endif
 
 
+let g:previous_window = -1
+    function SmartInsert()
+      if &buftype == 'terminal'
+        if g:previous_window != winnr()
+          startinsert
+        endif
+        let g:previous_window = winnr()
+      else
+        let g:previous_window = -1
+      endif
+    endfunction
+
+    au BufEnter * call SmartInsert()
+
+
 if g:vim_confi_option.auto_qf_height
     function! AdjustWindowHeight(minheight, maxheight)
         let l = 1
@@ -209,18 +224,10 @@ endif
         "autocmd filetype log nnoremap <buffer> <leader>lf :call log#filter(expand('%'), 'flow')<CR>
         "autocmd filetype log nnoremap <buffer> <leader>lt :call log#filter(expand('%'), 'tcp')<CR>
 
-        " vim-eval
-        let g:eval_viml_map_keys = 0
-        autocmd FileType vim nnoremap <buffer> <leader>ec <Plug>eval_viml
-        autocmd FileType vim vnoremap <buffer> <leader>ec <Plug>eval_viml_region
-
         " Test
         "nnoremap <silent> <leader>t :<c-u>R <C-R>=printf("python -m doctest -m trace --listfuncs --trackcalls %s \| tee log.test", expand('%:p'))<cr><cr>
         autocmd FileType python nnoremap <buffer> <leader>tt :<c-u>R <C-R>=printf("python -m doctest %s \| tee log.test", expand('%:p'))<cr><cr>
         autocmd FileType python nnoremap <buffer> <leader>tr :<c-u>R <C-R>=printf("python -m trace --trace %s \|  grep %s", expand('%:p'), expand('%'))<cr><cr>
-
-        autocmd FileType javascript nnoremap <buffer> <leader>ee  :DB mongodb:///test < %
-        autocmd FileType javascript vnoremap <buffer> <leader>ee  :'<,'>w! /tmp/vim.js<cr><cr> \| :DB mongodb:///test < /tmp/vim.js<cr><cr>
 
         " :help K  (powerman/vim-plugin-viewdoc)
         if g:vim_confi_option.keywordprg_filetype

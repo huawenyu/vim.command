@@ -584,30 +584,8 @@ endif
     nnoremap <silent> <leader>vv :<C-\>e utilgrep#Grep(1,0)<cr><cr>
     vnoremap <silent> <leader>vv :<C-\>e utilgrep#Grep(1,1)<cr><cr>
 
-    " script-eval
-    "vnoremap <silent> <leader>ee :<c-u>call vimuxscript#ExecuteSelection(1)<CR>
-    "nnoremap <silent> <leader>ee :<c-u>call vimuxscript#ExecuteSelection(0)<CR>
-    "nnoremap <silent> <leader>eg :<c-u>call vimuxscript#ExecuteGroup()<CR>
-
-    "" execute file that I'm editing in Vi(m) and get output in split window
-    "nnoremap <silent> <leader>x :w<CR>:silent !chmod 755 %<CR>:silent !./% > /tmp/vim.tmpx<CR>
-    "            \ :tabnew<CR>:r /tmp/vim.tmpx<CR>:silent !rm /tmp/vim.tmpx<CR>:redraw!<CR>
-    nnoremap <silent> <leader>ee :call SingleCompileSplit() \| SCCompileRun<CR>
-    nnoremap <silent> <leader>eo :SCViewResult<CR>
-    "vnoremap <silent> <unique> <leader>ee :NR<CR> \| :w! /tmp/1.c<cr> \| :e /tmp/1.c<cr>
-
-    function! SingleCompileSplit()
-        if winwidth(0) > 200
-            let g:SingleCompile_split = "vsplit"
-            let g:SingleCompile_resultsize = winwidth(0)/2
-        else
-            let g:SingleCompile_split = "split"
-            let g:SingleCompile_resultsize = winheight(0)/3
-        endif
-    endfunction
-
     vnoremap <silent> <leader>yy :<c-u>call utils#GetSelected("/tmp/vim.yank")<CR>
-    nnoremap <silent> <leader>yy  :<c-u>call vimuxscript#Copy() <CR>
+    nnoremap <silent> <leader>yy :<c-u>call vimuxscript#Copy() <CR>
     nnoremap <silent> <leader>yp :r! cat /tmp/vim.yank<CR>
 
     xnoremap * :<C-u>call utils#VSetSearch('/')<CR>/<C-R>=@/<CR>
@@ -628,3 +606,42 @@ endif
 "}}}
 
 
+" Filetype autocmd Keymaps {{{2
+    function! SingleCompileSplit()
+        if winwidth(0) > 200
+            let g:SingleCompile_split = "vsplit"
+            let g:SingleCompile_resultsize = winwidth(0)/2
+        else
+            let g:SingleCompile_split = "split"
+            let g:SingleCompile_resultsize = winheight(0)/3
+        endif
+    endfunction
+
+
+    nnoremap <silent> <leader>eo :SCViewResult<CR>
+
+    augroup filetype_auto_eval
+        if CheckPlug('vim-eval', 1)
+            autocmd FileType vim nnoremap <buffer> <leader>ee <Plug>eval_viml
+            autocmd FileType vim vnoremap <buffer> <leader>ee <Plug>eval_viml_region
+        elseif CheckPlug('vim-quickrun', 1)
+            autocmd FileType vim noremap <buffer> <leader>ee :QuickRun<cr>
+        endif
+
+            autocmd FileType javascript nnoremap <buffer> <leader>ee  :DB mongodb:///test < %
+            autocmd FileType javascript vnoremap <buffer> <leader>ee  :'<,'>w! /tmp/vim.js<cr><cr> \| :DB mongodb:///test < /tmp/vim.js<cr><cr>
+
+
+        if mapcheck('<leader>ee', 'n')
+            "" execute file that I'm editing in Vi(m) and get output in split window
+            "nnoremap <silent> <leader>x :w<CR>:silent !chmod 755 %<CR>:silent !./% > /tmp/vim.tmpx<CR>
+            "            \ :tabnew<CR>:r /tmp/vim.tmpx<CR>:silent !rm /tmp/vim.tmpx<CR>:redraw!<CR>
+            "vnoremap <silent> <unique> <leader>ee :NR<CR> \| :w! /tmp/1.c<cr> \| :e /tmp/1.c<cr>
+
+            nnoremap <silent> <leader>ee :call SingleCompileSplit() \| SCCompileRun<CR>
+        endif
+
+
+    augroup END
+
+"}}}

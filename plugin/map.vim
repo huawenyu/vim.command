@@ -575,14 +575,14 @@ endif
     map W <Plug>(expand_region_expand)
     map B <Plug>(expand_region_shrink)
 
-    nnoremap <silent> <leader>v] :NeomakeSh! tagme<cr>
+    nnoremap          <leader>v] :NeomakeSh! tagme<cr>
     nnoremap <silent> <leader>vi :call utils#VoomInsert(0) <CR>
     vnoremap <silent> <leader>vi :call utils#VoomInsert(1) <CR>
 
-    nnoremap <silent> <leader>gg :<C-\>e utilgrep#Grep(2,0)<cr><cr>
-    vnoremap <silent> <leader>gg :<C-\>e utilgrep#Grep(2,1)<cr><cr>
-    nnoremap <silent> <leader>vv :<C-\>e utilgrep#Grep(1,0)<cr><cr>
-    vnoremap <silent> <leader>vv :<C-\>e utilgrep#Grep(1,1)<cr><cr>
+    nnoremap <leader>gg :<C-\>e utilgrep#Grep(2,0)<cr>
+    vnoremap <leader>gg :<C-\>e utilgrep#Grep(2,1)<cr>
+    nnoremap <leader>vv :<C-\>e utilgrep#Grep(1,0)<cr>
+    vnoremap <leader>vv :<C-\>e utilgrep#Grep(1,1)<cr>
 
     vnoremap <silent> <leader>yy :<c-u>call utils#GetSelected("/tmp/vim.yank")<CR>
     nnoremap <silent> <leader>yy :<c-u>call vimuxscript#Copy() <CR>

@@ -557,7 +557,7 @@ endif
 
     " Most UNIX-like programming environments offer generic tools for formatting text. These include fmt, fold, sed, perl, and par. 
     " vnoremap qq c<C-R>=system('wc -c | perl -pe chomp', @")<CR><ESC>
-    vnoremap <leader>jf :!fmt -c -w 100 -u -s <cr>
+    vnoremap <leader>ft :!fmt -c -w 100 -u -s <cr>
 
     " Set log
     "nnoremap <silent> <leader>ll :<c-u>call log#log(expand('%'))<CR>
@@ -618,7 +618,19 @@ endif
     endfunction
 
 
-    nnoremap <silent> <leader>eo :SCViewResult<CR>
+
+    if mapcheck('<leader>ee', 'n')
+        "" execute file that I'm editing in Vi(m) and get output in split window
+        "nnoremap <silent> <leader>x :w<CR>:silent !chmod 755 %<CR>:silent !./% > /tmp/vim.tmpx<CR>
+        "            \ :tabnew<CR>:r /tmp/vim.tmpx<CR>:silent !rm /tmp/vim.tmpx<CR>:redraw!<CR>
+        "vnoremap <silent> <unique> <leader>ee :NR<CR> \| :w! /tmp/1.c<cr> \| :e /tmp/1.c<cr>
+
+        nnoremap <leader>ee :call SingleCompileSplit() \| SCCompileRun<CR>
+        nnoremap <leader>eo :SCViewResult<CR>
+    endif
+
+    nnoremap <leader>el :VlogDisplay \| Messages \| VlogClear<CR><CR>
+
 
     augroup filetype_auto_eval
         if CheckPlug('vim-eval', 1)
@@ -628,20 +640,8 @@ endif
             autocmd FileType vim noremap <buffer> <leader>ee :QuickRun<cr>
         endif
 
-            autocmd FileType javascript nnoremap <buffer> <leader>ee  :DB mongodb:///test < %
-            autocmd FileType javascript vnoremap <buffer> <leader>ee  :'<,'>w! /tmp/vim.js<cr><cr> \| :DB mongodb:///test < /tmp/vim.js<cr><cr>
-
-
-        if mapcheck('<leader>ee', 'n')
-            "" execute file that I'm editing in Vi(m) and get output in split window
-            "nnoremap <silent> <leader>x :w<CR>:silent !chmod 755 %<CR>:silent !./% > /tmp/vim.tmpx<CR>
-            "            \ :tabnew<CR>:r /tmp/vim.tmpx<CR>:silent !rm /tmp/vim.tmpx<CR>:redraw!<CR>
-            "vnoremap <silent> <unique> <leader>ee :NR<CR> \| :w! /tmp/1.c<cr> \| :e /tmp/1.c<cr>
-
-            nnoremap <silent> <leader>ee :call SingleCompileSplit() \| SCCompileRun<CR>
-        endif
-
-
+        autocmd FileType javascript nnoremap <buffer> <leader>ee  :DB mongodb:///test < %
+        autocmd FileType javascript vnoremap <buffer> <leader>ee  :'<,'>w! /tmp/vim.js<cr><cr> \| :DB mongodb:///test < /tmp/vim.js<cr><cr>
     augroup END
 
 "}}}

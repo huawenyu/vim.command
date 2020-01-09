@@ -333,9 +333,9 @@ if CheckPlug('quickmenu.vim', 1)
         exec strCmd
     endfunc
 
-    function! SelectedReplace()
+    function! SelectedReplace(mode)
         let l:save_cursor = getcurpos()
-        let sel_str = hw#misc#GetWord()
+        let sel_str = hw#misc#GetWord(a:mode)
 
         let nr = winnr()
         if getwinvar(nr, '&syntax') == 'qf'
@@ -407,8 +407,8 @@ if CheckPlug('quickmenu.vim', 1)
         vnoremap <leader>dd :<c-u>g/<C-R>*/ norm dd
         " For local replace
         "nnoremap <leader>vm [[ma%mb:call signature#sign#Refresh(1) <CR>
-        nnoremap <leader>vr :<C-\>e SelectedReplace()<CR><left><left><left>
-        vnoremap <leader>vr :<C-\>e SelectedReplace()<CR><left><left><left>
+        nnoremap <leader>vr :<C-\>e SelectedReplace('n')<CR><left><left><left>
+        vnoremap <leader>vr :<C-\>e SelectedReplace('v')<CR><left><left><left>
         " remove space from emptyline
         "nnoremap <leader>v<space> :%s/^\s\s*$//<CR>
         "vnoremap <leader>v<space> :s/^\s\s*$//<cr>

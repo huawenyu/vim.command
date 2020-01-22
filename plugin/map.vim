@@ -466,13 +466,38 @@ endif
 
 
 if CheckPlug('taboo.vim', 1)
-    nnoremap <silent> ;1   1gt
-    nnoremap <silent> ;2   2gt
-    nnoremap <silent> ;3   3gt
+    nnoremap <silent> ;1     1gt
+    nnoremap <silent> ;2     2gt
+    nnoremap <silent> ;3     3gt
+    nnoremap <silent> ;4     4gt
 
-    nnoremap <silent> ;tt :TabooOpen new-tab<CR>
-    nnoremap <silent> ;tc :tabclose<CR>
-    nnoremap          ;tr :TabooRename <C-R>=expand('%:t:r')<CR>
+    nnoremap <silent> ;tt   :TabooOpen new-tab<CR>
+    nnoremap <silent> ;tc   :tabclose<CR>
+    nnoremap          ;tr   :TabooRename <C-R>=expand('%:t:r')<CR>
+elseif CheckPlug('vim-tabber', 1)
+    nnoremap <silent> ;1     1gt
+    nnoremap <silent> ;2     2gt
+    nnoremap <silent> ;3     3gt
+    nnoremap <silent> ;4     4gt
+
+    "set tabline=%!tabber#TabLine()
+    "
+    "let g:tabber_wrap_when_shifting = 1
+    let g:tabber_predefined_labels = { 1: 'code', 2: 'config', 3: 'patch' }
+    let g:tabber_filename_style = 'filename'    " README.md
+
+    "let g:tabber_divider_style = 'compatible'
+    let g:tabber_divider_style = 'unicode'
+    "let g:tabber_divider_style = 'fancy'
+
+    nnoremap <silent> ;tt   :TabberNew<CR>
+    nnoremap          ;tc   :tabclose<CR>
+    nnoremap          ;tr   :TabberLabel <C-R>=expand('%:t:r')<CR>
+    nnoremap          ;tm   :TabberMove<CR>
+    nnoremap          ;th   :TabberShiftLeft<CR>
+    nnoremap          ;tl   :TabberShiftRight<CR>
+    nnoremap          ;ts   :TabberSwap<CR>
+    nnoremap <silent> ;aa   :TabberSelectLastActive<CR>
 endif
 
 
@@ -558,6 +583,7 @@ endif
     " Most UNIX-like programming environments offer generic tools for formatting text. These include fmt, fold, sed, perl, and par. 
     " vnoremap qq c<C-R>=system('wc -c | perl -pe chomp', @")<CR><ESC>
     vnoremap <leader>ft :!fmt -c -w 100 -u -s <cr>
+    nnoremap <leader>fd :DetectIndent<cr>
 
     " Set log
     "nnoremap <silent> <leader>ll :<c-u>call log#log(expand('%'))<CR>

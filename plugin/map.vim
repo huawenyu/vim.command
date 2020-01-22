@@ -645,7 +645,7 @@ endif
 
 
 
-    if mapcheck('<leader>ee', 'n')
+    if mapcheck('<leader>ee', 'n') == ""
         "" execute file that I'm editing in Vi(m) and get output in split window
         "nnoremap <silent> <leader>x :w<CR>:silent !chmod 755 %<CR>:silent !./% > /tmp/vim.tmpx<CR>
         "            \ :tabnew<CR>:r /tmp/vim.tmpx<CR>:silent !rm /tmp/vim.tmpx<CR>:redraw!<CR>

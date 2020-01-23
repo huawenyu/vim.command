@@ -11,7 +11,6 @@ endif
 " <Ctl-*>       Jump vim-windows/tmux-panes [hjkl]
 " <Alt-*>       Jump tmux-panes [hjkl], View toggle
 " <leader>*     View open
-" <leader>j*    Open/format current selection
 " ;*            View open 2
 " z*            Show info
 " q*            List
@@ -56,10 +55,10 @@ endif
 
 
     " Substitue for MaboXterm diable <c-h>
-    nnoremap <leader>jh <c-w>h
-    nnoremap <leader>jj <c-w>j
-    nnoremap <leader>jk <c-w>k
-    nnoremap <leader>jl <c-w>l
+    nnoremap <leader>h <c-w>h
+    nnoremap <leader>j <c-w>j
+    nnoremap <leader>k <c-w>k
+    nnoremap <leader>l <c-w>l
 
     " Replace by vim-tmux-navigator
     "nnoremap <c-h> <c-w>h
@@ -75,10 +74,10 @@ endif
         " But so far conflict with gdb mode
         "tnoremap <Esc> <C-\><C-n>
         "
-        "tnoremap <leader>jh <C-\><C-n><c-w>h
-        "tnoremap <leader>jj <C-\><C-n><c-w>j
-        "tnoremap <leader>jk <C-\><C-n><c-w>k
-        "tnoremap <leader>jl <C-\><C-n><c-w>l
+        "tnoremap <leader>h <C-\><C-n><c-w>h
+        "tnoremap <leader>j <C-\><C-n><c-w>j
+        "tnoremap <leader>k <C-\><C-n><c-w>k
+        "tnoremap <leader>l <C-\><C-n><c-w>l
 
         tnoremap <c-h> <C-\><C-n><C-w>h
         tnoremap <c-j> <C-\><C-n><C-w>j
@@ -182,10 +181,6 @@ if CheckPlug('neovim-fuzzy', 1)
     vnoremap          <leader>i  :<c-u>call <SID>JumpI(1)<cr>
     nnoremap <silent> <leader>o  :<c-u>call <SID>JumpO(0)<cr>
     vnoremap          <leader>o  :<c-u>call <SID>JumpO(1)<cr>
-    "nnoremap <silent> <leader>h  :<c-u>call <SID>JumpH(0)<cr>
-    "vnoremap          <leader>h  :<c-u>call <SID>JumpH(1)<cr>
-    "nnoremap <silent> <leader>j  :<c-u>call <SID>JumpJ(0)<cr>
-    "vnoremap          <leader>j  :<c-u>call <SID>JumpJ(1)<cr>
     "nnoremap          <leader>f  :ls<cr>:b<Space>
     nnoremap <silent> <leader>;  :<c-u>call <SID>JumpComma(0)<cr>
     vnoremap          <leader>;  :<c-u>call <SID>JumpComma(1)<cr>
@@ -568,9 +563,6 @@ if CheckPlug('w3m.vim', 1)
         "return printf("W3mSplit %s", aUrl)
         exec "W3mSplit ". aUrl
     endfunction
-
-    "nnoremap <leader>jo :<c-u><C-R>=W3mBrowser()<cr>
-    nnoremap <leader>jo :call W3mBrowser()<cr>
 endif
 
 

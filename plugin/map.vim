@@ -575,7 +575,12 @@ endif
     " Most UNIX-like programming environments offer generic tools for formatting text. These include fmt, fold, sed, perl, and par. 
     " vnoremap qq c<C-R>=system('wc -c | perl -pe chomp', @")<CR><ESC>
     vnoremap <leader>ft :!fmt -c -w 100 -u -s <cr>
-    nnoremap <leader>fd :DetectIndent<cr>
+
+    if CheckPlug('vim-sleuth', 1)
+        nnoremap <leader>fd :Sleuth<cr>
+    elseif CheckPlug('detectindent', 1)
+        nnoremap <leader>fd :DetectIndent<cr>
+    endif
 
     " Set log
     "nnoremap <silent> <leader>ll :<c-u>call log#log(expand('%'))<CR>
@@ -617,7 +622,7 @@ endif
     onoremap s :normal vs<CR>
 
     "nnoremap gf :<c-u>call utils#GotoFileWithLineNum()<CR>
-    "nnoremap <silent> <leader>gf :<c-u>call utils#GotoFileWithPreview()<CR>
+    nnoremap <silent> <leader>gf :<c-u>call utils#GotoFileWithPreview()<CR>
 
     nnoremap <silent> mm :<c-u>call utils#MarkSelected('n')<CR>
     vnoremap <silent> mm :<c-u>call utils#MarkSelected('v')<CR>

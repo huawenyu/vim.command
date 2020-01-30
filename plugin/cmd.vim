@@ -402,7 +402,7 @@ if CheckPlug('quickmenu.vim', 1)
 
     " Section 'String'
         "map <leader>ds :call Asm() <CR>
-        nnoremap <leader>df :%s/\s\+$//g
+        nnoremap <leader>dt :%s/\s\+$//g
         nnoremap <leader>dd :g/<C-R><C-w>/ norm dd
         vnoremap <leader>dd :<c-u>g/<C-R>*/ norm dd
         " For local replace

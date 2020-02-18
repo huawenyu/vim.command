@@ -624,6 +624,10 @@ endif
     "nnoremap gf :<c-u>call utils#GotoFileWithLineNum()<CR>
     nnoremap <silent> <leader>gf :<c-u>call utils#GotoFileWithPreview()<CR>
 
+    if CheckPlug('vim-sleuth', 1)
+        nnoremap <silent> <leader>gl :GV<CR>
+    endif
+
     nnoremap <silent> mm :<c-u>call utils#MarkSelected('n')<CR>
     vnoremap <silent> mm :<c-u>call utils#MarkSelected('v')<CR>
 "}}}

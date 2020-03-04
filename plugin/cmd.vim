@@ -198,7 +198,8 @@ endif
         autocmd BufEnter * sign define dummy
         autocmd BufEnter * execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
 
-        autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/
+        "ShellCmd like: $ rusty-tags vi --output=".tags"
+        "autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/
 
         " Set filetype base on extension
         autocmd BufNewFile,BufRead *.c.rej,*.c.orig,h.rej,*.h.orig,patch.*,*.diff,*.patch set ft=diff

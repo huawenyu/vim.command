@@ -11,9 +11,13 @@ endif
 " <Ctl-*>       Jump vim-windows/tmux-panes [hjkl]
 " <Alt-*>       Jump tmux-panes [hjkl], View toggle
 " <leader>*     View open
-" ;*            View open 2
 " z*            Show info
 " q*            List
+" ;*            View open 2
+"
+" Donnot map:
+" <space>*      Cause the input <space> not work
+" ;*            Cause 'f*' repeat mode fail, maybe plugin 'clever-f.vim' can release the key ';'
 "=========================================================
 
 

@@ -392,6 +392,36 @@ if CheckPlug('vim-gutentags', 1)
 endif
 
 
+if CheckPlug('vim-emacscommandline', 1)
+    "let g:EmacsCommandLine[Command]Disable = 1
+    "let g:EmacsCommandLineBeginningOfLineMap = ['<C-B>', '<C-A>']
+
+    "let g:EmacsCommandLineBeginningOfLineMap
+    "let g:EmacsCommandLineEndOfLineMap
+    let g:EmacsCommandLineBackwardCharDisable = 1
+    let g:EmacsCommandLineForwardCharDisable = 1
+    let g:EmacsCommandLineBackwardWordMap = ['<C-B>']
+    let g:EmacsCommandLineForwardWordMap = ['<C-F>']
+    let g:EmacsCommandLineDeleteCharDisable = 1
+    let g:EmacsCommandLineBackwardDeleteCharDisable = 1
+    "let g:EmacsCommandLineKillLineMap
+    "let g:EmacsCommandLineBackwardKillLineMap
+    let g:EmacsCommandLineKillWordMap = ['<C-D>']
+    let g:EmacsCommandLineBackwardKillWordMap = '<C-W>'
+    "let g:EmacsCommandLineDeleteBackwardsToWhiteSpaceMap
+    "let g:EmacsCommandLineOlderMatchingCommandLineMap
+    "let g:EmacsCommandLineNewerMatchingCommandLineMap
+    "let g:EmacsCommandLineFirstLineInHistoryMap
+    "let g:EmacsCommandLineLastLineInHistoryMap
+    "let g:EmacsCommandLineSearchCommandLineMap
+    "let g:EmacsCommandLineTransposeCharMap
+    "let g:EmacsCommandLineYankMap
+    "let g:EmacsCommandLineUndoMap
+    "let g:EmacsCommandLineAbortCommandMap
+    "let g:EmacsCommandLineToggleExternalCommandMap
+endif
+
+
 if CheckPlug('coc.nvim', 1)
     " using coc.vim/ale with ccls-cache which base on clang
     nmap <silent> <a-]> <Plug>(coc-definition)

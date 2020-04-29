@@ -64,6 +64,12 @@ endif
     nnoremap <leader>k <c-w>k
     nnoremap <leader>l <c-w>l
 
+    nnoremap <leader>q :<c-u>qa<cr>
+    nnoremap <leader>s :w<cr>
+    " Esc too far, use Ctrl+Enter as alternative
+    inoremap <a-CR> <Esc>
+    vnoremap <a-CR> <Esc>
+
     " Replace by vim-tmux-navigator
     "nnoremap <c-h> <c-w>h
     "nnoremap <c-j> <c-w>j

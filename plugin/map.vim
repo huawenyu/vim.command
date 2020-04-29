@@ -52,6 +52,9 @@ endif
     endfunction
     vnoremap <silent> <expr> p <sid>Repl()
 
+    "================================================= {{{2
+    "    Make our finger feeling better
+    "
     " Alt+HJKL   move around tmux pane
     " Ctrl+HJKL  move around vim-window/tmux-pane
     nnoremap <silent> <a-o> <C-o>
@@ -69,12 +72,22 @@ endif
     " Esc too far, use Ctrl+Enter as alternative
     inoremap <a-CR> <Esc>
     vnoremap <a-CR> <Esc>
+    " Adjust viewports to the same size
+    map <Leader>= <C-w>=
+
+    " Format {
+        vnoremap <Leader>ff =
+        "     Most UNIX-like programming environments offer generic tools for formatting text. These include fmt, fold, sed, perl, and par. 
+        "     vnoremap qq c<C-R>=system('wc -c | perl -pe chomp', @")<CR><ESC>
+        autocmd FileType vimwiki vnoremap <leader>ff :!fmt -c -w 100 -u -s <cr>
+    " }
 
     " Replace by vim-tmux-navigator
     "nnoremap <c-h> <c-w>h
     "nnoremap <c-j> <c-w>j
     "nnoremap <c-k> <c-w>k
     "nnoremap <c-l> <c-w>l
+    "=================================================}}}
 
     if has("nvim")
         let b:terminal_scrollback_buffer_size = 2000
@@ -101,9 +114,6 @@ endif
     " Show current color's name: zS show syntax[vim-scriptease]
     nnoremap zC :echomsg synIDattr(synIDtrans(synID(line("."), col("."), 1)), "name")<cr>
     nnoremap zc :echomsg synIDattr(synIDtrans(synID(line("."), col("."), 1)), "fg")<cr>
-
-    " Adjust viewports to the same size
-    map <Leader>= <C-w>=
 
     "" FIXME: Revert this f70be548
     "" fullscreen mode for GVIM and Terminal, need 'wmctrl' in you PATH
@@ -379,7 +389,7 @@ if CheckPlug('vim-gutentags', 1)
         noremap <silent> <leader>fc :GscopeFind c <C-R><C-W><cr>
         noremap <silent> <leader>ft :GscopeFind t <C-R><C-W><cr>
         noremap <silent> <leader>fe :GscopeFind e <C-R><C-W><cr>
-        noremap <silent> <leader>ff :GscopeFind f <C-R>=expand("<cfile>")<cr><cr>
+        "noremap <silent> <leader>ff :GscopeFind f <C-R>=expand("<cfile>")<cr><cr>
         noremap <silent> <leader>fi :GscopeFind i <C-R>=expand("<cfile>")<cr><cr>
         noremap <silent> <leader>fd :GscopeFind d <C-R><C-W><cr>
         noremap <silent> <leader>fa :GscopeFind a <C-R><C-W><cr>
@@ -390,7 +400,7 @@ if CheckPlug('vim-gutentags', 1)
         "noremap <silent> <leader>fc :cs find c <C-R><C-W><cr>
         "noremap <silent> <leader>ft :cs find t <C-R><C-W><cr>
         "noremap <silent> <leader>fe :cs find e <C-R><C-W><cr>
-        "noremap <silent> <leader>ff :cs find f <C-R>=expand("<cfile>")<cr><cr>
+        ""noremap <silent> <leader>ff :cs find f <C-R>=expand("<cfile>")<cr><cr>
         "noremap <silent> <leader>fi :cs find i <C-R>=expand("<cfile>")<cr><cr>
         "noremap <silent> <leader>fd :cs find d <C-R><C-W><cr>
         "noremap <silent> <leader>fa :cs find a <C-R><C-W><cr>
@@ -611,10 +621,6 @@ endif
     " Toggle source/header
     "nnoremap <silent> <leader>a  :<c-u>FuzzyOpen <C-R>=printf("%s\\.", expand('%:t:r'))<cr><cr>
     nnoremap <silent> <leader>a  :<c-u>call CurtineIncSw()<cr>
-
-    " Most UNIX-like programming environments offer generic tools for formatting text. These include fmt, fold, sed, perl, and par. 
-    " vnoremap qq c<C-R>=system('wc -c | perl -pe chomp', @")<CR><ESC>
-    vnoremap <leader>ft :!fmt -c -w 100 -u -s <cr>
 
     if CheckPlug('vim-sleuth', 1)
         nnoremap <leader>fd :Sleuth<cr>

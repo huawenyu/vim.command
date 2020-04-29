@@ -65,7 +65,7 @@ endif
     nnoremap <leader>l <c-w>l
 
     nnoremap <leader>q :<c-u>qa<cr>
-    nnoremap <leader>s :w<cr>
+    nnoremap <leader>s :w<cr> :echom "Saved"<CR>
     " Esc too far, use Ctrl+Enter as alternative
     inoremap <a-CR> <Esc>
     vnoremap <a-CR> <Esc>

@@ -41,8 +41,7 @@ endif
 
     " A little anoy when insert and hit j, but acceptable.
     inoremap jj <Esc>
-    vnoremap jj <Esc>
-
+    "vnoremap jj <Esc>    | " Duplicate select move-down
 
     " vp doesn't replace paste buffer
     function! RestoreRegister()

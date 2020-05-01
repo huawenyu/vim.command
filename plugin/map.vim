@@ -39,6 +39,10 @@ endif
     nnoremap j gj
     nnoremap k gk
 
+    " A little anoy when insert and hit j, but acceptable.
+    inoremap jj <Esc>
+    vnoremap jj <Esc>
+
 
     " vp doesn't replace paste buffer
     function! RestoreRegister()

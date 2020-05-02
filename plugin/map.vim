@@ -41,7 +41,7 @@ endif
 
     " A little anoy when insert and hit j, but acceptable.
     inoremap jj <Esc>
-    "vnoremap jj <Esc>    | " Duplicate select move-down
+    "vnoremap jj <Esc>    | " Bad: disable select move-down
 
     " vp doesn't replace paste buffer
     function! RestoreRegister()
@@ -56,13 +56,17 @@ endif
     vnoremap <silent> <expr> p <sid>Repl()
 
     "================================================= {{{2
-    "    Make our finger feeling better
+    "    Make our finger feeling better: same-bind a-, c-, leader-
     "
     " Alt+HJKL   move around tmux pane
     " Ctrl+HJKL  move around vim-window/tmux-pane
     nnoremap <silent> <a-o> <C-o>
     nnoremap <silent> <a-i> <C-i>
 
+    nnoremap <silent> <leader>o <C-o>
+    nnoremap <silent> <leader>i <C-i>
+    nnoremap <silent> <leader>] <C-]>
+    "inoremap <silent> <leader>[ <C-[>
 
     " Substitue for MaboXterm diable <c-h>
     nnoremap <leader>h <c-w>h
@@ -198,18 +202,18 @@ if CheckPlug('neovim-fuzzy', 1)
             call utils#Declaration()
         else
         endif
-    endfunction
+      endfunction
 
     " Must install fzy tool(https://github.com/jhawthorn/fzy)
-    nnoremap <silent> <leader>i  :<c-u>call <SID>JumpI(0)<cr>
-    vnoremap          <leader>i  :<c-u>call <SID>JumpI(1)<cr>
-    nnoremap <silent> <leader>o  :<c-u>call <SID>JumpO(0)<cr>
-    vnoremap          <leader>o  :<c-u>call <SID>JumpO(1)<cr>
+    nnoremap <silent>        ;i  :<c-u>call <SID>JumpI(0)<cr>
+    vnoremap                 ;i  :<c-u>call <SID>JumpI(1)<cr>
+    nnoremap <silent>        ;o  :<c-u>call <SID>JumpO(0)<cr>
+    vnoremap                 ;o  :<c-u>call <SID>JumpO(1)<cr>
     "nnoremap          <leader>f  :ls<cr>:b<Space>
     nnoremap <silent> <leader>;  :<c-u>call <SID>JumpComma(0)<cr>
     vnoremap          <leader>;  :<c-u>call <SID>JumpComma(1)<cr>
 elseif CheckPlug('fzf-cscope.vim', 1)
-    nnoremap <silent> <Leader>o          :FileCatN<cr>
+    nnoremap <silent>        ;o          :FileCatN<cr>
     nnoremap <silent> <Leader><leader>o  :FileCatN!<cr>
 endif
 

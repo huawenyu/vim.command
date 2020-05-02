@@ -83,8 +83,8 @@ endif
     map <Leader>= <C-w>=
 
     " Format {
-        vnoremap <Leader>ff =
-        nnoremap <Leader>ff =
+        vnoremap <Leader>ff =<cr>
+        nnoremap <Leader>ff =<cr>
         "     Most UNIX-like programming environments offer generic tools for formatting text. These include fmt, fold, sed, perl, and par. 
         "     vnoremap qq c<C-R>=system('wc -c | perl -pe chomp', @")<CR><ESC>
         autocmd FileType vimwiki vnoremap <leader>ff :!fmt -c -w 100 -u -s <cr>

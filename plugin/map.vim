@@ -39,9 +39,11 @@ endif
     nnoremap j gj
     nnoremap k gk
 
-    " A little anoy when insert and hit j, but acceptable.
-    inoremap jj <Esc>
-    "vnoremap jj <Esc>    | " Bad: disable select move-down
+    " A little anoy when insert and hit the key, but acceptable.
+    " @ver1: using jj, but how about the select-mode, the 'j' as move
+    nnoremap ;; <Esc>
+    inoremap ;; <Esc>
+    vnoremap ;; <Esc>
 
     " vp doesn't replace paste buffer
     function! RestoreRegister()
@@ -56,7 +58,7 @@ endif
     vnoremap <silent> <expr> p <sid>Repl()
 
     "================================================= {{{2
-    "    Make our finger feeling better: same-bind a-, c-, leader-
+    "    Finger candy: same-bind a-, c-, leader-
     "
     " Alt+HJKL   move around tmux pane
     " Ctrl+HJKL  move around vim-window/tmux-pane
@@ -76,9 +78,10 @@ endif
 
     nnoremap <leader>q :<c-u>qa<cr>
     nnoremap <leader>s :w<cr> :echom "Saved"<CR>
-    " Esc too far, use Ctrl+Enter as alternative
-    inoremap <a-CR> <Esc>
-    vnoremap <a-CR> <Esc>
+    "" Esc too far, use Ctrl+Enter as alternative
+    "inoremap <a-CR> <Esc>
+    "vnoremap <a-CR> <Esc>
+
     " Adjust viewports to the same size
     map <Leader>= <C-w>=
 
@@ -205,16 +208,16 @@ if CheckPlug('neovim-fuzzy', 1)
       endfunction
 
     " Must install fzy tool(https://github.com/jhawthorn/fzy)
-    nnoremap <silent>        ;i  :<c-u>call <SID>JumpI(0)<cr>
-    vnoremap                 ;i  :<c-u>call <SID>JumpI(1)<cr>
-    nnoremap <silent>        ;o  :<c-u>call <SID>JumpO(0)<cr>
-    vnoremap                 ;o  :<c-u>call <SID>JumpO(1)<cr>
-    "nnoremap          <leader>f  :ls<cr>:b<Space>
+    nnoremap <silent> <leader>i  :<c-u>call <SID>JumpI(0)<cr>
+    vnoremap          <leader>i  :<c-u>call <SID>JumpI(1)<cr>
+    nnoremap <silent> <leader>u  :<c-u>call <SID>JumpO(0)<cr>
+    vnoremap          <leader>u  :<c-u>call <SID>JumpO(1)<cr>
+    "nnoremap         <leader>f  :ls<cr>:b<Space>
     nnoremap <silent> <leader>;  :<c-u>call <SID>JumpComma(0)<cr>
     vnoremap          <leader>;  :<c-u>call <SID>JumpComma(1)<cr>
 elseif CheckPlug('fzf-cscope.vim', 1)
-    nnoremap <silent>        ;o          :FileCatN<cr>
-    nnoremap <silent> <Leader><leader>o  :FileCatN!<cr>
+    nnoremap <silent> <leader>u          :FileCatN<cr>
+    nnoremap <silent> <leader><leader>u  :FileCatN!<cr>
 endif
 
 " View keymap {{{1

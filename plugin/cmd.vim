@@ -323,7 +323,7 @@ endif
 if CheckPlug('quickmenu.vim', 1)
     "nnoremap <silent><F1> :call quickmenu#toggle(0)<cr>
     "nnoremap <silent><F1> :call quickmenu#bottom(0)<cr>
-    nnoremap <silent> ;; :call quickmenu#bottom(0)<cr>
+    "nnoremap <silent> ;; :call quickmenu#bottom(0)<cr>    | " conflict with <Esc>
 
     "noremap <silent> <leader><space> :call quickmenu#bottom(0)<cr>
     "noremap <silent> <leader>1 :call quickmenu#bottom(1)<cr>

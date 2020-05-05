@@ -55,7 +55,7 @@ endif
     inoremap ,, <Esc>`^
     onoremap ,, <Esc>`^
     vnoremap ,, <Esc>`<
-    cnoremap ,, <Esc>
+    cnoremap ,, <c-u><Esc>
 
 
     " vp doesn't replace paste buffer

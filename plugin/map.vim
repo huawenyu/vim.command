@@ -68,18 +68,21 @@ if CheckPlug('neovim-fuzzy', 1)
       endfunction
 
     " Must install fzy tool(https://github.com/jhawthorn/fzy)
-    nnoremap <silent> <leader>i  :<c-u>call <SID>JumpI(0)<cr>
-    vnoremap          <leader>i  :<c-u>call <SID>JumpI(1)<cr>
-    nnoremap <silent> <leader>u  :<c-u>call <SID>JumpO(0)<cr>
-    vnoremap          <leader>u  :<c-u>call <SID>JumpO(1)<cr>
-    "nnoremap         <leader>f  :ls<cr>:b<Space>
+    nnoremap <silent> ;i  :<c-u>call <SID>JumpI(0)<cr>
+    vnoremap          ;i  :<c-u>call <SID>JumpI(1)<cr>
+    nnoremap <silent> ;f  :<c-u>call <SID>JumpO(0)<cr>
+    vnoremap          ;f  :<c-u>call <SID>JumpO(1)<cr>
+    "nnoremap         ;f  :ls<cr>:b<Space>
     nnoremap <silent> <leader>;  :<c-u>call <SID>JumpComma(0)<cr>
     vnoremap          <leader>;  :<c-u>call <SID>JumpComma(1)<cr>
 elseif CheckPlug('fzf-cscope.vim', 1)
-    nnoremap <silent> <leader>u          :FileCatN<cr>
-    nnoremap <silent> <leader><leader>u  :FileCatN!<cr>
+    nnoremap <silent> ;f          :FileCatN<cr>
+    nnoremap <silent> <leader><leader>f  :FileCatN!<cr>
 endif
-
+" ver1: open-file by <leader>o
+" ver2: open-file by ;o       " the <leader>o take by jump-history, which like Ctrl-o
+" ver3: open-file by ;u
+" ver4: open-file by ;f       " quick & easy-remember
 
 if CheckPlug('c-utils.vim', 1)
     function! s:JumpComma(mode)

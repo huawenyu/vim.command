@@ -282,6 +282,9 @@ endif
     command! -bang -nargs=* -complete=file LGrep call utilgrep#_Grep('lgrep<bang>', <q-args>)
     command! -bang -nargs=* -complete=file LGrepAdd call utilgrep#_Grep('lgrepadd<bang>', <q-args>)
     "command! -bang -nargs=* -complete=file Replace call utilgrep#ReplaceAll(<f-args>)
+
+    "add commas to a number, e.g. change 31415926 to 31,415,926
+    "command! Int3 execute ':%s/\(\d\)\(\(\d\d\d\)\+\d\@!\)\@=/\1,/g'
 "}}}
 
 
@@ -326,7 +329,8 @@ if CheckPlug('quickmenu.vim', 1)
     "nnoremap <silent> ;; :call quickmenu#bottom(0)<cr>    | " conflict with <Esc>
 
     "noremap <silent> <leader><space> :call quickmenu#bottom(0)<cr>
-    "noremap <silent> <leader>1 :call quickmenu#bottom(1)<cr>
+    "nnoremap <silent> ;h  :call quickmenu#bottom(0)<cr>
+    nnoremap <silent>  ;h  :call quickmenu#toggle(0)<cr>
 
     function MyMenuExec(...)
         let strCmd = join(a:000, '')
@@ -367,9 +371,12 @@ if CheckPlug('quickmenu.vim', 1)
     " new section: empty action with text starts with "#" represent a new section
     call quickmenu#append("# Execute", '')
         "call quickmenu#append(text="Run %{expand('%:t')}", action='!./%', help="Run current file", ft="c,cpp,objc,objcpp")
+        "sed -i ':a;s/\B[0-9]\{3\}\>/,&/;ta' numbers.txt
         call quickmenu#append("Update TAGs",          "NeomakeSh! tagme", "")
-        call quickmenu#append("(mw) dict <word>",     'call MyMenuExec("R! ~/tools/dict ", expand("<cword>"))', "")
-        call quickmenu#append("Run %{expand('%:t')}", '!./%', "Run current file")
+        call quickmenu#append("(mw) QueryWord",       'NeomakeRun ~/tools/dict %{expand("<cword>")}', "")
+        call quickmenu#append("CommaDigit",           'NeomakeCmd sed -i ":a;s/\b\([0-9]\+\)\([0-9]\{3\}\)\b/\1,\2/;ta" %{expand("%:t")}', "")
+
+        call quickmenu#append("Execute script %{expand('%:t')}", '!./%', "Run current file")
         call quickmenu#append("(ma) make init",       "Make -j6 -i -s  -C sysinit", "")
         call quickmenu#append("(mk) make wad",        "Make -i -s -j6 -C daemon/wad", "")
         call quickmenu#append("(mf) qfix filter",     "call utilquickfix#QuickFixFilter()", "")
@@ -444,15 +451,15 @@ if CheckPlug('quickmenu.vim', 1)
         call quickmenu#append("Count `%{expand('<cword>')}`", 'call MyMenuExec("%s/", expand("<cword>"), "//gn")', '')
         call quickmenu#append("Convert number",               "normal gA", "")
 
-    function s:qm_append_branch()
-        call quickmenu#append('# Branches', '')
+    "function s:qm_append_branch()
+    "    call quickmenu#append('# Branches', '')
 
-        let branches = systemlist("git branch --list --format='%(refname:short)'")
-        for branch in branches
-            call quickmenu#append('' . branch, 'silent !git checkout ' . branch)
-        endfor
-    endfunction
-    call s:qm_append_branch()
+    "    let branches = systemlist("git branch --list --format='%(refname:short)'")
+    "    for branch in branches
+    "        call quickmenu#append('' . branch, 'silent !git checkout ' . branch)
+    "    endfor
+    "endfunction
+    "call s:qm_append_branch()
 
 endif
 

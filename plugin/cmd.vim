@@ -372,7 +372,7 @@ if CheckPlug('quickmenu.vim', 1)
     call quickmenu#append("# Execute", '')
         "call quickmenu#append(text="Run %{expand('%:t')}", action='!./%', help="Run current file", ft="c,cpp,objc,objcpp")
         "sed -i ':a;s/\B[0-9]\{3\}\>/,&/;ta' numbers.txt
-        call quickmenu#append("Update TAGs",          "NeomakeSh! tagme", "")
+        "call quickmenu#append("Update TAGs",          "NeomakeSh! tagme", "")
         call quickmenu#append("(mw) QueryWord",       'NeomakeRun ~/tools/dict %{expand("<cword>")}', "")
         call quickmenu#append("CommaDigit",           'NeomakeCmd sed -i ":a;s/\b\([0-9]\+\)\([0-9]\{3\}\)\b/\1,\2/;ta" %{expand("%:t")}', "")
 

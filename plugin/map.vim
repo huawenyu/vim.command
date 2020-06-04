@@ -251,6 +251,19 @@ if CheckPlug('vim-prettier', 1)
 endif
 
 
+if CheckPlug('nnn.vim', 1) | " {{{1
+    " Disable default mappings
+    let g:nnn#set_default_mappings = 0
+
+    " Then set your own
+    "nnoremap <silent> <a-e> :NnnPicker<CR>
+
+    " Or override
+    " Start nnn in the current file's directory
+    "nnoremap <leader>n :NnnPicker '%:p:h'<CR>
+endif
+
+
 if CheckPlug('vim-qf', 1)
     ""nnoremap <leader>mn :QFAddNote note:
     "nnoremap <leader>ms :SaveList

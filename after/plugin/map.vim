@@ -229,12 +229,15 @@ endif
     endfunction
 
     "nnoremap <f3> :VimwikiFollowLink
-  if CheckPlug('vim-maximizer', 1)
-    nnoremap <silent> <a-w> :MaximizerToggle<CR>
-  elseif CheckPlug('maximize', 1)
-    nnoremap <silent> <a-w> :MaximizeWindow<CR>
-  endif
+    if CheckPlug('vim-maximizer', 1)
+        nnoremap <silent> <a-w> :MaximizerToggle<CR>
+    elseif CheckPlug('maximize', 1)
+        nnoremap <silent> <a-w> :MaximizeWindow<CR>
+    endif
+
     nnoremap <silent> <a-e> :NERDTreeTabsToggle<cr>
+    nnoremap <silent> <a-w> :NnnPicker<CR>
+
     "nnoremap <silent> <a-f> :Null<CR>
     "nnoremap <silent> <a-g> :Null<CR>
     "nnoremap <silent> <a-q> :Null<CR>

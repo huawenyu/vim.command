@@ -311,6 +311,12 @@ if CheckPlug('taboo.vim', 1)
     nnoremap <silent> ;2     2gt
     nnoremap <silent> ;3     3gt
     nnoremap <silent> ;4     4gt
+    nnoremap <silent> ;5     5gt
+    nnoremap <silent> ;6     6gt
+    nnoremap <silent> ;7     7gt
+    nnoremap <silent> ;8     8gt
+    nnoremap <silent> ;9     9gt
+    nnoremap <silent> ;0     10gt
 
     nnoremap <silent> ;tt   :TabooOpen new-tab<CR>
     nnoremap <silent> ;tc   :tabclose<CR>
@@ -320,6 +326,12 @@ elseif CheckPlug('vim-tabber', 1)
     nnoremap <silent> ;2     2gt
     nnoremap <silent> ;3     3gt
     nnoremap <silent> ;4     4gt
+    nnoremap <silent> ;5     5gt
+    nnoremap <silent> ;6     6gt
+    nnoremap <silent> ;7     7gt
+    nnoremap <silent> ;8     8gt
+    nnoremap <silent> ;9     9gt
+    nnoremap <silent> ;0     10gt
 
     "set tabline=%!tabber#TabLine()
     "

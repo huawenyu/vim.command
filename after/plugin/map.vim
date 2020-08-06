@@ -152,11 +152,13 @@ endif
     " Paste in insert mode
     inoremap <silent> <a-i> <c-r>"
 
+    " Navigate quickfix
     nnoremap <silent> <c-n> :cn<cr>
     nnoremap <silent> <c-p> :cp<cr>
 
-    nnoremap <silent> <leader>n :cn<cr>
-    nnoremap <silent> <leader>p :cp<cr>
+    " Navigate locallist
+    nnoremap <silent> <leader>n :lne<cr>
+    nnoremap <silent> <leader>p :lp<cr>
 " }}}
 
 
@@ -285,10 +287,18 @@ endif
     nnoremap <silent> <leader>vi :call utils#VoomInsert(0) <CR>
     vnoremap <silent> <leader>vi :call utils#VoomInsert(1) <CR>
 
-    nnoremap <leader>gg :<C-\>e utilgrep#Grep(2,0)<cr>
-    vnoremap <leader>gg :<C-\>e utilgrep#Grep(2,1)<cr>
-    nnoremap <leader>vv :<C-\>e utilgrep#Grep(1,0)<cr>
-    vnoremap <leader>vv :<C-\>e utilgrep#Grep(1,1)<cr>
+
+    " Search
+    nnoremap <leader>gg :<C-\>e utilgrep#Grep(0, 0, "daemon/wad", 1)<cr>
+    vnoremap <leader>gg :<C-\>e utilgrep#Grep(0, 1, "daemon/wad", 1)<cr>
+    nnoremap <leader>vv :<C-\>e utilgrep#Grep(0, 0, "", 1)<cr>
+    vnoremap <leader>vv :<C-\>e utilgrep#Grep(0, 1, "", 1)<cr>
+
+    nnoremap ;gg :<C-\>e utilgrep#Grep(0, 0, "daemon/wad", 0)<cr>
+    vnoremap ;gg :<C-\>e utilgrep#Grep(0, 1, "daemon/wad", 0)<cr>
+    nnoremap ;vv :<C-\>e utilgrep#Grep(0, 0, "", 0)<cr>
+    vnoremap ;vv :<C-\>e utilgrep#Grep(0, 1, "", 0)<cr>
+
 
     vnoremap <silent> <leader>yy :<c-u>call utils#GetSelected("/tmp/vim.yank")<CR>
     nnoremap <silent> <leader>yy :<c-u>call vimuxscript#Copy() <CR>

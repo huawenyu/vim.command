@@ -361,6 +361,41 @@ if CheckPlug('quickmenu.vim', 1)
     " Clear all the items
     call quickmenu#reset()
 
+    " Section 'String'
+        "map <leader>ds :call Asm() <CR>
+        nnoremap <leader>dt :%s/\s\+$//g
+        nnoremap <leader>dd :g/<C-R><C-w>/ norm dd
+        vnoremap <leader>dd :<c-u>g/<C-R>*/ norm dd
+        " For local replace
+        "nnoremap <leader>vm [[ma%mb:call signature#sign#Refresh(1) <CR>
+        nnoremap <leader>vr :<C-\>e SelectedReplace('n')<CR><left><left><left>
+        vnoremap <leader>vr :<C-\>e SelectedReplace('v')<CR><left><left><left>
+        " remove space from emptyline
+        "nnoremap <leader>v<space> :%s/^\s\s*$//<CR>
+        "vnoremap <leader>v<space> :s/^\s\s*$//<cr>
+
+        " count the number of occurrences of a word
+        "nnoremap <leader>vc :%s/<C-R>=expand('<cword>')<cr>//gn<cr>
+
+        " For global replace
+        nnoremap <leader>vR gD:%s/<C-R>///g<left><left>
+        "
+        "nnoremap <leader>vr :Replace <C-R>=expand('<cword>') <CR> <C-R>=expand('<cword>') <cr>
+        "vnoremap <leader>vr ""y:%s/<C-R>=escape(@", '/\')<CR>/<C-R>=escape(@", '/\')<CR>/g<Left><Left>
+        "
+        "vnoremap <leader>vr :<C-\>e tmp#CurrentReplace() <CR>
+        "nnoremap <leader>vr :Replace <C-R>=expand('<cword>') <CR> <C-R>=expand('<cword>') <cr>
+
+    call quickmenu#append("# Format|String", '')
+        "call quickmenu#append("(F3) Autoformat",                            "Autoformat", "")
+        call quickmenu#append("Replace last search",                        "execute '%s///gc'", "")
+        call quickmenu#append("Replace search with `%{expand('<cword>')}`", 'call MyMenuExec("%s//", expand("<cword>"), "/gc")', "")
+        call quickmenu#append("Replace last search",                        "execute '%s///gc'", "")
+        call quickmenu#append("Remove empty lines",                         "g/^$/d", "delete blank lines, remove multi blank line")
+        call quickmenu#append("Remove extra empty lines",                   "%s/\\n\\{3,}/\\r\\r/e", "replace three or more consecutive line endings with two line endings (a single blank line)")
+        call quickmenu#append("(df) Remove ending space",                   "%s/\\s\\+$//g", "remove unwanted whitespace from line end")
+        call quickmenu#append("(dd) Remove lines of last search",           "g//norm dd", '')
+
     " Section 'Execute'
         nnoremap <leader>mk :Make -i -s -j6 -C daemon/wad <CR>
         nnoremap <leader>ma :Make -i -s -j6 -C sysinit <CR>
@@ -407,41 +442,6 @@ if CheckPlug('quickmenu.vim', 1)
         call quickmenu#append("git status", 'Gstatus', "use fugitive's Gstatus on current document")
         call quickmenu#append("git blame",  'Gblame',  "use fugitive's Gblame on current document")
         call quickmenu#append("git log",    'GV',      "")
-
-    " Section 'String'
-        "map <leader>ds :call Asm() <CR>
-        nnoremap <leader>dt :%s/\s\+$//g
-        nnoremap <leader>dd :g/<C-R><C-w>/ norm dd
-        vnoremap <leader>dd :<c-u>g/<C-R>*/ norm dd
-        " For local replace
-        "nnoremap <leader>vm [[ma%mb:call signature#sign#Refresh(1) <CR>
-        nnoremap <leader>vr :<C-\>e SelectedReplace('n')<CR><left><left><left>
-        vnoremap <leader>vr :<C-\>e SelectedReplace('v')<CR><left><left><left>
-        " remove space from emptyline
-        "nnoremap <leader>v<space> :%s/^\s\s*$//<CR>
-        "vnoremap <leader>v<space> :s/^\s\s*$//<cr>
-
-        " count the number of occurrences of a word
-        "nnoremap <leader>vc :%s/<C-R>=expand('<cword>')<cr>//gn<cr>
-
-        " For global replace
-        nnoremap <leader>vR gD:%s/<C-R>///g<left><left>
-        "
-        "nnoremap <leader>vr :Replace <C-R>=expand('<cword>') <CR> <C-R>=expand('<cword>') <cr>
-        "vnoremap <leader>vr ""y:%s/<C-R>=escape(@", '/\')<CR>/<C-R>=escape(@", '/\')<CR>/g<Left><Left>
-        "
-        "vnoremap <leader>vr :<C-\>e tmp#CurrentReplace() <CR>
-        "nnoremap <leader>vr :Replace <C-R>=expand('<cword>') <CR> <C-R>=expand('<cword>') <cr>
-
-    call quickmenu#append("# Format|String", '')
-        call quickmenu#append("(F3) Autoformat",                            "Autoformat", "")
-        call quickmenu#append("Replace last search",                        "execute '%s///gc'", "")
-        call quickmenu#append("Replace search with `%{expand('<cword>')}`", 'call MyMenuExec("%s//", expand("<cword>"), "/gc")', "")
-        call quickmenu#append("Replace last search",                        "execute '%s///gc'", "")
-        call quickmenu#append("Remove empty lines",                         "g/^$/d", "delete blank lines, remove multi blank line")
-        call quickmenu#append("Remove extra empty lines",                   "%s/\\n\\{3,}/\\r\\r/e", "replace three or more consecutive line endings with two line endings (a single blank line)")
-        call quickmenu#append("(df) Remove ending space",                   "%s/\\s\\+$//g", "remove unwanted whitespace from line end")
-        call quickmenu#append("(dd) Remove lines of last search",           "g//norm dd", '')
 
     " Section 'Misc'
     call quickmenu#append("# Misc", '')

@@ -236,7 +236,12 @@ endif
   elseif CheckPlug('maximize', 1)
     nnoremap <silent> <a-w> :MaximizeWindow<CR>
   endif
-    nnoremap <silent> <a-e> :NERDTreeTabsToggle<cr>
+    if CheckPlug('vim-nerdtree-tabs', 1)
+      nnoremap <silent> <a-e> :NERDTreeTabsToggle<cr>
+    elseif CheckPlug('nerdtree', 1)
+      nnoremap <silent> <a-e> :NERDTreeToggle<cr>
+    endif
+
     "nnoremap <silent> <a-f> :Null<CR>
     "nnoremap <silent> <a-g> :Null<CR>
     "nnoremap <silent> <a-q> :Null<CR>

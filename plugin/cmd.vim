@@ -388,6 +388,7 @@ if CheckPlug('quickmenu.vim', 1)
 
     call quickmenu#append("# Format|String", '')
         "call quickmenu#append("(F3) Autoformat",                            "Autoformat", "")
+        call quickmenu#append("Null",                                       "", "Do nothing")
         call quickmenu#append("Replace last search",                        "execute '%s///gc'", "")
         call quickmenu#append("Replace search with `%{expand('<cword>')}`", 'call MyMenuExec("%s//", expand("<cword>"), "/gc")', "")
         call quickmenu#append("Replace last search",                        "execute '%s///gc'", "")
@@ -395,7 +396,7 @@ if CheckPlug('quickmenu.vim', 1)
         call quickmenu#append("Remove extra empty lines",                   "%s/\\n\\{3,}/\\r\\r/e", "replace three or more consecutive line endings with two line endings (a single blank line)")
         call quickmenu#append("(df) Remove ending space",                   "%s/\\s\\+$//g", "remove unwanted whitespace from line end")
         call quickmenu#append("(dd) Remove lines of last search",           "g//norm dd", '')
-        call quickmenu#append("Wrap lines",                                 "!fmt -c -w 100 -u -s", '')
+        call quickmenu#append("(ft) Wrap lines",                            "!fmt -c -w 100 -u -s", '')
 
     " Section 'Execute'
         nnoremap <leader>mk :Make -i -s -j6 -C daemon/wad <CR>

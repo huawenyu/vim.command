@@ -56,7 +56,11 @@ endif
     onoremap ,, <Esc>`^
     vnoremap ,, <Esc>`<
     cnoremap ,, <c-u><Esc>
+    " @ver5:
+    inoremap jj <ESC>
 
+    " Save in insert mode
+    inoremap kk <c-o>:w<cr>
 
     " vp doesn't replace paste buffer
     function! RestoreRegister()

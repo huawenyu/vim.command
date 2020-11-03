@@ -62,6 +62,8 @@ endif
     " Save in insert mode
     inoremap kk <c-o>:w<cr>
 
+    nnoremap <silent> ;ww :w!<cr>
+
     " vp doesn't replace paste buffer
     function! RestoreRegister()
         let @" = s:restore_reg

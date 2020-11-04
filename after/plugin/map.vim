@@ -56,11 +56,11 @@ endif
     onoremap ,, <Esc>`^
     vnoremap ,, <Esc>`<
     cnoremap ,, <c-u><Esc>
-    " @ver5:
-    inoremap jj <ESC>
+    " @ver5: save & exit insert-mode
+    inoremap jj <c-o>:w<cr><ESC>
 
-    " Save in insert mode
-    inoremap kk <c-o>:w<cr>
+    " Save in insert mode, comment out it for anoy when you input the letter 'k'.
+    "inoremap kk <c-o>:w<cr>
 
     nnoremap <silent> ;ww :w!<cr>
 

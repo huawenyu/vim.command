@@ -323,44 +323,7 @@ if CheckPlug('accelerated-jk', 1)
 endif
 
 
-if CheckPlug('quickmenu.vim', 1)
-    "nnoremap <silent><F1> :call quickmenu#toggle(0)<cr>
-    "nnoremap <silent><F1> :call quickmenu#bottom(0)<cr>
-    "nnoremap <silent> ;; :call quickmenu#bottom(0)<cr>    | " conflict with <Esc>
-
-    "noremap <silent> <leader><space> :call quickmenu#bottom(0)<cr>
-    "nnoremap <silent> ;h  :call quickmenu#bottom(0)<cr>
-    nnoremap <silent>  ;h  :call quickmenu#toggle(0)<cr>
-
-    function MyMenuExec(...)
-        let strCmd = join(a:000, '')
-        silent! call s:log.info('MyExecArgs: "', strCmd, '"')
-        exec strCmd
-    endfunc
-
-    function! SelectedReplace(mode)
-        let l:save_cursor = getcurpos()
-        let sel_str = hw#misc#GetWord(a:mode)
-
-        let nr = winnr()
-        if getwinvar(nr, '&syntax') == 'qf'
-            call setpos('.', l:save_cursor)
-            return "%s/\\<". sel_str. '\>/'. sel_str. '/gI'
-        else
-            delmarks un
-            normal [[mu%mn
-            call signature#sign#Refresh(1)
-            redraw
-            return "'u,'ns/\\<". sel_str. '\>/'. sel_str. '/gI'
-        endif
-    endfunction
-
-    " enable cursorline (L) and cmdline help (H)
-    let g:quickmenu_options = ""
-    "call quickmenu#header("Helper")
-    " Clear all the items
-    call quickmenu#reset()
-
+if CheckPlug('quickmenu.vim', 1) || CheckPlug('vim-quickui', 1) "{{{1
     " Section 'String'
         "map <leader>ds :call Asm() <CR>
         nnoremap <leader>dt :%s/\s\+$//g
@@ -386,18 +349,6 @@ if CheckPlug('quickmenu.vim', 1)
         "vnoremap <leader>vr :<C-\>e tmp#CurrentReplace() <CR>
         "nnoremap <leader>vr :Replace <C-R>=expand('<cword>') <CR> <C-R>=expand('<cword>') <cr>
 
-    call quickmenu#append("# Format|String", '')
-        "call quickmenu#append("(F3) Autoformat",                            "Autoformat", "")
-        call quickmenu#append("Null",                                       "", "Do nothing")
-        call quickmenu#append("Replace last search",                        "execute '%s///gc'", "")
-        call quickmenu#append("Replace search with `%{expand('<cword>')}`", 'call MyMenuExec("%s//", expand("<cword>"), "/gc")', "")
-        call quickmenu#append("Replace last search",                        "execute '%s///gc'", "")
-        call quickmenu#append("Remove empty lines",                         "g/^$/d", "delete blank lines, remove multi blank line")
-        call quickmenu#append("Remove extra empty lines",                   "%s/\\n\\{3,}/\\r\\r/e", "replace three or more consecutive line endings with two line endings (a single blank line)")
-        call quickmenu#append("(df) Remove ending space",                   "%s/\\s\\+$//g", "remove unwanted whitespace from line end")
-        call quickmenu#append("(dd) Remove lines of last search",           "g//norm dd", '')
-        call quickmenu#append("(ft) Wrap lines",                            "!fmt -c -w 100 -u -s", '')
-
     " Section 'Execute'
         nnoremap <leader>mk :Make -i -s -j6 -C daemon/wad <CR>
         nnoremap <leader>ma :Make -i -s -j6 -C sysinit <CR>
@@ -405,19 +356,65 @@ if CheckPlug('quickmenu.vim', 1)
         nnoremap <leader>mf :call utilquickfix#QuickFixFilter() <CR>
         nnoremap <leader>mc :call utilquickfix#QuickFixFunction() <CR>
 
+    " Section 'Git'
+        "nnoremap <leader>bb :VCBlame<cr>
+        nnoremap <leader>bb :Gblame<cr>
+        nnoremap <leader>bl :GV
+
+
+    function MyMenuExec(...)
+        let strCmd = join(a:000, '')
+        silent! call s:log.info('MyExecArgs: "', strCmd, '"')
+        exec strCmd
+    endfunc
+
+    function! SelectedReplace(mode)
+        let l:save_cursor = getcurpos()
+        let sel_str = hw#misc#GetWord(a:mode)
+
+        let nr = winnr()
+        if getwinvar(nr, '&syntax') == 'qf'
+            call setpos('.', l:save_cursor)
+            return "%s/\\<". sel_str. '\>/'. sel_str. '/gI'
+        else
+            delmarks un
+            normal [[mu%mn
+            call signature#sign#Refresh(1)
+            redraw
+            return "'u,'ns/\\<". sel_str. '\>/'. sel_str. '/gI'
+        endif
+    endfunction
+
+
+    " Check is git repo
+    function! YvIsGit()
+        silent! !git rev-parse --is-inside-work-tree
+        if v:shell_error == 0
+            return 1
+        endif
+    endfunction
+endif
+
+
+if CheckPlug('quickmenu.vim', 1)
+
+    call quickmenu#append("# Format|String", '')
+        "call quickmenu#append("(F3) Autoformat",                            "Autoformat", "")
+        call quickmenu#append("Null",                                       "", "Do nothing")
+        call quickmenu#append("Replace last search",                        "execute '%s///gc'", "")
+        call quickmenu#append("Replace search with `%{expand('<cword>')}`", 'call MyMenuExec("%s//", expand("<cword>"), "/gc")', "")
+        call quickmenu#append("Remove empty lines",                         "g/^$/d", "delete blank lines, remove multi blank line")
+        call quickmenu#append("Remove extra empty lines",                   "%s/\\n\\{3,}/\\r\\r/e", "replace three or more consecutive line endings with two line endings (a single blank line)")
+        call quickmenu#append("(df) Remove ending space",                   "%s/\\s\\+$//g", "remove unwanted whitespace from line end")
+        call quickmenu#append("(dd) Remove lines of last search",           "g//norm dd", '')
+        call quickmenu#append("(ft) Wrap lines",                            "!fmt -c -w 100 -u -s", '')
+
+
     " new section: empty action with text starts with "#" represent a new section
     call quickmenu#append("# Execute", '')
         "call quickmenu#append(text="Run %{expand('%:t')}", action='!./%', help="Run current file", ft="c,cpp,objc,objcpp")
         "sed -i ':a;s/\B[0-9]\{3\}\>/,&/;ta' numbers.txt
         "call quickmenu#append("Update TAGs",          "NeomakeSh! tagme", "")
-        call quickmenu#append("(mw) QueryWord",       'NeomakeRun ~/tools/dict %{expand("<cword>")}', "")
-        call quickmenu#append("CommaDigit",           'NeomakeCmd sed -i ":a;s/\b\([0-9]\+\)\([0-9]\{3\}\)\b/\1,\2/;ta" %{expand("%:t")}', "")
-
-        call quickmenu#append("Execute script %{expand('%:t')}", '!./%', "Run current file")
-        call quickmenu#append("(ma) make init",       "Make -j6 -i -s  -C sysinit", "")
-        call quickmenu#append("(mk) make wad",        "Make -i -s -j6 -C daemon/wad", "")
-        call quickmenu#append("(mf) qfix filter",     "call utilquickfix#QuickFixFilter()", "")
-        call quickmenu#append("(mc) qfix function",   "call utilquickfix#QuickFixFunction()", "")
 
     call quickmenu#append("# Tmux(mark from 'u' to 'n')", '')
         call quickmenu#append("(tf) Exec file",     'VtrSendFile',  "Execute the file itself bin: python, awk")
@@ -428,42 +425,186 @@ if CheckPlug('quickmenu.vim', 1)
         call quickmenu#append("(tg) reset-command", 'VtrFlushCommand', "If no lines, repeat last-command, so this will flush last-command")
         call quickmenu#append("(tc) clear",         'VtrClearRunner', "")
 
-    call quickmenu#append("# View", '')
-        call quickmenu#append("Outline",   'VoomToggle markdown',  "use fugitive's Gvdiff on current document")
-        call quickmenu#append("Maximizer", 'MaximizerToggle',  "use fugitive's Gvdiff on current document")
-        call quickmenu#append("NERDTree",  'NERDTreeTabsToggle',  "use fugitive's Gvdiff on current document")
-        call quickmenu#append("TagBar",    "TagbarToggle", "Switch Tagbar on/off")
+endif
 
-    " Section 'Git'
-        "nnoremap <leader>bb :VCBlame<cr>
-        nnoremap <leader>bb :Gblame<cr>
-        nnoremap <leader>bl :GV
 
-    call quickmenu#append("# Git", '')
-        call quickmenu#append("git diff",   'Gvdiff',  "use fugitive's Gvdiff on current document")
-        call quickmenu#append("git status", 'Gstatus', "use fugitive's Gstatus on current document")
-        call quickmenu#append("git blame",  'Gblame',  "use fugitive's Gblame on current document")
-        call quickmenu#append("git log",    'GV',      "")
+if CheckPlug('vim-quickui', 1) "{{{1
 
-    " Section 'Misc'
-    call quickmenu#append("# Misc", '')
-        "call quickmenu#append("Turn paste %{&paste? 'off':'on'}",           "set paste!", "enable/disable paste mode (:set paste!)")
-        "call quickmenu#append("Turn spell %{&spell? 'off':'on'}",           "set spell!", "enable/disable spell check (:set spell!)")
-        call quickmenu#append("(g Ctrl-g) Count of selected",            "g Ctrl-g", "the selected words and bytes")
-        call quickmenu#append("Count `%{expand('<cword>')}`", 'call MyMenuExec("%s/", expand("<cword>"), "//gn")', '')
-        call quickmenu#append("Convert number",               "normal gA", "")
+    " enable to display tips in the cmdline
+    let g:quickui_show_tip = 1
+    let g:quickui_border_style = 2
+    let g:quickui_color_scheme = 'papercol dark'  | " 'borland' 'gruvbox' 'papercol dark'
 
-    "function s:qm_append_branch()
-    "    call quickmenu#append('# Branches', '')
+    " Sugar 'Pop-preview'
+      augroup YvQuickUI
+        au!
+        nnoremap <silent> ;;                       :call quickui#tools#preview_tag('')<cr>
+        au FileType qf noremap <silent><buffer> ;; :call quickui#tools#preview_quickfix()<cr>
+      augroup END
 
-    "    let branches = systemlist("git branch --list --format='%(refname:short)'")
-    "    for branch in branches
-    "        call quickmenu#append('' . branch, 'silent !git checkout ' . branch)
-    "    endfor
-    "endfunction
-    "call s:qm_append_branch()
+    " Sugar 'tag'
+        nnoremap <silent> <Leader>jj            :call quickui#tools#list_buffer('e')<cr>
+        nnoremap <silent> <Leader>jt            :call quickui#tools#list_buffer('tabedit')<cr>
+        nnoremap <silent> <Leader>jf            :call quickui#tools#list_function()<cr>
+
+
+    " Sugar 'terminal'
+        function! TermExit(code)
+            echom "terminal exit code: ". a:code
+        endfunc
+
+        let opts = {'w':80, 'h':10, 'callback':'TermExit'}
+        let opts.title = 'Terminal Popup'
+        nnoremap <silent> <Leader>ji            :call quickui#terminal#open('zsh', opts) <cr>
+
+    " Sugar 'git branch'
+    if YvIsGit()
+        let content = []
+
+        let branches = systemlist("git branch --list --format='%(refname:short)'")
+        for branch in branches
+            call add(content, [branch, 'silent !git checkout '. branch])
+        endfor
+
+        let opts = {'title': 'Select one branch'}
+        nnoremap <silent> <Leader>jb            :call quickui#listbox#open(content, opts) <cr>
+        nnoremap <silent> <Leader>jd            :call quickui#textbox#command('git diff', opts) <cr>
+    endif
+
+    function YvGetSel()
+        let sel_l = hw#misc#GetSelection('o')
+        if len(sel_l) > 0
+            return sel_l[0]
+        else
+            return expand('<cword>')
+        endif
+    endfunction
+
+    " Sugar 'Context menu'
+        function! YvContextMenu()
+            if CheckPlug('fzf.vim', 1)
+                let content = [
+                        \ ["&Symbol `%{expand('<cword>')}`",     "call cscope#run('0', expand('<cword>'))" ],
+                        \ ["&Caller `%{expand('<cword>')}`",     "call cscope#run('2', expand('<cword>'))"],
+                        \ ["Prev Sy&mbol `%{expand('<cword>')}", "call cscope#preview('0', expand('<cword>'), 1)" ],
+                        \ ["Prev Ca&ller `%{expand('<cword>')}", "call cscope#preview('2', expand('<cword>'), 1)"],
+                        \ ['-',                                  ''],
+                        \ ["Find &Tag `%{expand('<cword>')}`",   "exec 'TagCatN! '. expand('<cword>')" ],
+                        \ ["Prev T&ag `%{expand('<cword>')}`",   "exec 'TagCatPreN! '. expand('<cword>')" ],
+                        \ ["&VTag `%{YvGetSel()}`",              "exec 'TagCatV! '. YvGetSel()" ],
+                        \ ["VTa&g `%{YvGetSel()}`",              "exec 'TagCatPreV! '. YvGetSel()" ],
+                        \ ['-',                                  ''],
+                        \ ["&Doc",                               'echo 600'],
+                        \ ]
+            else
+                let content = [
+                        \ ["Find &Symbol", 'cs find s <C-R>=expand("<cword>")' ],
+                        \ ["&Signature", 'echo 101'],
+                        \ ['-'],
+                        \ ["Find in &File\t\\cx", 'echo 200' ],
+                        \ ["Find in &Project\t\\cp", 'echo 300' ],
+                        \ ["Find in &Defintion\t\\cd", 'echo 400' ],
+                        \ ["Search &References\t\\cr", 'echo 500'],
+                        \ ['-'],
+                        \ ["&Documentation\t\\cm", 'echo 600'],
+                        \ ]
+            endif
+
+            " set cursor to the last position
+            let opts = {'index':g:quickui#context#cursor}
+            call quickui#context#open(content, opts)
+        endfunction
+
+        augroup YvQuickUI
+            au FileType c noremap <silent><buffer> <silent> K            :call YvContextMenu()<cr>
+        augroup END
+
+
+
+    " Menu 'Editor':
+    call quickui#menu#switch('Editor') "Editor {{{2
+
+        call quickui#menu#reset()    | " clear all the menus
+
+        " hit space twice to open menu
+        noremap <silent> <space><space> :call quickui#menu#open('Editor')<cr>
+
+        " install a 'File' menu, use [text, command] to represent an item.
+        call quickui#menu#install('&File', [
+                    \ [ "&New File\tCtrl+n", 'echo 0' ],
+                    \ [ "&Open File\t(F3)",  'echo 1' ],
+                    \ [ "&Close",            'echo 2' ],
+                    \ [ "--",                '' ],
+                    \ [ "&Save\tCtrl+s",     'echo 3'],
+                    \ [ "Save &As",          'echo 4' ],
+                    \ [ "Save All",          'echo 5' ],
+                    \ [ "--",                '' ],
+                    \ [ "E&xit\tAlt+x",      'echo 6' ],
+                    \ ])
+
+        " items containing tips, tips will display in the cmdline
+        call quickui#menu#install('Ed&it', [
+                    \ [ '&Replace', 'call MyMenuExec("%s//", expand("<cword>"), "/gc")', "Replace search with `%{expand('<cword>')}`" ],
+                    \ [ '&Delete',  'g/^$/d',                                            'Remove empty lines' ],
+                    \ [ '&Blank',   "%s/\\n\\{3,}/\\r\\r/e",                             'Remove extra empty lines' ],
+                    \ [ '&Wrap (ft)',    "!fmt -c -w 100 -u -s",                              'Wrap lines' ],
+                    \ ])
+
+        " items containing tips, tips will display in the cmdline
+        call quickui#menu#install('&View', [
+                    \ [ '&Split',            'split',               "Split window" ],
+                    \ [ '&V-Split',          'vsplit',              'Vertical split window' ],
+                    \ [ "--",                '',                    '' ],
+                    \ [ 'Switch &Outline',   "VoomToggle markdown", '' ],
+                    \ [ 'Switch &Maximizer', "MaximizerToggle",     '' ],
+                    \ [ 'Switch NERDTr&ee',  "NERDTreeTabsToggle",  '' ],
+                    \ [ 'Switch &TagBar',    "TagbarToggle",        '' ],
+                    \ ])
+
+        " script inside %{...} will be evaluated and expanded in the string
+        call quickui#menu#install("&Option", [
+                    \ ['Set &Spell %{&spell? "Off":"On"}', 'set spell!'],
+                    \ ['Set &Cursor Line %{&cursorline? "Off":"On"}', 'set cursorline!'],
+                    \ ['Set &Paste %{&paste? "Off":"On"}', 'set paste!'],
+                    \ ])
+
+
+        if CheckPlug('vim-fugitive', 1) && YvIsGit()
+            call quickui#menu#install('&Git', [
+                    \ [ '&Diff',   'Gvdiff',  "fugitive" ],
+                    \ [ '&Status', "Gstatus", 'fugitive' ],
+                    \ [ '&Blame',  "Gblame",  'fugitive' ],
+                    \ [ '&Log',    "GV",      'fugitive' ],
+                    \ ])
+        endif
+
+
+        call quickui#menu#install('&QuickFix', [
+                    \ [ 'Make &wad',  'Make -i -s -j6 -C daemon/wad',          "make wad" ],
+                    \ [ 'Make &init', "Make -i -s -j6 -C sysinit",             'make init' ],
+                    \ [ '&Filter',    "call utilquickfix#QuickFixFilter()",    'Filter QuickFix' ],
+                    \ [ '&Caller',    "call utilquickfix#QuickFixFunction() ", 'Find the caller' ],
+                    \ ])
+
+        call quickui#menu#install('&Misc', [
+                    \ [ '&Count',     'call MyMenuExec("%s/", expand("<cword>"), "//gn")', "Count `%{expand('<cword>')}`" ],
+                    \ [ '&Number',    "normal gA",                                         'Convert number' ],
+                    \ [ '&Translate', "R! ~/tools/dict <C-R>=expand('<cword>')",           "Translate `%{expand('<cword>')}`" ],
+                    \ [ 'Update &Tag',    "NeomakeSh! tagme",                                         '' ],
+                    \ ])
+
+        " register HELP menu with weight 10000
+        call quickui#menu#install('H&elp', [
+                    \ ["&Cheatsheet", 'help index', ''],
+                    \ ['T&ips', 'help tips', ''],
+                    \ ['--',''],
+                    \ ["&Tutorial", 'help tutor', ''],
+                    \ ['&Quick Reference', 'help quickref', ''],
+                    \ ['&Summary', 'help summary', ''],
+                    \ ], 10000)
 
 endif
+
 
 if CheckPlug('vimlogger', 1)
     " note:readme

@@ -76,8 +76,8 @@ if CheckPlug('neovim-fuzzy', 1)
     nnoremap <silent> <leader>;  :<c-u>call <SID>JumpComma(0)<cr>
     vnoremap          <leader>;  :<c-u>call <SID>JumpComma(1)<cr>
 elseif CheckPlug('fzf-cscope.vim', 1)
-    nnoremap <silent> ;f          :FileCatN<cr>
-    nnoremap <silent> <leader><leader>f  :FileCatN!<cr>
+    nnoremap <silent> ;f    :FileCatN<cr>
+    nnoremap <silent> ;F    :FileCatN!<cr>
 endif
 " ver1: open-file by <leader>o
 " ver2: open-file by ;o       " the <leader>o take by jump-history, which like Ctrl-o

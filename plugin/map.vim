@@ -140,8 +140,8 @@ endif
 
 
 if CheckPlug('fzf.vim', 1)
-    nnoremap ;j     :Buffers<cr>
-    nnoremap ;l     :BLines<cr>
+    "nnoremap ;j     :Buffers<cr>
+    "nnoremap ;l     :BLines<cr>
 endif
 
 
@@ -423,4 +423,9 @@ if CheckPlug('w3m.vim', 1)
     endfunction
 endif
 
+
+if CheckPlug('vim-which-key', 1) | " {{{1
+    "noremap <silent> ;?            :<c-u>WhichKey ';'<cr>
+    "noremap <silent> <leader>?     :<c-u>WhichKey '<leader>'<cr>
+endif
 

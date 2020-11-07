@@ -438,14 +438,19 @@ if CheckPlug('vim-quickui', 1) "{{{1
     " Sugar 'Pop-preview'
       augroup YvQuickUI
         au!
-        nnoremap <silent> ;;                       :call quickui#tools#preview_tag('')<cr>
+
+        if CheckPlug('vim-which-key', 1)
+            nnoremap <silent> ;j?            :WhichKey ';j'<cr>
+        endif
+
+        nnoremap <silent> ;;             :call quickui#tools#preview_tag('')<cr>
+    " Sugar 'tag'
+        nnoremap <silent> ;jj            :call quickui#tools#list_buffer('e')<cr>
+        nnoremap <silent> ;jt            :call quickui#tools#list_buffer('tabedit')<cr>
+        nnoremap <silent> ;jf            :call quickui#tools#list_function()<cr>
+
         au FileType qf noremap <silent><buffer> ;; :call quickui#tools#preview_quickfix()<cr>
       augroup END
-
-    " Sugar 'tag'
-        nnoremap <silent> <Leader>jj            :call quickui#tools#list_buffer('e')<cr>
-        nnoremap <silent> <Leader>jt            :call quickui#tools#list_buffer('tabedit')<cr>
-        nnoremap <silent> <Leader>jf            :call quickui#tools#list_function()<cr>
 
 
     " Sugar 'terminal'
@@ -455,7 +460,7 @@ if CheckPlug('vim-quickui', 1) "{{{1
 
         let opts = {'w':80, 'h':10, 'callback':'TermExit'}
         let opts.title = 'Terminal Popup'
-        nnoremap <silent> <Leader>ji            :call quickui#terminal#open('zsh', opts) <cr>
+        nnoremap <silent> ;ji            :call quickui#terminal#open('zsh', opts) <cr>
 
     " Sugar 'git branch'
     if YvIsGit()
@@ -467,8 +472,10 @@ if CheckPlug('vim-quickui', 1) "{{{1
         endfor
 
         let opts = {'title': 'Select one branch'}
-        nnoremap <silent> <Leader>jb            :call quickui#listbox#open(content, opts) <cr>
-        nnoremap <silent> <Leader>jd            :call quickui#textbox#command('git diff', opts) <cr>
+      augroup YvQuickUI
+        nnoremap <silent> ;jb            :call quickui#listbox#open(content, opts) <cr>
+        nnoremap <silent> ;jd            :call quickui#textbox#command('git diff', opts) <cr>
+      augroup END
     endif
 
     function YvGetSel()
@@ -486,27 +493,30 @@ if CheckPlug('vim-quickui', 1) "{{{1
                 let content = [
                         \ ["&Symbol `%{expand('<cword>')}`",     "call cscope#run('0', expand('<cword>'))" ],
                         \ ["&Caller `%{expand('<cword>')}`",     "call cscope#run('2', expand('<cword>'))"],
-                        \ ["Prev Sy&mbol `%{expand('<cword>')}", "call cscope#preview('0', expand('<cword>'), 1)" ],
-                        \ ["Prev Ca&ller `%{expand('<cword>')}", "call cscope#preview('2', expand('<cword>'), 1)"],
+                        \ ["Prev S&ymbol `%{expand('<cword>')}", "call cscope#preview('0', expand('<cword>'), 1)" ],
+                        \ ["Prev C&aller `%{expand('<cword>')}", "call cscope#preview('2', expand('<cword>'), 1)"],
                         \ ['-',                                  ''],
                         \ ["Find &Tag `%{expand('<cword>')}`",   "exec 'TagCatN! '. expand('<cword>')" ],
-                        \ ["Prev T&ag `%{expand('<cword>')}`",   "exec 'TagCatPreN! '. expand('<cword>')" ],
+                        \ ["&Prev Tag `%{expand('<cword>')}`",   "exec 'TagCatPreN! '. expand('<cword>')" ],
                         \ ["&VTag `%{YvGetSel()}`",              "exec 'TagCatV! '. YvGetSel()" ],
                         \ ["VTa&g `%{YvGetSel()}`",              "exec 'TagCatPreV! '. YvGetSel()" ],
-                        \ ['-',                                  ''],
-                        \ ["&Doc",                               'echo 600'],
+                        \ ['-',            ''],
+                        \ ["&Files",       "FileCatV" ],
+                        \ ["All F&iles",   "FileCatV!" ],
+                        \ ["Prev Fil&es",  "FileCatPreN" ],
+                        \ ["Pre&v Files",  "FileCatPreV" ],
+                        \ ['-',            ''],
+                        \ ["Text Searc&h", "exec 'RgType '. expand('<cword>')" ],
+                        \ ["Li&nes",       "BLines" ],
                         \ ]
             else
                 let content = [
-                        \ ["Find &Symbol", 'cs find s <C-R>=expand("<cword>")' ],
-                        \ ["&Signature", 'echo 101'],
-                        \ ['-'],
-                        \ ["Find in &File\t\\cx", 'echo 200' ],
-                        \ ["Find in &Project\t\\cp", 'echo 300' ],
-                        \ ["Find in &Defintion\t\\cd", 'echo 400' ],
-                        \ ["Search &References\t\\cr", 'echo 500'],
-                        \ ['-'],
-                        \ ["&Documentation\t\\cm", 'echo 600'],
+                        \ ["Find &Symbol",     "exec 'cs find s '. expand('<cword>')" ],
+                        \ ["Find &Definition", "exec 'cs find g '. expand('<cword>')" ],
+                        \ ["Find &Caller",     "exec 'cs find c '. expand('<cword>')" ],
+                        \ ["Find &Callee",     "exec 'cs find d '. expand('<cword>')" ],
+                        \ ["Find &Text",       "exec 'cs find e '. expand('<cword>')" ],
+                        \ ["Find &Symbol",     "call cscope#Symbol()" ],
                         \ ]
             endif
 
@@ -516,7 +526,7 @@ if CheckPlug('vim-quickui', 1) "{{{1
         endfunction
 
         augroup YvQuickUI
-            au FileType c noremap <silent><buffer> <silent> K            :call YvContextMenu()<cr>
+            au FileType c,cpp,log noremap <silent><buffer> <silent> K            :call YvContextMenu()<cr>
         augroup END
 
 

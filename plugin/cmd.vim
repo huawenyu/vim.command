@@ -443,13 +443,13 @@ if CheckPlug('vim-quickui', 1) "{{{1
             nnoremap <silent> ;j?            :WhichKey ';j'<cr>
         endif
 
-        nnoremap <silent> ;;             :call quickui#tools#preview_tag('')<cr>
+        nnoremap <silent> ;;             :call quickui#tools#preview_tag('') <bar> "Pop-Define" <cr>
     " Sugar 'tag'
-        nnoremap <silent> ;jj            :call quickui#tools#list_buffer('e')<cr>
-        nnoremap <silent> ;jt            :call quickui#tools#list_buffer('tabedit')<cr>
-        nnoremap <silent> ;jf            :call quickui#tools#list_function()<cr>
+        nnoremap <silent> ;jj            :call quickui#tools#list_buffer('e') <bar> 'Buffer' <cr>
+        nnoremap <silent> ;jt            :call quickui#tools#list_buffer('tabedit') <bar> 'Buffer2Tab' <cr>
+        nnoremap <silent> ;jf            :call quickui#tools#list_function() <bar> 'Pop-functions' <cr>
 
-        au FileType qf noremap <silent><buffer> ;; :call quickui#tools#preview_quickfix()<cr>
+        au FileType qf noremap <silent><buffer> ;; :call quickui#tools#preview_quickfix() <bar> 'Prev-context' <cr>
       augroup END
 
 
@@ -460,7 +460,7 @@ if CheckPlug('vim-quickui', 1) "{{{1
 
         let opts = {'w':80, 'h':10, 'callback':'TermExit'}
         let opts.title = 'Terminal Popup'
-        nnoremap <silent> ;ji            :call quickui#terminal#open('zsh', opts) <cr>
+        nnoremap <silent> ;ji            :call quickui#terminal#open('zsh', opts) <bar> 'Terminal' <cr>
 
     " Sugar 'git branch'
     if YvIsGit()
@@ -473,8 +473,8 @@ if CheckPlug('vim-quickui', 1) "{{{1
 
         let opts = {'title': 'Select one branch'}
       augroup YvQuickUI
-        nnoremap <silent> ;jb            :call quickui#listbox#open(content, opts) <cr>
-        nnoremap <silent> ;jd            :call quickui#textbox#command('git diff', opts) <cr>
+        nnoremap <silent> ;jb            :call quickui#listbox#open(content, opts) <bar> 'Switch-branch'  <cr>
+        nnoremap <silent> ;jd            :call quickui#textbox#command('git diff', opts) <bar> 'Pop diff'  <cr>
       augroup END
     endif
 
@@ -491,13 +491,13 @@ if CheckPlug('vim-quickui', 1) "{{{1
         function! YvContextMenu()
             if CheckPlug('fzf.vim', 1)
                 let content = [
-                        \ ["&Symbol `%{expand('<cword>')}`",     "call cscope#run('0', expand('<cword>'))" ],
-                        \ ["&Caller `%{expand('<cword>')}`",     "call cscope#run('2', expand('<cword>'))"],
-                        \ ["Prev S&ymbol `%{expand('<cword>')}", "call cscope#preview('0', expand('<cword>'), 1)" ],
-                        \ ["Prev C&aller `%{expand('<cword>')}", "call cscope#preview('2', expand('<cword>'), 1)"],
+                        \ ["&Caller `%{expand('<cword>')}`",     "call cscope#run('0', expand('<cword>'))" ],
+                        \ ["C&allee `%{expand('<cword>')}`",     "call cscope#run('2', expand('<cword>'))"],
+                        \ ["&Prev Caller `%{expand('<cword>')}", "call cscope#preview('0', expand('<cword>'), 1)" ],
+                        \ ["P&rev Callee `%{expand('<cword>')}", "call cscope#preview('2', expand('<cword>'), 1)"],
                         \ ['-',                                  ''],
-                        \ ["Find &Tag `%{expand('<cword>')}`",   "exec 'TagCatN! '. expand('<cword>')" ],
-                        \ ["&Prev Tag `%{expand('<cword>')}`",   "exec 'TagCatPreN! '. expand('<cword>')" ],
+                        \ ["&Symbol `%{expand('<cword>')}`",   "exec 'TagCatN! '. expand('<cword>')" ],
+                        \ ["Prev S&ymbol `%{expand('<cword>')}`",   "exec 'TagCatPreN! '. expand('<cword>')" ],
                         \ ["&VTag `%{YvGetSel()}`",              "exec 'TagCatV! '. YvGetSel()" ],
                         \ ["VTa&g `%{YvGetSel()}`",              "exec 'TagCatPreV! '. YvGetSel()" ],
                         \ ['-',            ''],
@@ -526,7 +526,7 @@ if CheckPlug('vim-quickui', 1) "{{{1
         endfunction
 
         augroup YvQuickUI
-            au FileType c,cpp,log noremap <silent><buffer> <silent> K            :call YvContextMenu()<cr>
+            au FileType c,cpp,log noremap <silent><buffer> <silent> K            :call YvContextMenu() <cr>
         augroup END
 
 

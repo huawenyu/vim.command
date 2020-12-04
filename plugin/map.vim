@@ -14,6 +14,11 @@ if CheckPlug('vim-workspace', 1)
 endif
 
 
+if CheckPlug('vim-workspace', 1)
+    nnoremap <leader>tm :TableModeToggle<cr>
+endif
+
+
 " Quick Jump
 if CheckPlug('neovim-fuzzy', 1)
     function! s:JumpI(mode)
@@ -123,7 +128,7 @@ endif
 
 
 if CheckPlug('vim-autoformat', 1)
-    noremap <F3> :Autoformat<CR>
+    "noremap <F3> :Autoformat<CR>
 endif
 
 
@@ -293,16 +298,16 @@ endif
 
 
 if CheckPlug('vim-tmux-runner', 1)
-    nnoremap <silent> <leader>tt :exec "VtrLoad" \| exec "call vtr#SendCommandEx('n')"<CR>
-    vnoremap <silent> <leader>tt :exec "VtrLoad" \| exec "call vtr#SendCommandEx('v')"<CR>
-    nnoremap <silent> <leader>tw :exec "VtrLoad" \| exec "call vtr#ExecuteCommand('n')"<CR>
-    vnoremap <silent> <leader>tw :exec "VtrLoad" \| exec "call vtr#ExecuteCommand('v')"<CR>
+    "nnoremap <silent> <leader>tt :exec "VtrLoad" \| exec "call vtr#SendCommandEx('n')"<CR>
+    "vnoremap <silent> <leader>tt :exec "VtrLoad" \| exec "call vtr#SendCommandEx('v')"<CR>
+    "nnoremap <silent> <leader>tw :exec "VtrLoad" \| exec "call vtr#ExecuteCommand('n')"<CR>
+    "vnoremap <silent> <leader>tw :exec "VtrLoad" \| exec "call vtr#ExecuteCommand('v')"<CR>
 
-    nnoremap <silent> <leader>tf :exec "VtrLoad" \| exec "VtrSendFile"<CR>
-    nnoremap <silent> <leader>tl :exec "VtrLoad" \| exec "VtrSendLinesToRunner"<CR>
-    nnoremap <silent> <leader>tj :exec "VtrLoad" \| exec "VtrBufferPasteHere"<CR>
-    nnoremap <silent> <leader>tg :exec "VtrLoad" \| exec "VtrFlushCommand"<CR>
-    nnoremap <silent> <leader>tc :exec "VtrLoad" \| exec "VtrClearRunner"<CR>
+    "nnoremap <silent> <leader>tf :exec "VtrLoad" \| exec "VtrSendFile"<CR>
+    "nnoremap <silent> <leader>tl :exec "VtrLoad" \| exec "VtrSendLinesToRunner"<CR>
+    "nnoremap <silent> <leader>tj :exec "VtrLoad" \| exec "VtrBufferPasteHere"<CR>
+    "nnoremap <silent> <leader>tg :exec "VtrLoad" \| exec "VtrFlushCommand"<CR>
+    "nnoremap <silent> <leader>tc :exec "VtrLoad" \| exec "VtrClearRunner"<CR>
 endif
 
 

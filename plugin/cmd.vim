@@ -537,7 +537,7 @@ if CheckPlug('vim-quickui', 1) "{{{1
         call quickui#menu#reset()    | " clear all the menus
 
         " hit space twice to open menu
-        noremap <silent> <space><space> :call quickui#menu#open('Editor')<cr>
+        noremap <silent> ;m  :call quickui#menu#open('Editor')<cr>
 
         " install a 'File' menu, use [text, command] to represent an item.
         call quickui#menu#install('&File', [

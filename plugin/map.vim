@@ -97,8 +97,8 @@ if CheckPlug('c-utils.vim', 1)
         endif
     endfunction
 
-    nnoremap <silent> <leader>;  :<c-u>call <SID>JumpComma(0)<cr>
-    vnoremap          <leader>;  :<c-u>call <SID>JumpComma(1)<cr>
+    nnoremap <silent> <leader><leader>  :<c-u>call <SID>JumpComma(0)<cr>
+    vnoremap          <leader><leader>  :<c-u>call <SID>JumpComma(1)<cr>
 endif
 
 

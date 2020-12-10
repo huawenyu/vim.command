@@ -86,7 +86,7 @@ endif
 
     nnoremap <silent> <leader>o <C-o>
     nnoremap <silent> <leader>i <C-i>
-    nnoremap <silent> <leader>] <C-]>
+    nnoremap <silent> <leader>; <C-]>
     "inoremap <silent> <leader>[ <C-[>
 
     " Substitue for MaboXterm diable <c-h>

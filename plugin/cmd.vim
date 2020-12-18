@@ -356,10 +356,19 @@ if CheckPlug('quickmenu.vim', 1) || CheckPlug('vim-quickui', 1) "{{{1
         nnoremap <leader>mf :call utilquickfix#QuickFixFilter() <CR>
         nnoremap <leader>mc :call utilquickfix#QuickFixFunction() <CR>
 
+        Shortcut! <space>mk    Make wad
+        Shortcut! <space>ma    Make init
+        Shortcut! <space>mf    QuickFix filter
+        Shortcut! <space>mc    QuickFix show caller
+        Shortcut! <space>mw    Tools dictionary
+
     " Section 'Git'
         "nnoremap <leader>bb :VCBlame<cr>
         nnoremap <leader>bb :Gblame<cr>
         nnoremap <leader>bl :GV
+
+        Shortcut! <space>bb    Git blame
+        Shortcut! <space>bl    Git logs
 
 
     function MyMenuExec(...)
@@ -443,7 +452,8 @@ if CheckPlug('vim-quickui', 1) "{{{1
             nnoremap <silent> ;j?            :WhichKey ';j'<cr>
         endif
 
-        nnoremap <silent> ;;             :call quickui#tools#preview_tag('') <bar> "Pop-Define" <cr>
+        "" Sometime mess up the colortheme of a special-window
+        "nnoremap <silent> ;;             :call quickui#tools#preview_tag('') <bar> "Pop-Define" <cr>
     " Sugar 'tag'
         nnoremap <silent> ;jj            :call quickui#tools#list_buffer('e') <bar> 'Buffer' <cr>
         nnoremap <silent> ;jt            :call quickui#tools#list_buffer('tabedit') <bar> 'Buffer2Tab' <cr>

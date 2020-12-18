@@ -112,6 +112,7 @@ endif
         "     vnoremap qq c<C-R>=system('wc -c | perl -pe chomp', @")<CR><ESC>
         "autocmd FileType vimwiki vnoremap <leader>ff :!fmt -c -w 100 -u -s <cr>
         vnoremap <leader>ft :!fmt -c -w 100 -u -s <cr>
+        Shortcut! <space>ft    Format box lines
     " }
 
     " Replace by vim-tmux-navigator
@@ -159,6 +160,7 @@ endif
     nnoremap <silent> p p`]
     " Paste in insert mode
     inoremap <silent> <a-i> <c-r>"
+    Shortcut! <leader><a-i> Paste in insert mode
 
     " Navigate quickfix
     nnoremap <silent> <c-n> :cn<cr>
@@ -277,6 +279,10 @@ endif
     "nnoremap <silent> <a-]> :Null<CR>
     "nnoremap <silent> <a-\> :Null<CR>
 
+    Shortcut!  <a-'>    View outline
+    Shortcut!  <a-;>    View taglist
+    Shortcut!  <a-e>    View NerdTree
+    Shortcut!  <a-w>    View Maximize window
 "}}}
 
 
@@ -284,12 +290,14 @@ endif
     " Toggle source/header
     "nnoremap <silent> <leader>a  :<c-u>FuzzyOpen <C-R>=printf("%s\\.", expand('%:t:r'))<cr><cr>
     nnoremap <silent> <leader>a  :<c-u>call CurtineIncSw()<cr>
+    Shortcut!  <space>a    Jump header c/h
 
     if CheckPlug('vim-sleuth', 1)
         nnoremap <leader>fd :Sleuth<cr>
     elseif CheckPlug('detectindent', 1)
         nnoremap <leader>fd :DetectIndent<cr>
     endif
+    Shortcut!  <space>fd    Help Detect Indent
 
     " Set log
     "nnoremap <silent> <leader>ll :<c-u>call log#log(expand('%'))<CR>
@@ -310,6 +318,7 @@ endif
     nnoremap          <leader>v] :NeomakeSh! tagme<cr>
     nnoremap <silent> <leader>vi :call utils#VoomInsert(0) <CR>
     vnoremap <silent> <leader>vi :call utils#VoomInsert(1) <CR>
+    Shortcut!  <space>vi    Help outline insert
 
 
     " Search
@@ -317,6 +326,8 @@ endif
     vnoremap <leader>gg :<C-\>e utilgrep#Grep(0, 1, "daemon/wad", 1)<cr>
     nnoremap <leader>vv :<C-\>e utilgrep#Grep(0, 0, "", 1)<cr>
     vnoremap <leader>vv :<C-\>e utilgrep#Grep(0, 1, "", 1)<cr>
+    Shortcut!  <space>gg    Search wad
+    Shortcut!  <space>vv    Search all
 
     nnoremap ;gg :<C-\>e utilgrep#Grep(0, 0, "daemon/wad", 0)<cr>
     vnoremap ;gg :<C-\>e utilgrep#Grep(0, 1, "daemon/wad", 0)<cr>
@@ -347,6 +358,7 @@ endif
 
     nnoremap <silent> mm :<c-u>call utils#MarkSelected('n')<CR>
     vnoremap <silent> mm :<c-u>call utils#MarkSelected('v')<CR>
+    Shortcut! mm    Help mark word
 "}}}
 
 
@@ -371,6 +383,8 @@ endif
 
         nnoremap <leader>ee :call SingleCompileSplit() \| SCCompileRun<CR>
         nnoremap <leader>eo :SCViewResult<CR>
+        Shortcut! ee    Tool compile & run
+        Shortcut! eo    Tool compile & run
     endif
 
     nnoremap <leader>el :VlogDisplay \| Messages \| VlogClear<CR><CR>

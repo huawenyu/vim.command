@@ -11,11 +11,13 @@ if CheckPlug('vim-workspace', 1)
     " restore-session: vim -S
     "nnoremap <C-s> :Obsess
     "nnoremap <C-s> :Savews<cr>
+    Shortcut! <C-s>    Workspace save
 endif
 
 
-if CheckPlug('vim-workspace', 1)
+if CheckPlug('vim-table-mode', 1)
     nnoremap <leader>tm :TableModeToggle<cr>
+    Shortcut! <space>tm    Switch table mode
 endif
 
 
@@ -83,6 +85,8 @@ if CheckPlug('neovim-fuzzy', 1)
 elseif CheckPlug('fzf-cscope.vim', 1)
     nnoremap <silent> ;f    :FileCatN<cr>
     nnoremap <silent> ;F    :FileCatN!<cr>
+    Shortcut! ;f    File partial
+    Shortcut! ;F    File all
 endif
 " ver1: open-file by <leader>o
 " ver2: open-file by ;o       " the <leader>o take by jump-history, which like Ctrl-o

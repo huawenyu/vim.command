@@ -22,6 +22,8 @@ endif
 
 
 " Key maps {{{1
+" https://vimways.org/2018/for-mappings-and-a-tutorial/
+"
     "" Stop that stupid window from popping up
     "map q: :q
 
@@ -63,6 +65,8 @@ endif
     "inoremap kk <c-o>:w<cr>
 
     nnoremap <silent> ;ww :w!<cr>
+    " Temporarily turns off search highlighting
+    nnoremap <Return> :nohls<Return><Return>
 
     " vp doesn't replace paste buffer
     function! RestoreRegister()
@@ -290,7 +294,7 @@ endif
     " Toggle source/header
     "nnoremap <silent> <leader>a  :<c-u>FuzzyOpen <C-R>=printf("%s\\.", expand('%:t:r'))<cr><cr>
     nnoremap <silent> <leader>a  :<c-u>call CurtineIncSw()<cr>
-    Shortcut!  <space>a    Jump header c/h
+    Shortcut!  <space>a    Toggle header c/h
 
     if CheckPlug('vim-sleuth', 1)
         nnoremap <leader>fd :Sleuth<cr>

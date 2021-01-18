@@ -352,14 +352,14 @@ elseif CheckPlug('vim-tabber', 1)
     let g:tabber_divider_style = 'unicode'
     "let g:tabber_divider_style = 'fancy'
 
-    nnoremap <silent> ;tt   :TabberNew<CR>
-    nnoremap          ;tc   :tabclose<CR>
-    nnoremap          ;tr   :TabberLabel <C-R>=expand('%:t:r')<CR>
-    nnoremap          ;tm   :TabberMove<CR>
-    nnoremap          ;th   :TabberShiftLeft<CR>
-    nnoremap          ;tl   :TabberShiftRight<CR>
-    nnoremap          ;ts   :TabberSwap<CR>
-    nnoremap <silent> ;aa   :TabberSelectLastActive<CR>
+    "nnoremap <silent> ;tt   :TabberNew<CR>
+    "nnoremap          ;tc   :tabclose<CR>
+    "nnoremap          ;tr   :TabberLabel <C-R>=expand('%:t:r')<CR>
+    "nnoremap          ;tm   :TabberMove<CR>
+    "nnoremap          ;th   :TabberShiftLeft<CR>
+    "nnoremap          ;tl   :TabberShiftRight<CR>
+    "nnoremap          ;ts   :TabberSwap<CR>
+    "nnoremap <silent> ;aa   :TabberSelectLastActive<CR>
 endif
 
 
@@ -436,5 +436,11 @@ endif
 if CheckPlug('vim-which-key', 1) | " {{{1
     "noremap <silent> ;?            :<c-u>WhichKey ';'<cr>
     "noremap <silent> <leader>?     :<c-u>WhichKey '<leader>'<cr>
+endif
+
+
+if CheckPlug('vim-argwrap', 1) | " {{{1
+    nnoremap <silent> <leader>A :ArgWrap<CR>
+    Shortcut! <space>A    Format arguments
 endif
 

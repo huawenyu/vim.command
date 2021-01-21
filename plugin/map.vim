@@ -352,7 +352,7 @@ elseif CheckPlug('vim-tabber', 1)
     let g:tabber_divider_style = 'unicode'
     "let g:tabber_divider_style = 'fancy'
 
-    "nnoremap <silent> ;tt   :TabberNew<CR>
+    nnoremap <silent> ;tt   :TabberNew<CR>
     "nnoremap          ;tc   :tabclose<CR>
     "nnoremap          ;tr   :TabberLabel <C-R>=expand('%:t:r')<CR>
     "nnoremap          ;tm   :TabberMove<CR>

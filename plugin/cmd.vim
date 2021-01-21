@@ -242,11 +242,12 @@ endif
         endif
 
         if !empty(g:vim_confi_option.plug_note)
-           autocmd FileType vim,zsh,vimwiki,markdown,media nnoremap <buffer> <silent> K :call <sid>plug_note()<cr>
-           "autocmd FileType notes nnoremap <buffer> <silent> K :call <sid>plug_note()<cr>
-           "
-           "command! ShowPlugNote call <sid>plug_note()
-           "autocmd FileType vim setlocal keywordprg=:ShowPlugNote
+           "autocmd FileType vim,zsh,vimwiki,markdown,media nnoremap <buffer> <silent> K :call <sid>plug_note()<cr>
+
+           ""autocmd FileType notes nnoremap <buffer> <silent> K :call <sid>plug_note()<cr>
+           ""
+           ""command! ShowPlugNote call <sid>plug_note()
+           ""autocmd FileType vim setlocal keywordprg=:ShowPlugNote
         endif
 
     augroup END
@@ -536,7 +537,7 @@ if CheckPlug('vim-quickui', 1) "{{{1
         endfunction
 
         augroup YvQuickUI
-            au FileType c,cpp,log noremap <silent><buffer> <silent> K            :call YvContextMenu() <cr>
+            "au FileType c,cpp,log noremap <silent><buffer> <silent> K            :call YvContextMenu() <cr>
         augroup END
 
 

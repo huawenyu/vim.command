@@ -20,6 +20,11 @@ endif
 " ;*            Cause 'f*' repeat mode fail, maybe plugin 'clever-f.vim' can release the key ';'
 "=========================================================
 
+if HasPlug('DrawIt')
+    " release map <leader>w, <leader>r
+    unmap <leader>swp
+    unmap <leader>rwp
+endif
 
 " Key maps {{{1
 " https://vimways.org/2018/for-mappings-and-a-tutorial/
@@ -64,9 +69,9 @@ endif
     " Save in insert mode, comment out it for anoy when you input the letter 'k'.
     "inoremap kk <c-o>:w<cr>
 
-    nnoremap <silent> ;ww :w!<cr>
+    "nnoremap <silent> ;ww :w!<cr>
     " Temporarily turns off search highlighting
-    nnoremap <Return> :nohls<Return><Return>
+    nnoremap <silent> <Return> :nohls<Return><Return>
 
     " vp doesn't replace paste buffer
     function! RestoreRegister()
@@ -100,7 +105,7 @@ endif
     nnoremap <leader>l <c-w>l
 
     nnoremap <leader>q :<c-u>qa<cr>
-    nnoremap <leader>s :w<cr> :echom "Saved"<CR>
+    nnoremap <leader>s :<c-u>SaveAs<space>
     "" Esc too far, use Ctrl+Enter as alternative
     "inoremap <a-CR> <Esc>
     "vnoremap <a-CR> <Esc>
@@ -179,6 +184,21 @@ endif
 
 " View keymap {{{1
     "autocmd WinEnter * if !utils#IsLeftMostWindow() | let g:tagbar_left = 0 | else | let g:tagbar_left = 1 | endif
+
+
+    function! s:SaveAs(fname)
+        let cfname = expand('%:t')
+        if (cfname == 'tmux.log' && !empty(a:fname))
+            let tmuxWname = trim(system("tmux display-message -p '#W'"))
+            let cmdstr = "w! ~/work/". tmuxWname. "/doc/". a:fname
+            "echomsg cmdstr
+            exec cmdstr
+        else
+            w
+        endif
+    endfunction
+    command! -nargs=? SaveAs call <SID>SaveAs( '<args>' )
+
     function! s:ToggleTagbar()
         " Detect which plugins are open
         if exists('t:NERDTreeBufName')
@@ -188,38 +208,33 @@ endif
         endif
 
         if nerdtree_open
-            if CheckPlug('tagbar', 1)
+            if HasPlug('tagbar')
                 let g:tagbar_left = 0
-            elseif CheckPlug('vista.vim', 1)
+            elseif HasPlug('vista.vim')
                 let g:vista_sidebar_position = 'vertical botright'
             endif
         else
             " left
             if utils#IsLeftMostWindow()
-                if CheckPlug('tagbar', 1)
+                if HasPlug('tagbar')
                     let g:tagbar_left = 1
-                elseif CheckPlug('vista.vim', 1)
+                elseif HasPlug('vista.vim')
                     let g:vista_sidebar_position = 'vertical topleft'
                 endif
             " right
             else
-                if CheckPlug('tagbar', 1)
+                if HasPlug('tagbar')
                     let g:tagbar_left = 0
-                elseif CheckPlug('vista.vim', 1)
+                elseif HasPlug('vista.vim')
                     let g:vista_sidebar_position = 'vertical botright'
                 endif
             endif
         endif
 
-        if CheckPlug('tagbar', 1)
+        if HasPlug('tagbar')
             TagbarToggle
-        elseif CheckPlug('vista.vim', 1)
-            let tagbar_open = bufwinnr('__vista__') != -1
-            if tagbar_open
-                Vista! ctags
-            else
-                Vista ctags
-            endif
+        elseif HasPlug('vista.vim')
+            Vista!!
         endif
 
 
@@ -256,14 +271,14 @@ endif
     " --End
 
     "nnoremap <f3> :VimwikiFollowLink
-    if CheckPlug('vim-maximizer', 1)
+    if HasPlug('vim-maximizer')
         nnoremap <silent> <a-w> :MaximizerToggle<CR>
-    elseif CheckPlug('maximize', 1)
+    elseif HasPlug('maximize')
         nnoremap <silent> <a-w> :MaximizeWindow<CR>
     endif
-    if CheckPlug('vim-nerdtree-tabs', 1)
+    if HasPlug('vim-nerdtree-tabs')
         nnoremap <silent> <a-e> :NERDTreeTabsToggle<cr>
-    elseif CheckPlug('nerdtree', 1)
+    elseif HasPlug('nerdtree')
         nnoremap <silent> <a-e> :NERDTreeToggle<cr>
     endif
 
@@ -296,9 +311,9 @@ endif
     nnoremap <silent> <leader>a  :<c-u>call CurtineIncSw()<cr>
     Shortcut!  <space>a    Toggle header c/h
 
-    if CheckPlug('vim-sleuth', 1)
+    if HasPlug('vim-sleuth')
         nnoremap <leader>fd :Sleuth<cr>
-    elseif CheckPlug('detectindent', 1)
+    elseif HasPlug('detectindent')
         nnoremap <leader>fd :DetectIndent<cr>
     endif
     Shortcut!  <space>fd    Help Detect Indent
@@ -356,7 +371,7 @@ endif
     "nnoremap gf :<c-u>call utils#GotoFileWithLineNum()<CR>
     nnoremap <silent> <leader>gf :<c-u>call utils#GotoFileWithPreview()<CR>
 
-    if CheckPlug('vim-sleuth', 1)
+    if HasPlug('vim-sleuth')
         nnoremap <silent> <leader>gl :GV<CR>
     endif
 
@@ -395,10 +410,10 @@ endif
 
 
     augroup filetype_auto_eval
-        if CheckPlug('vim-eval', 1)
+        if HasPlug('vim-eval')
             autocmd FileType vim nnoremap <buffer> <leader>ee <Plug>eval_viml
             autocmd FileType vim vnoremap <buffer> <leader>ee <Plug>eval_viml_region
-        elseif CheckPlug('vim-quickrun', 1)
+        elseif HasPlug('vim-quickrun')
             autocmd FileType vim noremap <buffer> <leader>ee :QuickRun<cr>
         endif
 

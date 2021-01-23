@@ -22,7 +22,11 @@ endif
 
 
 " Quick Jump
-if CheckPlug('neovim-fuzzy', 1)
+" ver1: open-file by <leader>o
+" ver2: open-file by ;o       " the <leader>o take by jump-history, which like Ctrl-o
+" ver3: open-file by ;u
+" ver4: open-file by ;f       " quick & easy-remember
+if HasPlug('neovim-fuzzy')
     function! s:JumpI(mode)
         if v:count == 0
             if a:mode
@@ -82,16 +86,38 @@ if CheckPlug('neovim-fuzzy', 1)
     "nnoremap         ;f  :ls<cr>:b<Space>
     nnoremap <silent> <leader>;  :<c-u>call <SID>JumpComma(0)<cr>
     vnoremap          <leader>;  :<c-u>call <SID>JumpComma(1)<cr>
-elseif CheckPlug('fzf-cscope.vim', 1)
+elseif HasPlug('fzf-cscope.vim')
+    " File
+    " FileCatV, FileCatPreN (preview)
     nnoremap <silent> ;f    :FileCatN<cr>
     nnoremap <silent> ;F    :FileCatN!<cr>
-    Shortcut! ;f    File partial
-    Shortcut! ;F    File all
+
+    " function
+    if HasPlug('vista.vim')
+        nnoremap <silent> ;e    :Vista finder ctags<cr>
+    else
+        nnoremap ;e    :TagCatPreN <c-r>=YvGetSel()<cr><cr>
+    endif
+
+    " symbol
+    nnoremap ;s    :TagCatPreN! <c-r>=YvGetSel()<cr>
+    nnoremap ;S    :TagCatN! <c-r>=YvGetSel()<cr>
+
+    " Buffer & lines
+    if CheckPlug('fzf.vim', 1)
+        nnoremap <silent> ;b    :Buffers<cr><cr>
+        nnoremap <silent> ;w    :BLines<cr>
+    endif
+
+    Shortcut! ;f    Jump file partial
+    Shortcut! ;F    Jump file all
+    Shortcut! ;e    Jump function
+    Shortcut! ;s    Jump symbol
+    Shortcut! ;S    Jump symbol withou preview
+    Shortcut! ;b    Jump buffer
+    Shortcut! ;w    Jump line
 endif
-" ver1: open-file by <leader>o
-" ver2: open-file by ;o       " the <leader>o take by jump-history, which like Ctrl-o
-" ver3: open-file by ;u
-" ver4: open-file by ;f       " quick & easy-remember
+
 
 if CheckPlug('c-utils.vim', 1)
     function! s:JumpComma(mode)
@@ -145,12 +171,6 @@ if CheckPlug('vim-go', 1)
     au FileType go nmap <leader>gi <Plug>(go-info)
     au FileType go nmap <leader>ge <Plug>(go-rename)
     au FileType go nmap <leader>gg <Plug>(go-def-vertical)
-endif
-
-
-if CheckPlug('fzf.vim', 1)
-    "nnoremap ;j     :Buffers<cr>
-    "nnoremap ;l     :BLines<cr>
 endif
 
 

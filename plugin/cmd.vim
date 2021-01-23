@@ -25,45 +25,104 @@ endif
 
 
 let g:previous_window = -1
-    function SmartInsert()
-      if &buftype == 'terminal'
-        if g:previous_window != winnr()
-          startinsert
-        endif
-        let g:previous_window = winnr()
-      else
-        let g:previous_window = -1
-      endif
-    endfunction
+function SmartInsert()
+  if &buftype == 'terminal'
+    if g:previous_window != winnr()
+      startinsert
+    endif
+    let g:previous_window = winnr()
+  else
+    let g:previous_window = -1
+  endif
+endfunction
+au BufEnter * call SmartInsert()
 
-    au BufEnter * call SmartInsert()
+
+function! YvGetSel()
+    let sel_l = hw#misc#GetSelection('o')
+    if len(sel_l) > 0
+        return sel_l[0]
+    else
+        return expand('<cword>')
+    endif
+endfunction
 
 
 if g:vim_confi_option.auto_qf_height
-    function! AdjustWindowHeight(minheight, maxheight)
-        let l = 1
-        let n_lines = 0
-        let w_width = winwidth(0)
-        while l <= line('$')
-            " number to float for division
-            let l_len = strlen(getline(l)) + 0.0
-            let line_width = l_len/w_width
-            let n_lines += float2nr(ceil(line_width))
-            let l += 1
-        endw
-        let exp_height = max([min([n_lines, a:maxheight]), a:minheight])
-        if (abs(winheight(0) - exp_height)) > 2
-            exe max([min([n_lines, a:maxheight]), a:minheight]) . "wincmd _"
+    " Maximize the window after entering it, be sure to keep the quickfix window
+    " at the specified height.
+    au WinEnter * call MaximizeAndResizeQuickfix(10)
+
+    " Maximize current window and set the quickfix window to the specified height.
+    function MaximizeAndResizeQuickfix(quickfixHeight)
+        " Redraw after executing the function.
+        set lazyredraw
+        " Ignore WinEnter events for now.
+        set ei=WinEnter
+
+        "??? Maximize current window.
+        "wincmd _
+
+        " If the current window is the quickfix window
+        if (getbufvar(winbufnr(winnr()), "&buftype") == "quickfix")
+            " Maximize previous window, and resize the quickfix window to the
+            " specified height.
+
+            " ???
+            "wincmd p
+            "resize
+            "wincmd p
+
+            exe "resize " . a:quickfixHeight
+        else
+            " Current window isn't the quickfix window, loop over all windows to
+            " find it (if it exists...)
+            let i = 1
+            let currBufNr = winbufnr(i)
+            while (currBufNr != -1)
+                " If the buffer in window i is the quickfix buffer.
+                if (getbufvar(currBufNr, "&buftype") == "quickfix")
+                    " Go to the quickfix window, set height to quickfixHeight, and jump to the previous
+                    " window.
+                    exe i . "wincmd w"
+                    exe "resize " . a:quickfixHeight
+                    wincmd p
+                    break
+                endif
+                let i = i + 1
+                let currBufNr = winbufnr(i)
+            endwhile
         endif
+        set ei-=WinEnter
+        set nolazyredraw
     endfunction
 
-    augroup adjustView
-        autocmd!
-        autocmd filetype qf call AdjustWindowHeight(2, 10)
-    augroup END
+
+    " function! AdjustWindowHeight(minheight, maxheight)
+    "     return
+    "     let l = 1
+    "     let n_lines = 0
+    "     let w_width = winwidth(0)
+    "     while l <= line('$')
+    "         " number to float for division
+    "         let l_len = strlen(getline(l)) + 0.0
+    "         let line_width = l_len/w_width
+    "         let n_lines += float2nr(ceil(line_width))
+    "         let l += 1
+    "     endw
+    "     let exp_height = max([min([n_lines, a:maxheight]), a:minheight])
+    "     if (abs(winheight(0) - exp_height)) > 2
+    "         exe max([min([n_lines, a:maxheight]), a:minheight]) . "wincmd _"
+    "     endif
+    " endfunction
+
+    " augroup adjustView
+    "     autocmd!
+    "     au FileType qf call AdjustWindowHeight(2, 10)
+    " augroup END
 endif
 
-autocmd BufWinEnter,WinEnter term://* startinsert
+"autocmd BufWinEnter,WinEnter term://* startinsert
 autocmd BufEnter * if &buftype == 'terminal' | silent! normal A | endif
 autocmd BufWinEnter,WinEnter * if &buftype == 'terminal' | silent! normal A | endif
 
@@ -189,10 +248,10 @@ endif
         autocmd CursorHold * normal! m'
         "autocmd BufEnter term://* startinsert
 
-        if has('nvim')
-            "autocmd BufNew,BufEnter term://* startinsert
-            autocmd BufEnter,BufEnter * if &buftype == 'terminal' | :startinsert | endif
-        endif
+        "if has('nvim')
+        "    "autocmd BufNew,BufEnter term://* startinsert
+        "    autocmd BufEnter,BufEnter * if &buftype == 'terminal' | :startinsert | endif
+        "endif
 
         " Always show sign column
         autocmd BufEnter * sign define dummy
@@ -258,9 +317,10 @@ endif
 " Commands {{{2
     command! -nargs=* Wrap set wrap linebreak nolist
     "command! -nargs=* Wrap PencilSoft
-    "command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
-    command! -nargs=+ -bang -complete=shellcmd
-          \ Make execute ':NeomakeCmd make '. <q-args>
+
+    ""command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
+    "command! -nargs=+ -bang -complete=shellcmd
+    "      \ NeoMake execute ':NeomakeCmd make '. <q-args>
 
     command! -nargs=1 Silent
       \ | execute ':silent !'.<q-args>
@@ -324,7 +384,7 @@ if CheckPlug('accelerated-jk', 1)
 endif
 
 
-if CheckPlug('quickmenu.vim', 1) || CheckPlug('vim-quickui', 1) "{{{1
+if CheckPlug('vim.config', 1) "{{{1
     " Section 'String'
         "map <leader>ds :call Asm() <CR>
         nnoremap <leader>dt :%s/\s\+$//g
@@ -351,8 +411,10 @@ if CheckPlug('quickmenu.vim', 1) || CheckPlug('vim-quickui', 1) "{{{1
         "nnoremap <leader>vr :Replace <C-R>=expand('<cword>') <CR> <C-R>=expand('<cword>') <cr>
 
     " Section 'Execute'
-        nnoremap <leader>mk :Make -i -s -j6 -C daemon/wad <CR>
-        nnoremap <leader>ma :Make -i -s -j6 -C sysinit <CR>
+        " Plug : asynctasks.vim : ~/.vim_tasks.ini : wad|sysinit
+        nnoremap <leader>mk :AsyncTask wad<CR>
+        nnoremap <leader>ma :AsyncTask sysinit<CR>
+
         nnoremap <leader>mw :R! ~/tools/dict <C-R>=expand('<cword>') <cr>
         nnoremap <leader>mf :call utilquickfix#QuickFixFilter() <CR>
         nnoremap <leader>mc :call utilquickfix#QuickFixFunction() <CR>
@@ -366,7 +428,7 @@ if CheckPlug('quickmenu.vim', 1) || CheckPlug('vim-quickui', 1) "{{{1
     " Section 'Git'
         "nnoremap <leader>bb :VCBlame<cr>
         nnoremap <leader>bb :Gblame<cr>
-        nnoremap <leader>bl :GV
+        nnoremap <leader>bl :GV<cr>
 
         Shortcut! <space>bb    Git blame
         Shortcut! <space>bl    Git logs
@@ -489,15 +551,6 @@ if CheckPlug('vim-quickui', 1) "{{{1
       augroup END
     endif
 
-    function YvGetSel()
-        let sel_l = hw#misc#GetSelection('o')
-        if len(sel_l) > 0
-            return sel_l[0]
-        else
-            return expand('<cword>')
-        endif
-    endfunction
-
     " Sugar 'Context menu'
         function! YvContextMenu()
             if CheckPlug('fzf.vim', 1)
@@ -601,8 +654,8 @@ if CheckPlug('vim-quickui', 1) "{{{1
 
 
         call quickui#menu#install('&QuickFix', [
-                    \ [ 'Make &wad',  'Make -i -s -j6 -C daemon/wad',          "make wad" ],
-                    \ [ 'Make &init', "Make -i -s -j6 -C sysinit",             'make init' ],
+                    \ [ 'Make &wad',  'NeoMake -i -s -j6 -C daemon/wad',       "make wad" ],
+                    \ [ 'Make &init', "NeoMake -i -s -j6 -C sysinit",          'make init' ],
                     \ [ '&Filter',    "call utilquickfix#QuickFixFilter()",    'Filter QuickFix' ],
                     \ [ '&Caller',    "call utilquickfix#QuickFixFunction() ", 'Find the caller' ],
                     \ ])

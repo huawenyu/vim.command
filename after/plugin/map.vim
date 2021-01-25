@@ -348,10 +348,11 @@ endif
     Shortcut!  <space>gg    Search wad
     Shortcut!  <space>vv    Search all
 
-    nnoremap ;gg :<C-\>e utilgrep#Grep(0, 0, "daemon/wad", 0)<cr>
-    vnoremap ;gg :<C-\>e utilgrep#Grep(0, 1, "daemon/wad", 0)<cr>
-    nnoremap ;vv :<C-\>e utilgrep#Grep(0, 0, "", 0)<cr>
-    vnoremap ;vv :<C-\>e utilgrep#Grep(0, 1, "", 0)<cr>
+    " Giveback the 'g' to git
+    " nnoremap ;gg :<C-\>e utilgrep#Grep(0, 0, "daemon/wad", 0)<cr>
+    " vnoremap ;gg :<C-\>e utilgrep#Grep(0, 1, "daemon/wad", 0)<cr>
+    " nnoremap ;vv :<C-\>e utilgrep#Grep(0, 0, "", 0)<cr>
+    " vnoremap ;vv :<C-\>e utilgrep#Grep(0, 1, "", 0)<cr>
 
 
     vnoremap <silent> <leader>yy :<c-u>call utils#GetSelected("/tmp/vim.yank")<CR>

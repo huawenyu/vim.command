@@ -114,8 +114,9 @@ endif
     map <Leader>= <C-w>=
 
     " Format {
-        vnoremap <Leader>ff =<cr>
-        nnoremap <Leader>ff =<cr>
+        " Reserve to cscope/ctags
+        " vnoremap <Leader>ff =<cr>
+        " nnoremap <Leader>ff =<cr>
 
         "     Most UNIX-like programming environments offer generic tools for formatting text. These include fmt, fold, sed, perl, and par. 
         "     vnoremap qq c<C-R>=system('wc -c | perl -pe chomp', @")<CR><ESC>
@@ -258,17 +259,6 @@ endif
             tabnew | enew | exec ":term ". join(a:000)
         endif
     endfunction
-
-    " Reload all opened files
-        fun! PullAndRefresh()
-            set noconfirm
-            !git pull
-            bufdo e!
-            set confirm
-        endfun
-
-        nmap ;gr call PullAndRefresh()
-    " --End
 
     "nnoremap <f3> :VimwikiFollowLink
     if HasPlug('vim-maximizer')

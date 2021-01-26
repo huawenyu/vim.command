@@ -6,6 +6,8 @@ else
   let g:loaded_local_map = 'yes'
 endif
 
+
+" Plugins' map {{{1
 if CheckPlug('vim-workspace', 1)
     nnoremap <C-s> :ToggleWorkspace<cr>
     " restore-session: vim -S
@@ -86,37 +88,60 @@ if HasPlug('neovim-fuzzy')
     "nnoremap         ;f  :ls<cr>:b<Space>
     nnoremap <silent> <leader>;  :<c-u>call <SID>JumpComma(0)<cr>
     vnoremap          <leader>;  :<c-u>call <SID>JumpComma(1)<cr>
+elseif HasPlug('old@fzf-cscope.vim')
+    " if HasPlug('vista.vim')
+    "     nnoremap <silent> ;e    :Vista finder ctags<cr>
+    " else
+    "     nnoremap ;e    :TagCatPreN <c-r>=utils#GetSelected('')<cr><cr>
+    " endif
+    echo "NOP, redirect to cscope."
 elseif HasPlug('fzf-cscope.vim')
     " File
     " FileCatV, FileCatPreN (preview)
-    nnoremap <silent> ;f    :FileCatN<cr>
-    nnoremap <silent> ;F    :FileCatN!<cr>
+    nnoremap <silent> <leader>ff    :FileCatN<cr>
+    vnoremap <silent> <leader>ff    :<c-u>FileCatN<cr>
+    " All files
+    nnoremap <silent> <leader>fF    :FileCatN!<cr>
+    vnoremap <silent> <leader>fF    :<c-u>FileCatN!<cr>
 
-    " function
-    if HasPlug('vista.vim')
-        nnoremap <silent> ;e    :Vista finder ctags<cr>
-    else
-        nnoremap ;e    :TagCatPreN <c-r>=YvGetSel()<cr><cr>
-    endif
+    " Function called
+    nnoremap <silent> <leader>fc    :call cscope#preview('3', 'n', 1)<cr>
+    vnoremap <silent> <leader>fc    :<c-u>call cscope#preview('3', 'v', 1)<cr>
+
+    " Function calling
+    nnoremap <silent> <leader>fC    :call cscope#preview('2', 'n', 1)<cr>
+    vnoremap <silent> <leader>fC    :<c-u>call cscope#preview('2', 'v', 1)<cr>
 
     " symbol
-    nnoremap ;s    :TagCatPreN! <c-r>=YvGetSel()<cr>
-    nnoremap ;S    :TagCatN! <c-r>=YvGetSel()<cr>
+    nnoremap <silent> <leader>fs    :call cscope#preview('0', 'n', 1)<cr>
+    vnoremap <silent> <leader>fs    :<c-u>call cscope#preview('0', 'v', 1)<cr>
+    " symbol assign value
+    nnoremap <silent> <leader>fS    :call cscope#preview('9', 'n', 1)<cr>
+    vnoremap <silent> <leader>fS    :<c-u>call cscope#preview('9', 'v', 1)<cr><cr>
 
-    " Buffer & lines
-    if CheckPlug('fzf.vim', 1)
-        nnoremap <silent> ;b    :Buffers<cr><cr>
-        nnoremap <silent> ;w    :BLines<cr>
-    endif
-
-    Shortcut! ;f    Jump file partial
-    Shortcut! ;F    Jump file all
-    Shortcut! ;e    Jump function
-    Shortcut! ;s    Jump symbol
-    Shortcut! ;S    Jump symbol withou preview
-    Shortcut! ;b    Jump buffer
-    Shortcut! ;w    Jump line
+    " tExt
+    nnoremap          <leader>fe    :CscopeText! <c-r>=utils#GetSelected('')<cr>
+    vnoremap          <leader>fe    :<c-u>CscopeText! <c-r>=utils#GetSelected('')<cr>
+    nnoremap          <leader>fE    :CscopeGrep! <c-r>=utils#GetSelected('')<cr>
+    vnoremap          <leader>fE    :<c-u>CscopeGrep! <c-r>=utils#GetSelected('')<cr>
 endif
+
+" Buffer & lines
+if CheckPlug('fzf.vim', 1)
+    nnoremap <silent> <leader>fb    :Buffers<cr>
+    vnoremap <silent> <leader>fb    :<c-u>Buffers<cr>
+    nnoremap <silent> <leader>fl    :BLines<cr>
+    vnoremap <silent> <leader>fl    :<c-u>BLines<cr>
+endif
+
+" Setup shortcut
+Shortcut! <space>ff    Jump file partial
+Shortcut! <space>fF    Jump file all
+Shortcut! <space>fe    Jump function
+Shortcut! <space>fs    Jump symbol
+Shortcut! <space>fS    Jump symbol withou preview
+Shortcut! <space>fb    Jump buffer
+Shortcut! <space>fl    Jump line
 
 
 if CheckPlug('c-utils.vim', 1)

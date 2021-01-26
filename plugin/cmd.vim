@@ -38,16 +38,6 @@ endfunction
 au BufEnter * call SmartInsert()
 
 
-function! YvGetSel()
-    let sel_l = hw#misc#GetSelection('o')
-    if len(sel_l) > 0
-        return sel_l[0]
-    else
-        return expand('<cword>')
-    endif
-endfunction
-
-
 if g:vim_confi_option.auto_qf_height
     " Maximize the window after entering it, be sure to keep the quickfix window
     " at the specified height.

@@ -32,7 +32,7 @@ if HasPlug('neovim-fuzzy')
     function! s:JumpI(mode)
         if v:count == 0
             if a:mode
-                let ans = input("FuzzySymbol ", utils#GetSelected(''))
+                let ans = input("FuzzySymbol ", utils#GetSelected(a:mode))
                 exec 'FuzzySymb '. ans
             else
                 FuzzySymb
@@ -43,7 +43,7 @@ if HasPlug('neovim-fuzzy')
     function! s:JumpO(mode)
         if v:count == 0
             if a:mode
-                let ans = input("FuzzyOpen ", utils#GetSelected(''))
+                let ans = input("FuzzyOpen ", utils#GetSelected(a:mode))
                 exec 'FuzzyOpen '. ans
             else
                 FuzzyOpen
@@ -57,7 +57,7 @@ if HasPlug('neovim-fuzzy')
     function! s:JumpJ(mode)
         if v:count == 0
             if a:mode
-                let ans = input("FuzzyFunction ", utils#GetSelected(''))
+                let ans = input("FuzzyFunction ", utils#GetSelected(a:mode))
                 exec 'FuzzyFunc '. ans
             else
                 FuzzyFunc
@@ -92,7 +92,7 @@ elseif HasPlug('old@fzf-cscope.vim')
     " if HasPlug('vista.vim')
     "     nnoremap <silent> ;e    :Vista finder ctags<cr>
     " else
-    "     nnoremap ;e    :TagCatPreN <c-r>=utils#GetSelected('')<cr><cr>
+    "     nnoremap ;e    :TagCatPreN <c-r>=utils#GetSelected('n')<cr><cr>
     " endif
     echo "NOP, redirect to cscope."
 elseif HasPlug('fzf-cscope.vim')
@@ -120,10 +120,10 @@ elseif HasPlug('fzf-cscope.vim')
     vnoremap <silent> <leader>fS    :<c-u>call cscope#preview('9', 'v', 1)<cr><cr>
 
     " tExt
-    nnoremap          <leader>fe    :CscopeText! <c-r>=utils#GetSelected('')<cr>
-    vnoremap          <leader>fe    :<c-u>CscopeText! <c-r>=utils#GetSelected('')<cr>
-    nnoremap          <leader>fE    :CscopeGrep! <c-r>=utils#GetSelected('')<cr>
-    vnoremap          <leader>fE    :<c-u>CscopeGrep! <c-r>=utils#GetSelected('')<cr>
+    nnoremap          <leader>fe    :CscopeText! <c-r>=utils#GetSelected('n')<cr>
+    vnoremap          <leader>fe    :<c-u>CscopeText! <c-r>=utils#GetSelected('v')<cr>
+    nnoremap          <leader>fE    :CscopeGrep! <c-r>=utils#GetSelected('n')<cr>
+    vnoremap          <leader>fE    :<c-u>CscopeGrep! <c-r>=utils#GetSelected('v')<cr>
 endif
 
 " Buffer & lines

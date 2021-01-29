@@ -345,7 +345,7 @@ endif
     " vnoremap ;vv :<C-\>e utilgrep#Grep(0, 1, "", 0)<cr>
 
 
-    vnoremap <silent> <leader>yy :<c-u>call utils#GetSelected("/tmp/vim.yank")<CR>
+    vnoremap <silent> <leader>yy :<c-u>call utils#GetSelected('v', "/tmp/vim.yank")<CR>
     nnoremap <silent> <leader>yy :<c-u>call vimuxscript#Copy() <CR>
     nnoremap <silent> <leader>yp :r! cat /tmp/vim.yank<CR>
 

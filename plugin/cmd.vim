@@ -669,15 +669,4 @@ if CheckPlug('vim-quickui', 1) "{{{1
 
 endif
 
-
-if CheckPlug('vimlogger', 1)
-    " note:readme
-    silent! call logger#init('ALL', ['/tmp/vim.log'])
-    "silent! call logger#init('ERROR', ['/tmp/vim.log'])
-
-    "silent! let s:log = logger#getLogger(expand('<sfile>:t'))
-    "silent! call s:log.info(l:__func__, " args=", string(g:gdb.args))
-    "$ tail -f /tmp/vim.log
-endif
-
 " vim:set ft=vim et sw=4:

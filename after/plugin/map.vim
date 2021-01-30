@@ -43,8 +43,13 @@ endif
 
     inoremap <S-Tab> <C-V><Tab>
 
-    nnoremap j gj
-    nnoremap k gk
+    noremap  j gj
+    vnoremap j gj
+    noremap  k gk
+    vnoremap k gk
+    vnoremap > >gv
+    vnoremap < <gv
+
 
     " https://www.reddit.com/r/vim/comments/53bpb4/alternatives_to_esc/
     " https://stackoverflow.com/questions/3776117/what-is-the-difference-between-the-remap-noremap-nnoremap-and-vnoremap-mapping
@@ -85,7 +90,7 @@ endif
     endfunction
     vnoremap <silent> <expr> p <sid>Repl()
 
-    "================================================= {{{2
+    " ____________ {{{2
     "    Finger candy: same-bind a-, c-, leader-
     "
     " Alt+HJKL   move around tmux pane
@@ -105,7 +110,13 @@ endif
     nnoremap <leader>l <c-w>l
 
     nnoremap <leader>q :<c-u>qa<cr>
-    nnoremap <leader>s :<c-u>SaveAs<space>
+
+    nnoremap <leader>ss     :<c-u>FileSaveAs<space>
+    nnoremap <leader>fo     :<c-u>call FileOpenDoc()<cr>
+    Shortcut! <space>ss     File Saveas
+    Shortcut! <space>fo     File Open doc
+    Shortcut! <space>fi     Terminal Open
+
     "" Esc too far, use Ctrl+Enter as alternative
     "inoremap <a-CR> <Esc>
     "vnoremap <a-CR> <Esc>
@@ -136,10 +147,11 @@ endif
         let b:terminal_scrollback_buffer_size = 2000
         let g:terminal_scrollback_buffer_size = 2000
 
-        " i: enter interact-mode, 'esc' exit interact-mode and enter vi-mode
-        " But so far conflict with gdb mode
-        "tnoremap <Esc> <C-\><C-n>
-        "
+        " Terminal exit-to-text-mode, i: enter interact-mode
+        " conflict with gdb mode
+        "   tnoremap <Esc> <C-\><C-n>
+        tnoremap <c-o>     <C-\><C-n>
+
         "tnoremap <leader>h <C-\><C-n><c-w>h
         "tnoremap <leader>j <C-\><C-n><c-w>j
         "tnoremap <leader>k <C-\><C-n><c-w>k
@@ -168,9 +180,13 @@ endif
     "vnoremap <silent> y y`]
     vnoremap <silent> p p`]
     nnoremap <silent> p p`]
+
     " Paste in insert mode
     inoremap <silent> <a-i> <c-r>"
+    " now it is possible to paste many times over selected text
+    xnoremap <expr> p 'pgv"'.v:register.'y'
     Shortcut! <leader><a-i> Paste in insert mode
+
 
     " Navigate quickfix
     nnoremap <silent> <c-n> :cn<cr>
@@ -179,6 +195,24 @@ endif
     " Navigate locallist
     nnoremap <silent> <leader>n :lne<cr>
     nnoremap <silent> <leader>p :lp<cr>
+
+    " Go to end of parenthesis/brackets/quotes
+    " <C-o> is used to issue a normal mode command without leaving insert mode.
+    inoremap <C-e>      <C-o>A
+
+    " Text operations {{{2
+    Shortcut Text Capitalize word
+                \ nnoremap <leader>tc :CapitalizeWord<CR>
+    Shortcut Text UPPERCASE word
+                \ nnoremap <leader>tu :UppercaseWord<CR>
+    " lowercase inner word
+    Shortcut Text lowercase word
+                \ nnoremap <leader>tl :LowercaseWord<CR>
+    Shortcut Text Just one space   " just one space on the line, preserving indent
+                \ nnoremap <leader>tos :JustOneInnerSpace<CR>
+    Shortcut Text remove trailing spaces
+                \ nnoremap <leader>tts :RemoveTrailingSpaces<CR>
+
 " }}}
 
 
@@ -187,7 +221,41 @@ endif
     "autocmd WinEnter * if !utils#IsLeftMostWindow() | let g:tagbar_left = 0 | else | let g:tagbar_left = 1 | endif
 
 
-    function! s:SaveAs(fname)
+" Helper fucntion {{{2
+"
+"
+" Commands {{{3
+    " remove trailing spaces
+    " make a separate plugin for the commands
+    command! RemoveTrailingSpaces :silent! %s/\v(\s+$)|(\r+$)//g<bar>
+                \:exe 'normal ``'<bar>
+                \:echo 'Remove trailing spaces and ^Ms.'
+
+    command! JustOneInnerSpace :let pos=getpos('.')<bar>
+                \:silent! s/\S\+\zs\s\+/ /g<bar>
+                \:silent! s/\s$//<bar>
+                \:call setpos('.', pos)<bar>
+                \:nohl<bar>
+                \:echo 'Just one space'
+
+    command! CapitalizeWord :let pos=getpos('.')<bar>
+                \:exe 'normal guiw~'<bar>
+                \:call setpos('.', pos)
+
+    command! UppercaseWord :let pos=getpos('.')<bar>
+                \:exe 'normal gUiw'<bar>
+                \:call setpos('.', pos)
+
+    command! LowercaseWord :let pos=getpos('.')<bar>
+                \:exe 'normal guiw'<bar>
+                \:call setpos('.', pos)
+
+    function! FileOpenDoc()
+        let tmuxWname = trim(system("tmux display-message -p '#W'"))
+        exec 'FilePre ~/work/'. tmuxWname. "/doc/"
+    endfunction
+
+    function! s:FileSaveAs(fname)
         let cfname = expand('%:t')
         if (cfname == 'tmux.log' && !empty(a:fname))
             let tmuxWname = trim(system("tmux display-message -p '#W'"))
@@ -195,10 +263,11 @@ endif
             "echomsg cmdstr
             exec cmdstr
         else
-            w
+            " write only when the file changed
+            update
         endif
     endfunction
-    command! -nargs=? SaveAs call <SID>SaveAs( '<args>' )
+    command! -nargs=? FileSaveAs call <SID>FileSaveAs( '<args>' )
 
     function! s:ToggleTagbar()
         " Detect which plugins are open
@@ -313,14 +382,6 @@ endif
     "vnoremap <silent> <leader>ll :<c-u>call log#log(expand('%'))<CR>
     " Lint: -i ignore-error and continue, -s --silent --quiet
 
-    "bookmark
-    nnoremap <silent> <leader>mm :silent! call mark#MarkCurrentWord(expand('<cword>'))<CR>
-    "nnoremap <leader>mf :echo(statusline#GetFuncName())<CR>
-    "nnoremap <leader>mo :BookmarkLoad Default
-    "nnoremap <leader>ma :BookmarkShowAll <CR>
-    "nnoremap <leader>mg :BookmarkGoto <C-R><c-w>
-    "nnoremap <leader>mc :BookmarkDel <C-R><c-w>
-    "
     map W <Plug>(expand_region_expand)
     map B <Plug>(expand_region_shrink)
 
@@ -360,15 +421,25 @@ endif
     onoremap s :normal vs<CR>
 
     "nnoremap gf :<c-u>call utils#GotoFileWithLineNum()<CR>
-    nnoremap <silent> <leader>gf :<c-u>call utils#GotoFileWithPreview()<CR>
+    Shortcut File Goto preview
+                \ nnoremap <silent> <leader>gf :<c-u>call utils#GotoFileWithPreview()<CR>
 
     if HasPlug('vim-sleuth')
-        nnoremap <silent> <leader>gl :GV<CR>
+        Shortcut Git log
+                    \ nnoremap <silent> <leader>gl :GV<CR>
+        Shortcut Git status
+                    \ nnoremap <silent> <leader>gs :Gstatus<CR>
     endif
 
-    nnoremap <silent> mm :<c-u>call utils#MarkSelected('n')<CR>
-    vnoremap <silent> mm :<c-u>call utils#MarkSelected('v')<CR>
-    Shortcut! mm    Help mark word
+    "bookmark
+    Shortcut Toggle RainbowParentheses
+                \ nnoremap <silent> <leader>mm :silent! call mark#MarkCurrentWord(expand('<cword>'))<cr>
+    "nnoremap <leader>mf :echo(statusline#GetFuncName())<CR>
+    "nnoremap <leader>mo :BookmarkLoad Default
+    "nnoremap <leader>ma :BookmarkShowAll <CR>
+    "nnoremap <leader>mg :BookmarkGoto <C-R><c-w>
+    "nnoremap <leader>mc :BookmarkDel <C-R><c-w>
+
 "}}}
 
 
@@ -391,10 +462,10 @@ endif
         "            \ :tabnew<CR>:r /tmp/vim.tmpx<CR>:silent !rm /tmp/vim.tmpx<CR>:redraw!<CR>
         "vnoremap <silent> <unique> <leader>ee :NR<CR> \| :w! /tmp/1.c<cr> \| :e /tmp/1.c<cr>
 
-        nnoremap <leader>ee :call SingleCompileSplit() \| SCCompileRun<CR>
-        nnoremap <leader>eo :SCViewResult<CR>
-        Shortcut! ee    Tool compile & run
-        Shortcut! eo    Tool compile & run
+        Shortcut Tool compile & run
+                    \ nnoremap <leader>ee :call SingleCompileSplit() \| SCCompileRun<CR>
+        Shortcut Tool View Result
+                    \ nnoremap <leader>eo :SCViewResult<CR>
     endif
 
     nnoremap <leader>el :VlogDisplay \| Messages \| VlogClear<CR><CR>

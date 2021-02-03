@@ -404,17 +404,19 @@ endif
 
             if HasPlug('vim-fugitive')
                 "nnoremap <leader>bb :VCBlame<cr>
-                nnoremap <leader>gl     :GV<CR>
-                nnoremap <leader>gb     :Gblame<cr>
-                nnoremap <leader>gs     :Gstatus<cr>
+                nnoremap ;gl     :GV<CR>
+                nnoremap ;gb     :Gblame<cr>
+                nnoremap ;gs     :Gstatus<cr>
 
-                Shortcut! <space>gb    Git blame
-                Shortcut! <space>gl    Git log
-                Shortcut! <space>gs    Git status
+                Shortcut! ;gl    Git log
+                Shortcut! ;gb    Git blame
+                Shortcut! ;gs    Git status
             endif
 
-            nnoremap <leader>gc     :AsyncTask gitclean-dryrun<cr>
-            nnoremap <leader>gd     :AsyncTask gitclean<cr>
+            nnoremap ;gc     :AsyncTask gitclean-dryrun<cr>
+            nnoremap ;gd     :AsyncTask gitclean<cr>
+            Shortcut! ;gc    Git clean dryrun
+            Shortcut! ;gd    Git clean
 
 
 " Helper fucntion {{{1

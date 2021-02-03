@@ -415,15 +415,6 @@ if CheckPlug('vim.config', 1) "{{{1
         Shortcut! <space>mc    QuickFix show caller
         Shortcut! <space>mw    Tools dictionary
 
-    " Section 'Git'
-        "nnoremap <leader>bb :VCBlame<cr>
-        nnoremap <leader>bb :Gblame<cr>
-        nnoremap <leader>bl :GV<cr>
-
-        Shortcut! <space>bb    Git blame
-        Shortcut! <space>bl    Git logs
-
-
     function MyMenuExec(...)
         let strCmd = join(a:000, '')
         silent! call s:log.info('MyExecArgs: "', strCmd, '"')

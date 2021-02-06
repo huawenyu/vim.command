@@ -288,9 +288,6 @@ endif
     nnoremap zc :echomsg synIDattr(synIDtrans(synID(line("."), col("."), 1)), "fg")<cr>
 
     " Copy/paste {{{2
-        " now it is possible to paste many times over selected text
-        xnoremap <expr> p 'pgv"'.v:register.'y'
-
         " " vp doesn't replace paste buffer
         " function! RestoreRegister()
         "     let @" = s:restore_reg
@@ -314,9 +311,13 @@ endif
         vnoremap <silent> p p`]
         nnoremap <silent> p p`]
 
+        " now it is possible to paste many times over selected text
+        xnoremap <expr> p 'pgv"'.v:register.'y'
+
         " Paste in insert mode
         inoremap <silent> <a-i> <c-r>"
         Shortcut! <leader><a-i> Paste in insert mode
+
 
         map W <Plug>(expand_region_expand)
         map B <Plug>(expand_region_shrink)
@@ -345,13 +346,19 @@ endif
 
     " Git/grep {{{2
         " Search {{{3
-            nnoremap <leader>gg :<C-\>e utilgrep#Grep(0, 0, "daemon/wad", 1)<cr>
-            vnoremap <leader>gg :<C-\>e utilgrep#Grep(0, 1, "daemon/wad", 1)<cr>
-            nnoremap <leader>vv :<C-\>e utilgrep#Grep(0, 0, "", 1)<cr>
-            vnoremap <leader>vv :<C-\>e utilgrep#Grep(0, 1, "", 1)<cr>
+            " Search-mode: hit cs, replace first match, and hit <Esc>
+            "   then hit n to review and replace
+            vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
+                  \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
+            onoremap s :normal vs<CR>
 
-            Shortcut!  <space>gg    Search wad
-            Shortcut!  <space>vv    Search all
+            nnoremap  ;gg    :<C-\>e utilgrep#Grep(0, 0, "daemon/wad", 1)<cr>
+            vnoremap  ;gg    :<C-\>e utilgrep#Grep(0, 1, "daemon/wad", 1)<cr>
+            nnoremap  ;vv    :<C-\>e utilgrep#Grep(0, 0, "", 1)<cr>
+            vnoremap  ;vv    :<C-\>e utilgrep#Grep(0, 1, "", 1)<cr>
+
+            Shortcut!  ;gg    Search wad
+            Shortcut!  ;vv    Search all
 
             " Giveback the 'g' to git
             " nnoremap ;gg :<C-\>e utilgrep#Grep(0, 0, "daemon/wad", 0)<cr>
@@ -362,12 +369,6 @@ endif
             "nnoremap gf :<c-u>call utils#GotoFileWithLineNum()<CR>
             nnoremap <silent> <leader>gf :<c-u>call utils#GotoFileWithPreview()<CR>
             Shortcut! <space>gf    File Goto preview
-
-            " Search-mode: hit cs, replace first match, and hit <Esc>
-            "   then hit n to review and replace
-            vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
-                  \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
-            onoremap s :normal vs<CR>
 
         " Git {{{3
             if HasPlug('vim-gitgutter')
@@ -382,41 +383,41 @@ endif
                 "     nmap ;gr call PullAndRefresh()
                 " " --End
 
-                nnoremap <silent> ;gg   :GitGutterToggle <cr>
-                nnoremap <silent> ;gr   :GitGutter <cr>
-                nnoremap <silent> ;gv   :GitGutterQuickFix \| copen <cr>
+                nnoremap <silent> <leader>gg   :GitGutterToggle <cr>
+                nnoremap <silent> <leader>gr   :GitGutter <cr>
+                nnoremap <silent> <leader>gv   :GitGutterQuickFix \| copen <cr>
 
                 " Jump between hunks
-                nnoremap <silent> ;gn   <Plug>(GitGutterNextHunk)
-                nnoremap <silent> ;gp   <Plug>(GitGutterPrevHunk)
+                nnoremap <silent> <leader>gn   <Plug>(GitGutterNextHunk)
+                nnoremap <silent> <leader>gp   <Plug>(GitGutterPrevHunk)
 
                 " Hunk-add and hunk-revert for chunk staging
-                nnoremap <silent> ;ga   <Plug>(GitGutterStageHunk)
-                nnoremap <silent> ;gu   <Plug>(GitGutterUndoHunk)
+                nnoremap <silent> <leader>ga   <Plug>(GitGutterStageHunk)
+                nnoremap <silent> <leader>gu   <Plug>(GitGutterUndoHunk)
 
-                Shortcut! ;gg    Git Gutter Toggle
-                Shortcut! ;gv    Git Gutter Quickfix
-                Shortcut! ;gn    Git Hunk Next
-                Shortcut! ;gp    Git Hunk Prev
-                Shortcut! ;ga    Git Hunk Stage
-                Shortcut! ;gu    Git Hunk Undo
+                Shortcut! <space>gg    Git Gutter Toggle
+                Shortcut! <space>gv    Git Gutter Quickfix
+                Shortcut! <space>gn    Git Hunk Next
+                Shortcut! <space>gp    Git Hunk Prev
+                Shortcut! <space>ga    Git Hunk Stage
+                Shortcut! <space>gu    Git Hunk Undo
             endif
 
             if HasPlug('vim-fugitive')
                 "nnoremap <leader>bb :VCBlame<cr>
-                nnoremap ;gl     :GV<CR>
-                nnoremap ;gb     :Gblame<cr>
-                nnoremap ;gs     :Gstatus<cr>
+                nnoremap <leader>gl     :GV<CR>
+                nnoremap <leader>gb     :Gblame<cr>
+                nnoremap <leader>gs     :Gstatus<cr>
 
-                Shortcut! ;gl    Git log
-                Shortcut! ;gb    Git blame
-                Shortcut! ;gs    Git status
+                Shortcut! <space>gl     Git log
+                Shortcut! <space>gb     Git blame
+                Shortcut! <space>gs     Git status
             endif
 
-            nnoremap ;gc     :AsyncTask gitclean-dryrun<cr>
-            nnoremap ;gd     :AsyncTask gitclean<cr>
-            Shortcut! ;gc    Git clean dryrun
-            Shortcut! ;gd    Git clean
+            nnoremap <leader>gc     :AsyncTask gitclean-dryrun<cr>
+            nnoremap <leader>gd     :AsyncTask gitclean<cr>
+            Shortcut! <space>gc     Git clean dryrun
+            Shortcut! <space>gd     Git clean
 
 
 " Helper fucntion {{{1

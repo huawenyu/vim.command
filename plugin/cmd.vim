@@ -446,6 +446,44 @@ if CheckPlug('vim.config', 1) "{{{1
             return 1
         endif
     endfunction
+
+
+    function! TwikiPreview(query, preview)
+        let __func__ = "TwikiPreview() "
+
+        if !CheckPlug('fzf.vim', 1) | return | endif
+
+        if a:query ==# 'n'
+            silent! call s:log.info(__func__, " from nmap ", a:query)
+            let query = utils#GetSelected('n')
+        elseif a:query ==# 'v'
+            silent! call s:log.info(__func__, " from vmap ", a:query)
+            let query = utils#GetSelected('v')
+        else
+            silent! call s:log.info(__func__, " from N/A ", a:query)
+            let query = a:query
+        endif
+
+        let char1st = strcharpart(query, 0, 1)
+        if char1st !=# '"' && char1st !=# "'"
+            let query = "'". query. "'"
+        endif
+
+        " Don't use --vimgrep, for it output the same file:line several times
+        "   rg -H --no-heading --vimgrep -w
+        let cmdStr = "rg -L -H --color never --no-heading --no-column --with-filename --line-number ". query. " $MYPATH_WIKI"
+        silent! call s:log.info(__func__, cmdStr)
+
+        call fzf#vim#grep(
+                    \   cmdStr, 0,
+                    \   a:preview ? fzf#vim#with_preview('up:60%')
+                    \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+                    \   a:preview)
+    endfunction
+
+    nnoremap <silent> <leader>fw    :<c-u>call TwikiPreview(' ', 1)<cr>
+    vnoremap <silent> <leader>fw    :<c-u>call TwikiPreview('v', 1)<cr>
+    Shortcut! <space>fw    Wiki search, [n]All, [v]Text
 endif
 
 

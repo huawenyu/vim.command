@@ -120,10 +120,16 @@ endif
         Shortcut!  <a-e>    View NerdTree
         Shortcut!  <a-w>    View Maximize window
 
-        nnoremap          <leader>v] :NeomakeSh! tagme<cr>
+        nnoremap          <leader>f] :AsyncTask tagme<cr>
         nnoremap <silent> <leader>vi :call utils#VoomInsert(0) <CR>
         vnoremap <silent> <leader>vi :call utils#VoomInsert(1) <CR>
         Shortcut!  <space>vi    Help outline insert
+        Shortcut!  <space>f]    Tag generate
+
+        nnoremap <silent> <leader>vc :<c-u>Goyo<CR>
+        nnoremap <silent> <leader>vp :<c-u>TogglePencil<CR>
+        Shortcut!  <space>vc    Toggle Goyo
+        Shortcut!  <space>vp   Toggle Pencil
 
 
     " Sugar {{{2
@@ -172,8 +178,30 @@ endif
         nnoremap <silent> <leader>p :lp<cr>
 
         " bookmark/color
-        nnoremap <silent> <leader>mm :silent! call mark#MarkCurrentWord(expand('<cword>'))<cr>
-        Shortcut! <space>mm    Toggle RainbowParentheses
+        if HasPlug('vim-mark')
+            nnoremap <silent> <leader>mm  :<c-u>silent! call mark#MarkCurrentWord(expand('<cword>'))<cr>
+            "vnoremap <silent> <leader>mm  :<c-u>silent! call mark#GetVisualSelection()<cr>
+            nnoremap <silent> <leader>mx  :<c-u>silent! call mark#ClearAll()<cr>
+
+            Shortcut! <space>mm    Toggle Mark current-word
+            Shortcut! <space>mx    Toggle Mark clear all
+        endif
+
+
+        " Suppose record macro in register `q`:
+        "vnoremap <leader>mm  :normal @q
+        if HasPlug('vim-macroscope')
+            nnoremap <leader>mr     :<c-u>Macroscope
+            nnoremap <leader>mp     :<c-u>Macroplay<cr>
+            Shortcut! <space>mr    Macro edit `qq`, save by `s`, play by `mp`
+        endif
+
+
+        if HasPlug('rainbow_parentheses.vim')
+            nnoremap <silent> <leader>m[   :<c-u>RainbowParentheses!!<cr>
+            Shortcut! <space>m[    Toggle RainbowParentheses
+        endif
+
 
         "nnoremap <leader>mf :echo(statusline#GetFuncName())<CR>
         "nnoremap <leader>mo :BookmarkLoad Default
@@ -183,8 +211,10 @@ endif
 
     " File helper {{{2
         nnoremap <leader>ss     :<c-u>FileSaveAs<space>
+        nnoremap        ;ss     :FileSaveAs<cr>
         nnoremap <leader>fo     :<c-u>call FileOpenDoc()<cr>
         Shortcut! <space>ss     File Saveas
+        Shortcut!       ;ss     File Save directly
         Shortcut! <space>fo     File Open doc
         "Shortcut! <space>fi     Terminal Open
 
@@ -352,10 +382,14 @@ endif
                   \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
             onoremap s :normal vs<CR>
 
-            nnoremap  ;gg    :<C-\>e utilgrep#Grep(0, 0, "daemon/wad", 1)<cr>
-            vnoremap  ;gg    :<C-\>e utilgrep#Grep(0, 1, "daemon/wad", 1)<cr>
-            nnoremap  ;vv    :<C-\>e utilgrep#Grep(0, 0, "", 1)<cr>
-            vnoremap  ;vv    :<C-\>e utilgrep#Grep(0, 1, "", 1)<cr>
+            nnoremap         ;gg    :<C-\>e utilgrep#Grep(0, 0, "daemon/wad", 1)<cr>
+            nnoremap  <leader>gg    :<C-\>e utilgrep#Grep(0, 0, "daemon/wad", 1)<cr>
+            vnoremap         ;gg    :<C-\>e utilgrep#Grep(0, 1, "daemon/wad", 1)<cr>
+            vnoremap  <leader>gg    :<C-\>e utilgrep#Grep(0, 1, "daemon/wad", 1)<cr>
+            nnoremap         ;vv    :<C-\>e utilgrep#Grep(0, 0, "", 1)<cr>
+            nnoremap  <leader>vv    :<C-\>e utilgrep#Grep(0, 0, "", 1)<cr>
+            vnoremap         ;vv    :<C-\>e utilgrep#Grep(0, 1, "", 1)<cr>
+            vnoremap  <leader>vv    :<C-\>e utilgrep#Grep(0, 1, "", 1)<cr>
 
             Shortcut!  ;gg    Search wad
             Shortcut!  ;vv    Search all
@@ -383,9 +417,9 @@ endif
                 "     nmap ;gr call PullAndRefresh()
                 " " --End
 
-                nnoremap <silent> <leader>gg   :GitGutterToggle <cr>
+                nnoremap <silent> <leader>gv  :GitGutterToggle <cr>
                 nnoremap <silent> <leader>gr   :GitGutter <cr>
-                nnoremap <silent> <leader>gv   :GitGutterQuickFix \| copen <cr>
+                nnoremap <silent> <leader>gf   :GitGutterQuickFix \| copen <cr>
 
                 " Jump between hunks
                 nnoremap <silent> <leader>gn   <Plug>(GitGutterNextHunk)
@@ -395,8 +429,8 @@ endif
                 nnoremap <silent> <leader>ga   <Plug>(GitGutterStageHunk)
                 nnoremap <silent> <leader>gu   <Plug>(GitGutterUndoHunk)
 
-                Shortcut! <space>gg    Git Gutter Toggle
-                Shortcut! <space>gv    Git Gutter Quickfix
+                Shortcut! <space>gv    Git Gutter Toggle
+                Shortcut! <space>gq    Git Gutter Quickfix
                 Shortcut! <space>gn    Git Hunk Next
                 Shortcut! <space>gp    Git Hunk Prev
                 Shortcut! <space>ga    Git Hunk Stage
@@ -407,11 +441,23 @@ endif
                 "nnoremap <leader>bb :VCBlame<cr>
                 nnoremap <leader>gl     :GV<CR>
                 nnoremap <leader>gb     :Gblame<cr>
+                nnoremap        ;bb     :Gblame<cr>
                 nnoremap <leader>gs     :Gstatus<cr>
 
                 Shortcut! <space>gl     Git log
                 Shortcut! <space>gb     Git blame
+                Shortcut!       ;gb     Git blame
                 Shortcut! <space>gs     Git status
+            endif
+
+            if HasPlug('tig-explorer.vim')
+                nnoremap <leader>gtl     :Tig<cr>
+                nnoremap <leader>gtL     :Tig --first-parent -m<cr>
+                nnoremap <leader>gtm     :Tig --first-parent --all<cr>
+                nnoremap <leader>gtb     :TigBlame<cr>
+                Shortcut! <space>gtl     Git(tig) log
+                Shortcut! <space>gtL     Git(tig) log --first-parent -m
+                Shortcut! <space>gtb     Git(tig) blame
             endif
 
             nnoremap <leader>gc     :AsyncTask gitclean-dryrun<cr>

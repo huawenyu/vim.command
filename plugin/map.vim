@@ -100,9 +100,13 @@ elseif HasPlug('fzf-cscope.vim')
     " FileCatV, FileCatPreN (preview)
     nnoremap <silent> <leader>ff    :FileCatN<cr>
     vnoremap <silent> <leader>ff    :<c-u>FileCatN<cr>
+    nnoremap <silent>        ;ff    :FileCatN<cr>
+    vnoremap <silent>        ;ff    :<c-u>FileCatN<cr>
     " All files
     nnoremap <silent> <leader>fF    :FileCatN!<cr>
     vnoremap <silent> <leader>fF    :<c-u>FileCatN!<cr>
+    nnoremap <silent>        ;fF    :FileCatN!<cr>
+    vnoremap <silent>        ;fF    :<c-u>FileCatN!<cr>
 
     " Function called
     nnoremap <silent> <leader>fc    :call cscope#preview('3', 'n', 1)<cr>
@@ -440,11 +444,11 @@ endif
 
 
 if CheckPlug('vim-youdao-translater', 1)
-    vnoremap <silent> qw :<C-u>Ydv<CR>
-    nnoremap <silent> qw :<C-u>Ydc<CR>
+    vnoremap <silent> ;ww :<C-u>Ydv<CR>
+    nnoremap <silent> ;ww :<C-u>Ydc<CR>
     "noremap <leader>yd :<C-u>Yde<CR>
 elseif executable('~/tools/dict')
-    nmap qw :R! ~/tools/dict <C-R>=expand('<cword>') <cr>
+    nmap ;ww :R! ~/tools/dict <C-R>=expand('<cword>') <cr>
 endif
 
 

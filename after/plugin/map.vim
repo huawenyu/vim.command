@@ -120,7 +120,7 @@ endif
         Shortcut!  <a-e>    View NerdTree
         Shortcut!  <a-w>    View Maximize window
 
-        nnoremap          <leader>f] :AsyncTask tagme<cr>
+        nnoremap          <leader>f] :AsyncStop! <bar> AsyncTask! tagme<cr>
         nnoremap <silent> <leader>vi :call utils#VoomInsert(0) <CR>
         vnoremap <silent> <leader>vi :call utils#VoomInsert(1) <CR>
         Shortcut!  <space>vi    Help outline insert
@@ -440,11 +440,13 @@ endif
             if HasPlug('vim-fugitive')
                 "nnoremap <leader>bb :VCBlame<cr>
                 nnoremap <leader>gl     :GV<CR>
+                nnoremap <leader>gd     :Gvdiff<CR>
                 nnoremap <leader>gb     :Gblame<cr>
                 nnoremap        ;bb     :Gblame<cr>
                 nnoremap <leader>gs     :Gstatus<cr>
 
                 Shortcut! <space>gl     Git log
+                Shortcut! <space>gd     Git diff vertical
                 Shortcut! <space>gb     Git blame
                 Shortcut!       ;gb     Git blame
                 Shortcut! <space>gs     Git status
@@ -460,10 +462,10 @@ endif
                 Shortcut! <space>gtb     Git(tig) blame
             endif
 
-            nnoremap <leader>gc     :AsyncTask gitclean-dryrun<cr>
-            nnoremap <leader>gd     :AsyncTask gitclean<cr>
+            nnoremap <leader>gc     :AsyncStop! <bar> AsyncTask gitclean-dryrun<cr>
+            nnoremap <leader>gx     :AsyncStop! <bar> AsyncTask gitclean<cr>
             Shortcut! <space>gc     Git clean dryrun
-            Shortcut! <space>gd     Git clean
+            Shortcut! <space>gx     Git clean
 
 
 " Helper fucntion {{{1

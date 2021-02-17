@@ -41,7 +41,7 @@ au BufEnter * call SmartInsert()
 if g:vim_confi_option.auto_qf_height
     " Maximize the window after entering it, be sure to keep the quickfix window
     " at the specified height.
-    au WinEnter * call MaximizeAndResizeQuickfix(10)
+    au WinEnter * call MaximizeAndResizeQuickfix(5)
 
     " Maximize current window and set the quickfix window to the specified height.
     function MaximizeAndResizeQuickfix(quickfixHeight)
@@ -402,8 +402,8 @@ if CheckPlug('vim.config', 1) "{{{1
 
     " Section 'Execute'
         " Plug : asynctasks.vim : ~/.vim_tasks.ini : wad|sysinit
-        nnoremap <leader>mk :AsyncTask wad<CR>
-        nnoremap <leader>ma :AsyncTask sysinit<CR>
+        nnoremap <leader>mk :AsyncStop! <bar> AsyncTask! wad<CR>
+        nnoremap <leader>ma :AsyncStop! <bar> AsyncTask! sysinit<CR>
 
         nnoremap <leader>mw :R! ~/tools/dict <C-R>=expand('<cword>') <cr>
         nnoremap <leader>mf :call utilquickfix#QuickFixFilter() <CR>

@@ -92,6 +92,23 @@ endif
             nnoremap <silent> <a-w> :MaximizerToggle<CR>
         elseif HasPlug('maximize')
             nnoremap <silent> <a-w> :MaximizeWindow<CR>
+        else
+            nnoremap <silent> <a-w> :ZoomToggle<CR>
+
+            " Zoom / Restore window.
+            function! s:ZoomToggle() abort
+                if exists('t:zoomed') && t:zoomed
+                    execute t:zoom_winrestcmd
+                    let t:zoomed = 0
+                else
+                    let t:zoom_winrestcmd = winrestcmd()
+                    resize
+                    vertical resize
+                    let t:zoomed = 1
+                endif
+            endfunction
+
+            command! ZoomToggle call s:ZoomToggle()
         endif
         if HasPlug('vim-nerdtree-tabs')
             nnoremap <silent> <a-e> :NERDTreeTabsToggle<cr>
@@ -249,8 +266,6 @@ endif
                 let g:SingleCompile_resultsize = winheight(0)/3
             endif
         endfunction
-
-
 
 
         augroup filetype_auto_eval
@@ -441,12 +456,14 @@ endif
                 "nnoremap <leader>bb :VCBlame<cr>
                 nnoremap <leader>gl     :GV<CR>
                 nnoremap <leader>gd     :Gvdiff<CR>
+                nnoremap <leader>gD     :DiffReview git show 
                 nnoremap <leader>gb     :Gblame<cr>
                 nnoremap        ;bb     :Gblame<cr>
                 nnoremap <leader>gs     :Gstatus<cr>
 
                 Shortcut! <space>gl     Git log
                 Shortcut! <space>gd     Git diff vertical
+                Shortcut! <space>gD     Git diff side by side
                 Shortcut! <space>gb     Git blame
                 Shortcut!       ;gb     Git blame
                 Shortcut! <space>gs     Git status

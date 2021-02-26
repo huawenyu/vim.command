@@ -267,6 +267,7 @@ endif
 
         autocmd filetype markdown nnoremap <buffer> <a-'> :VoomToggle markdown<CR>
         autocmd filetype python   nnoremap <buffer> <a-'> :VoomToggle python<CR>
+        autocmd filetype c,cpp    nnoremap <buffer> <a-'> :VoomToggle txt2tags<CR>
 
         autocmd filetype vim,vimwiki,txt  C0
         "autocmd filetype c,cpp,diff      C8

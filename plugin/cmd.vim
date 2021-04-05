@@ -391,6 +391,8 @@ if CheckPlug('vim.config', 1) "{{{1
 
         " count the number of occurrences of a word
         "nnoremap <leader>vc :%s/<C-R>=expand('<cword>')<cr>//gn<cr>
+        nnoremap <leader>vn :%s///gn<cr>
+        Shortcut! <space>vn    Tool count
 
         " For global replace
         nnoremap <leader>vR gD:%s/<C-R>///g<left><left>
@@ -414,7 +416,7 @@ if CheckPlug('vim.config', 1) "{{{1
         Shortcut! <space>ma    Make init
         Shortcut! <space>mf    QuickFix filter
         Shortcut! <space>mc    QuickFix show caller
-        Shortcut! <space>mw    Tools dictionary
+        Shortcut! <space>mw    Tool dictionary
 
     function MyMenuExec(...)
         let strCmd = join(a:000, '')

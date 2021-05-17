@@ -351,6 +351,12 @@ endif
 
         " Yank from the cursor to the end of the line, to be consistent with C and D.
         nnoremap Y y$
+        if HasPlug('vim-oscyank')
+            vnoremap Y :OSCYank<CR>
+            Shortcut! Y     Text copy to client-remote-OS
+            "let g:oscyank_term = 'tmux'  " or 'screen', 'kitty', 'default'
+        endif
+
         " Automatically jump to end of text you pasted
         "vnoremap <silent> y y`]
         vnoremap <silent> p p`]
@@ -370,6 +376,7 @@ endif
         vnoremap <silent> <leader>yy :<c-u>call utils#GetSelected('v', "/tmp/vim.yank")<CR>
         nnoremap <silent> <leader>yy :<c-u>call vimuxscript#Copy() <CR>
         nnoremap <silent> <leader>yp :r! cat /tmp/vim.yank<CR>
+        Shortcut! <space>yy     Text copy to a tmp/file
 
         xnoremap * :<C-u>call utils#VSetSearch('/')<CR>/<C-R>=@/<CR>
         xnoremap # :<C-u>call utils#VSetSearch('?')<CR>?<C-R>=@/<CR>

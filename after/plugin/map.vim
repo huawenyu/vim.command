@@ -404,15 +404,15 @@ endif
                   \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
             onoremap s :normal vs<CR>
 
-            nnoremap         ;gg    :Rg <c-r>=utils#GetSelected('n')<cr>
-            nnoremap  <leader>gg    :Rg <c-r>=utils#GetSelected('n')<cr>
-            vnoremap         ;gg    :<c-u>Rg <c-r>=utils#GetSelected('v')<cr>
-            vnoremap  <leader>gg    :<c-u>Rg <c-r>=utils#GetSelected('v')<cr>
+            nnoremap         ;bb    :Rg <c-r>=utils#GetSelected('n')<cr>
+            nnoremap  <leader>bb    :Rg <c-r>=utils#GetSelected('n')<cr>
+            vnoremap         ;bb    :<c-u>Rg <c-r>=utils#GetSelected('v')<cr>
+            vnoremap  <leader>bb    :<c-u>Rg <c-r>=utils#GetSelected('v')<cr>
 
-            nnoremap         ;bb    :<C-\>e utilgrep#Grep(0, 0, "daemon/wad", 1)<cr>
-            nnoremap  <leader>bb    :<C-\>e utilgrep#Grep(0, 0, "daemon/wad", 1)<cr>
-            vnoremap         ;bb    :<C-\>e utilgrep#Grep(0, 1, "daemon/wad", 1)<cr>
-            vnoremap  <leader>bb    :<C-\>e utilgrep#Grep(0, 1, "daemon/wad", 1)<cr>
+            nnoremap         ;gg    :<C-\>e utilgrep#Grep(0, 0, "daemon/wad", 1)<cr>
+            nnoremap  <leader>gg    :<C-\>e utilgrep#Grep(0, 0, "daemon/wad", 1)<cr>
+            vnoremap         ;gg    :<C-\>e utilgrep#Grep(0, 1, "daemon/wad", 1)<cr>
+            vnoremap  <leader>gg    :<C-\>e utilgrep#Grep(0, 1, "daemon/wad", 1)<cr>
 
             nnoremap         ;vv    :<C-\>e utilgrep#Grep(0, 0, "", 1)<cr>
             nnoremap  <leader>vv    :<C-\>e utilgrep#Grep(0, 0, "", 1)<cr>

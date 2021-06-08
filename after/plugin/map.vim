@@ -87,6 +87,18 @@ endif
 
 
     " view {{{2
+        " toggles the quickfix window.
+        command -bang -nargs=? QFix call QFixToggle(<bang>0)
+        function! QFixToggle(forced)
+            if exists("g:qfix_win") && a:forced == 0
+                cclose
+                unlet g:qfix_win
+            else
+                botright copen
+                let g:qfix_win = bufnr("$")
+            endif
+        endfunction
+
         "nnoremap <f3> :VimwikiFollowLink
         if HasPlug('vim-maximizer')
             nnoremap <silent> <a-w> :MaximizerToggle<CR>
@@ -124,7 +136,8 @@ endif
         inoremap <silent> <a-i> <c-r>"
 
         nnoremap <silent> <a-'> :VoomToggle<cr>
-        nnoremap <silent> <a-;> :<c-u>call <SID>ToggleTagbar()<CR>
+        nnoremap <silent> <a-;> :QFix<CR>
+        nnoremap <silent> <a-/> :<c-u>call <SID>ToggleTagbar()<CR>
         "nnoremap <silent> <a-;> :TMToggle<CR>
         "nnoremap <silent> <a-.> :BuffergatorToggle<CR>
         "nnoremap <silent> <a-,> :VoomToggle<CR>
@@ -153,8 +166,8 @@ endif
         " Finger candy: same-bind a-, c-, leader-
         " Alt+HJKL   move around tmux pane
         " Ctrl+HJKL  move around vim-window/tmux-pane
-        nnoremap <silent> <a-o> <C-o>
-        nnoremap <silent> <a-i> <C-i>
+        nnoremap <silent> <a-o>   :colder<cr>
+        nnoremap <silent> <a-i>   :cnewer<cr>
 
         nnoremap <silent> <leader>o <C-o>
         nnoremap <silent> <leader>i <C-i>

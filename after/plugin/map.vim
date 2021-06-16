@@ -85,6 +85,9 @@ endif
         " Temporarily turns off search highlighting
         nnoremap <silent> <Return> :nohls<Return><Return>
 
+        " Lazy macro repeat
+        nmap <leader>.  @@
+
 
     " view {{{2
         " toggles the quickfix window.

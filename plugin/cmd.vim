@@ -231,6 +231,12 @@ endif
 
         "autocmd VimLeavePre * cclose | lclose
         autocmd InsertEnter,InsertLeave * set cul!
+        autocmd VimResized * wincmd =
+
+        if g:vim_confi_option.auto_save
+            autocmd InsertLeave * write
+        endif
+
         " Sometime crack the tag file
         "autocmd BufWritePost,FileWritePost * call RetagFile()
 

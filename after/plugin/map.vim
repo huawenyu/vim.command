@@ -444,7 +444,7 @@ endif
             " nnoremap ;vv :<C-\>e utilgrep#Grep(0, 0, "", 0)<cr>
             " vnoremap ;vv :<C-\>e utilgrep#Grep(0, 1, "", 0)<cr>
 
-            "nnoremap gf :<c-u>call utils#GotoFileWithLineNum()<CR>
+            nnoremap gf :<c-u>call utils#GotoFileWithLineNum(0)<CR>
             nnoremap <silent> <leader>gf :<c-u>call utils#GotoFileWithPreview()<CR>
             Shortcut! <space>gf    File Goto preview
 
@@ -463,7 +463,7 @@ endif
 
                 nnoremap <silent> <leader>gv   :GitGutterToggle <cr>
                 nnoremap <silent> <leader>gr   :GitGutter <cr>
-                nnoremap <silent> <leader>gf   :GitGutterQuickFix \| copen <cr>
+                "nnoremap <silent> <leader>gf   :GitGutterQuickFix \| copen <cr>
 
                 " Jump between hunks
                 nnoremap <silent> <leader>gn   <Plug>(GitGutterNextHunk)
@@ -485,9 +485,9 @@ endif
                 "nnoremap <leader>bb :VCBlame<cr>
                 nnoremap <leader>gl     :GV<CR>
                 nnoremap <leader>gd     :Gvdiff<CR>
-                nnoremap <leader>gD     :DiffReview git show 
-                nnoremap <leader>gb     :Gblame<cr>
-                nnoremap        ;bb     :Gblame<cr>
+                nnoremap <leader>gD     :DiffReview git show
+                nnoremap <leader>gb     :Git blame<cr>
+                nnoremap        ;bb     :Git blame<cr>
                 nnoremap <leader>gs     :Gstatus<cr>
 
                 Shortcut! <space>gl     Git log

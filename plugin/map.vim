@@ -8,7 +8,7 @@ endif
 
 
 " Plugins' map {{{1
-if CheckPlug('vim-workspace', 1)
+if HasPlug('vim-workspace')
     nnoremap <C-s> :ToggleWorkspace<cr>
     " restore-session: vim -S
     "nnoremap <C-s> :Obsess
@@ -16,8 +16,12 @@ if CheckPlug('vim-workspace', 1)
     Shortcut! <C-s>    Workspace save
 endif
 
+if HasPlug('c-utils.vim')
+    nnoremap <C-s>      :Savews<cr>
+    Shortcut! <C-s>     Save Workspace
+endif
 
-if CheckPlug('vim-table-mode', 1)
+if HasPlug('vim-table-mode')
     nnoremap <leader>tm :TableModeToggle<cr>
     Shortcut! <space>tm    Switch table mode
 endif
@@ -117,6 +121,13 @@ elseif HasPlug('fzf-cscope.vim')
     vnoremap <silent> <leader>fC    :<c-u>call cscope#preview('2', 'v', 1)<cr>
 
     " symbol
+    " 1. Please install 'batcat' first: sudo apt install bat
+    " 2. Then check the config if batcat can't works:  batcat --diagnostic
+    if !executable('batcat')
+        echom "[fzf-cscope.vim] Please install tools `batcat`: sudo apt install bat"
+        finish
+    endif
+
     nnoremap <silent> <leader>fs    :call cscope#preview('0', 'n', 1)<cr>
     vnoremap <silent> <leader>fs    :<c-u>call cscope#preview('0', 'v', 1)<cr>
     " symbol assign value

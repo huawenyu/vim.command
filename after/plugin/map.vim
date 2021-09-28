@@ -368,9 +368,12 @@ endif
         " Yank from the cursor to the end of the line, to be consistent with C and D.
         nnoremap Y y$
         if HasPlug('vim-oscyank')
-            vnoremap Y :OSCYank<CR>
-            Shortcut! Y     Text copy to client-remote-OS
+            let g:oscyank_max_length = 1000000
             "let g:oscyank_term = 'tmux'  " or 'screen', 'kitty', 'default'
+            let g:oscyank_term = 'tmux'
+            vnoremap Y :OSCYank<CR>
+            "vnoremap Y :call YankOSC52(getreg('+'))<CR>
+            Shortcut! Y     Text copy to client-remote-OS
         endif
 
         " Automatically jump to end of text you pasted

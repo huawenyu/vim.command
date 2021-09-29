@@ -275,7 +275,7 @@ endif
         autocmd filetype python   nnoremap <buffer> <a-'> :VoomToggle python<CR>
         autocmd filetype c,cpp    nnoremap <buffer> <a-'> :VoomToggle txt2tags<CR>
 
-        autocmd filetype vim,vimwiki,txt  C0
+        autocmd filetype vim,vimwiki,tmux,txt  C0
         "autocmd filetype c,cpp,diff      C8
         "autocmd filetype zsh,bash        C2
         "autocmd filetype vim,markdown    C08

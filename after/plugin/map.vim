@@ -46,7 +46,19 @@ endif
         " map <leader><Esc> :AnsiEsc<cr>
         nnoremap <C-c> <silent> <C-c>
         "nnoremap <buffer> <Enter> <C-W><Enter>     | " vimwiki use this to create a new link
+
+        " Ctrl-q: if-window exit all, if-terminal exit terminal
         nnoremap <C-q> :<c-u>qa!<cr>
+        augroup MyTermMappings
+            autocmd!
+            if has('nvim')
+                autocmd TermOpen * nnoremap <buffer> <C-q> :q<cr>
+                autocmd TermOpen * nnoremap <buffer> <Enter> :q<cr>
+            elseif exists('##TerminalOpen')
+                audocmd TerminalOpen * nnoremap <buffer> <C-c> :q<cr>
+                audocmd TerminalOpen * nnoremap <buffer> <Enter> :q<cr>
+            endif
+        augroup END
 
         inoremap <S-Tab> <C-V><Tab>
 
@@ -276,28 +288,28 @@ endif
         " Lint: -i ignore-error and continue, -s --silent --quiet
 
     " Filetype autocmd Keymaps {{{2
-        function! SingleCompileSplit()
-            if winwidth(0) > 200
-                let g:SingleCompile_split = "vsplit"
-                let g:SingleCompile_resultsize = winwidth(0)/2
-            else
-                let g:SingleCompile_split = "split"
-                let g:SingleCompile_resultsize = winheight(0)/3
-            endif
-        endfunction
+        " function! SingleCompileSplit()
+        "     if winwidth(0) > 200
+        "         let g:SingleCompile_split = "vsplit"
+        "         let g:SingleCompile_resultsize = winwidth(0)/2
+        "     else
+        "         let g:SingleCompile_split = "split"
+        "         let g:SingleCompile_resultsize = winheight(0)/3
+        "     endif
+        " endfunction
 
 
-        augroup filetype_auto_eval
-            if HasPlug('vim-eval')
-                autocmd FileType vim nnoremap <buffer> <leader>ee <Plug>eval_viml
-                autocmd FileType vim vnoremap <buffer> <leader>ee <Plug>eval_viml_region
-            elseif HasPlug('vim-quickrun')
-                autocmd FileType vim noremap <buffer> <leader>ee :QuickRun<cr>
-            endif
+        " augroup filetype_auto_eval
+        "     if HasPlug('vim-eval')
+        "         autocmd FileType vim nnoremap <buffer> <leader>ee <Plug>eval_viml
+        "         autocmd FileType vim vnoremap <buffer> <leader>ee <Plug>eval_viml_region
+        "     elseif HasPlug('vim-quickrun')
+        "         autocmd FileType vim noremap <buffer> <leader>ee :QuickRun<cr>
+        "     endif
 
-            autocmd FileType javascript nnoremap <buffer> <leader>ee  :DB mongodb:///test < %
-            autocmd FileType javascript vnoremap <buffer> <leader>ee  :'<,'>w! /tmp/vim.js<cr><cr> \| :DB mongodb:///test < /tmp/vim.js<cr><cr>
-        augroup END
+        "     autocmd FileType javascript nnoremap <buffer> <leader>ee  :DB mongodb:///test < %
+        "     autocmd FileType javascript vnoremap <buffer> <leader>ee  :'<,'>w! /tmp/vim.js<cr><cr> \| :DB mongodb:///test < /tmp/vim.js<cr><cr>
+        " augroup END
 
     " Format {{{2
         " Reserve to cscope/ctags
@@ -311,19 +323,19 @@ endif
         Shortcut! <space>ft    Format align lines
 
     " repl/execute {{{2
-        if mapcheck('<leader>ee', 'n') == ""
-            "" execute file that I'm editing in Vi(m) and get output in split window
-            "nnoremap <silent> <leader>x :w<CR>:silent !chmod 755 %<CR>:silent !./% > /tmp/vim.tmpx<CR>
-            "            \ :tabnew<CR>:r /tmp/vim.tmpx<CR>:silent !rm /tmp/vim.tmpx<CR>:redraw!<CR>
-            "vnoremap <silent> <unique> <leader>ee :NR<CR> \| :w! /tmp/1.c<cr> \| :e /tmp/1.c<cr>
+        "if mapcheck('<leader>ee', 'n') == ""
+        "    "" execute file that I'm editing in Vi(m) and get output in split window
+        "    "nnoremap <silent> <leader>x :w<CR>:silent !chmod 755 %<CR>:silent !./% > /tmp/vim.tmpx<CR>
+        "    "            \ :tabnew<CR>:r /tmp/vim.tmpx<CR>:silent !rm /tmp/vim.tmpx<CR>:redraw!<CR>
+        "    "vnoremap <silent> <unique> <leader>ee :NR<CR> \| :w! /tmp/1.c<cr> \| :e /tmp/1.c<cr>
 
-            Shortcut! <space>ee    Tool compile & run
-            nnoremap <leader>ee :call SingleCompileSplit() \| SCCompileRun<CR>
-            Shortcut! <leader>eo    Tool View Result
-            nnoremap <leader>eo :SCViewResult<CR>
-        endif
+        "    Shortcut! <space>ee    Tool compile & run
+        "    nnoremap <leader>ee :call SingleCompileSplit() \| SCCompileRun<CR>
+        "    Shortcut! <leader>eo    Tool View Result
+        "    nnoremap <leader>eo :SCViewResult<CR>
+        "endif
 
-        nnoremap <leader>el :VlogDisplay \| Messages \| VlogClear<CR><CR>
+        "nnoremap <leader>el :VlogDisplay \| Messages \| VlogClear<CR><CR>
 
 
     " nvim.terminal map {{{2

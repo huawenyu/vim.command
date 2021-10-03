@@ -177,6 +177,9 @@ endif
         nnoremap <silent> <leader>; <C-]>
         "inoremap <silent> <leader>[ <C-[>
 
+        " Take as map hole
+        "nnoremap <silent> <leader>,,,
+
         " Substitue for MaboXterm diable <c-h>
         nnoremap <leader>h <c-w>h
         nnoremap <leader>j <c-w>j
@@ -305,7 +308,7 @@ endif
         "     vnoremap qq c<C-R>=system('wc -c | perl -pe chomp', @")<CR><ESC>
         "autocmd FileType vimwiki vnoremap <leader>ff :!fmt -c -w 100 -u -s <cr>
         vnoremap <leader>ft :!fmt -c -w 100 -u -s <cr>
-        Shortcut! <space>ft    Format box lines
+        Shortcut! <space>ft    Format align lines
 
     " repl/execute {{{2
         if mapcheck('<leader>ee', 'n') == ""

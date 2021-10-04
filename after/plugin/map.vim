@@ -49,15 +49,29 @@ endif
 
         " Ctrl-q: if-window exit all, if-terminal exit terminal
         nnoremap <C-q> :<c-u>qa!<cr>
-        augroup MyTermMappings
+        nnoremap <leader>q :<c-u>qa<cr>
+
+        "" Esc too far, use Ctrl+Enter as alternative
+        "inoremap <a-CR> <Esc>
+        "vnoremap <a-CR> <Esc>
+
+        " Adjust viewports to the same size
+        map <leader>= <C-w>=
+
+        augroup MyFiletypeMappings
             autocmd!
-            if has('nvim')
-                autocmd TermOpen * nnoremap <buffer> <C-q> :q<cr>
-                autocmd TermOpen * nnoremap <buffer> <Enter> :q<cr>
-            elseif exists('##TerminalOpen')
-                audocmd TerminalOpen * nnoremap <buffer> <C-c> :q<cr>
-                audocmd TerminalOpen * nnoremap <buffer> <Enter> :q<cr>
-            endif
+            "if has('nvim')
+            "    autocmd TermOpen * nnoremap <buffer> <C-q> :q<cr>
+            "    "autocmd TermOpen * nnoremap <buffer> Q :q<cr>
+            "elseif exists('##TerminalOpen')
+            "    autocmd TerminalOpen * nnoremap <buffer> <C-q> :q<cr>
+            "    "autocmd TerminalOpen * nnoremap <buffer> Q :q<cr>
+            "endif
+
+            autocmd FileType help     nnoremap <buffer> <C-q> :q<cr>
+            autocmd FileType help     nnoremap <buffer> q     :q<cr>
+            autocmd FileType floaterm nnoremap <buffer> <C-q> :q<cr>
+            autocmd FileType floaterm nnoremap <buffer> q     :q<cr>
         augroup END
 
         inoremap <S-Tab> <C-V><Tab>
@@ -69,6 +83,12 @@ endif
         vnoremap > >gv
         vnoremap < <gv
 
+		" " H/L - jump to start/end of line (^/$)
+		" " J/K - jump down/up half a screen (C-d/C-u)
+		" nnoremap H ^
+		" nnoremap L $
+		" nnoremap gj <C-d>
+		" nnoremap gk <C-u>
 
         " https://www.reddit.com/r/vim/comments/53bpb4/alternatives_to_esc/
         " https://stackoverflow.com/questions/3776117/what-is-the-difference-between-the-remap-noremap-nnoremap-and-vnoremap-mapping
@@ -203,15 +223,6 @@ endif
         "nnoremap <c-j> <c-w>j
         "nnoremap <c-k> <c-w>k
         "nnoremap <c-l> <c-w>l
-
-        nnoremap <leader>q :<c-u>qa<cr>
-
-        "" Esc too far, use Ctrl+Enter as alternative
-        "inoremap <a-CR> <Esc>
-        "vnoremap <a-CR> <Esc>
-
-        " Adjust viewports to the same size
-        map <leader>= <C-w>=
 
         " Go to end of parenthesis/brackets/quotes
         " <C-o> is used to issue a normal mode command without leaving insert mode.
@@ -440,8 +451,8 @@ endif
 
             nnoremap         ;bb    :Rg <c-r>=utils#GetSelected('n')<cr>
             nnoremap  <leader>bb    :Rg <c-r>=utils#GetSelected('n')<cr>
-            vnoremap         ;bb    :<c-u>Rg <c-r>=utils#GetSelected('v')<cr>
-            vnoremap  <leader>bb    :<c-u>Rg <c-r>=utils#GetSelected('v')<cr>
+            " vnoremap         ;bb    :<c-u>Rg <c-r>=utils#GetSelected('v')<cr>
+            " vnoremap  <leader>bb    :<c-u>Rg <c-r>=utils#GetSelected('v')<cr>
 
             nnoremap         ;gg    :<C-\>e utilgrep#Grep(0, 0, "daemon/wad", 1)<cr>
             nnoremap  <leader>gg    :<C-\>e utilgrep#Grep(0, 0, "daemon/wad", 1)<cr>

@@ -106,11 +106,12 @@ elseif HasPlug('fzf-cscope.vim')
     vnoremap <silent> <leader>ff    :<c-u>FileCatN<cr>
     nnoremap <silent>        ;ff    :FileCatN<cr>
     vnoremap <silent>        ;ff    :<c-u>FileCatN<cr>
-    " All files
-    nnoremap <silent> <leader>fF    :FileCatN!<cr>
-    vnoremap <silent> <leader>fF    :<c-u>FileCatN!<cr>
-    nnoremap <silent>        ;fF    :FileCatN!<cr>
-    vnoremap <silent>        ;fF    :<c-u>FileCatN!<cr>
+
+    " " All files
+    " nnoremap <silent> <leader>fF    :FileCatN!<cr>
+    " vnoremap <silent> <leader>fF    :<c-u>FileCatN!<cr>
+    " nnoremap <silent>        ;fF    :FileCatN!<cr>
+    " vnoremap <silent>        ;fF    :<c-u>FileCatN!<cr>
 
     " Function called
     nnoremap <silent> <leader>fc    :call cscope#preview('3', 'n', 1)<cr>
@@ -134,32 +135,55 @@ elseif HasPlug('fzf-cscope.vim')
     nnoremap <silent> <leader>fS    :call cscope#preview('9', 'n', 1)<cr>
     vnoremap <silent> <leader>fS    :<c-u>call cscope#preview('9', 'v', 1)<cr><cr>
 
-    " tExt
-    nnoremap          <leader>fe    :CscopeText! <c-r>=utils#GetSelected('n')<cr>
-    vnoremap          <leader>fe    :<c-u>CscopeText! <c-r>=utils#GetSelected('v')<cr>
-    nnoremap          <leader>fE    :CscopeGrep! <c-r>=utils#GetSelected('n')<cr>
-    vnoremap          <leader>fE    :<c-u>CscopeGrep! <c-r>=utils#GetSelected('v')<cr>
+    " " tExt
+    " nnoremap          <leader>fe    :CscopeText! <c-r>=utils#GetSelected('n')<cr>
+    " vnoremap          <leader>fe    :<c-u>CscopeText! <c-r>=utils#GetSelected('v')<cr>
+    " nnoremap          <leader>fE    :CscopeGrep! <c-r>=utils#GetSelected('n')<cr>
+    " vnoremap          <leader>fE    :<c-u>CscopeGrep! <c-r>=utils#GetSelected('v')<cr>
+
+    Shortcut! <space>ff    find file partial
+    "Shortcut! <space>fF    find file all
+    Shortcut! <space>fe    find function
+    Shortcut! <space>fs    find symbol
+    Shortcut! <space>fS    find symbol withou preview
+
 endif
 
+
 " Buffer & lines
-if CheckPlug('fzf.vim', 1)
+if HasPlug('fzf.vim')
     nnoremap <silent> <leader>fb    :Buffers<cr>
     vnoremap <silent> <leader>fb    :<c-u>Buffers<cr>
     nnoremap <silent> <leader>fl    :BLines<cr>
     vnoremap <silent> <leader>fl    :<c-u>BLines<cr>
+
+    Shortcut! <space>fb    Jump find buffer
+    Shortcut! <space>fl    Jump find line
+
 endif
 
-" Setup shortcut
-Shortcut! <space>ff    Jump file partial
-Shortcut! <space>fF    Jump file all
-Shortcut! <space>fe    Jump function
-Shortcut! <space>fs    Jump symbol
-Shortcut! <space>fS    Jump symbol withou preview
-Shortcut! <space>fb    Jump buffer
-Shortcut! <space>fl    Jump line
+
+if HasPlug('fzf-preview.vim')
+    Shortcut find history
+                \ nnoremap <Space>fF      :FZFFiles<cr>
+    Shortcut find quickfix
+                \ nnoremap <Space>fq      :FZFQuickFix<cr>
+    Shortcut find history
+                \ nnoremap <Space>fh      :FZFHistory<cr>
 
 
-if CheckPlug('c-utils.vim', 1)
+    nnoremap  <Space>fg      :FZFRg <c-r>=utils#GetSelected('n')<cr><cr>
+    vnoremap  <Space>fg      :<c-u>FZFRg <c-r>=utils#GetSelected('v')<cr>
+    Shortcut! <Space>fg      find grep
+
+    " Shortcut select map style
+    noremap <silent> <Space>,,x    :<c-u>exec 'FZFRg '..g:my_selstr<cr>
+    Shortcut!        <Space>,,x    find grep
+
+endif
+
+
+if HasPlug('c-utils.vim')
     function! s:JumpComma(mode)
         if v:count == 0
             call utils#Declaration()

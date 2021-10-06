@@ -34,93 +34,6 @@ endif
 
 
 " Key maps {{{1
-" https://vimways.org/2018/for-mappings-and-a-tutorial/
-    " Basic {{{2
-        "" Stop that stupid window from popping up
-        "map q: :q
-
-        "" Disable F1 built-in help key by: re-replace last search
-        "map <F1> :<c-u>%s///gc<cr>
-        map <F1> :<c-u>%s//<C-R>"/gc<cr>
-
-        " map <leader><Esc> :AnsiEsc<cr>
-        nnoremap <C-c> <silent> <C-c>
-        "nnoremap <buffer> <Enter> <C-W><Enter>     | " vimwiki use this to create a new link
-
-        " Ctrl-q: if-window exit all, if-terminal exit terminal
-        nnoremap <C-q> :<c-u>qa!<cr>
-        nnoremap <leader>q :<c-u>qa<cr>
-
-        "" Esc too far, use Ctrl+Enter as alternative
-        "inoremap <a-CR> <Esc>
-        "vnoremap <a-CR> <Esc>
-
-        " Adjust viewports to the same size
-        map <leader>= <C-w>=
-
-        augroup MyFiletypeMappings
-            autocmd!
-            "if has('nvim')
-            "    autocmd TermOpen * nnoremap <buffer> <C-q> :q<cr>
-            "    "autocmd TermOpen * nnoremap <buffer> Q :q<cr>
-            "elseif exists('##TerminalOpen')
-            "    autocmd TerminalOpen * nnoremap <buffer> <C-q> :q<cr>
-            "    "autocmd TerminalOpen * nnoremap <buffer> Q :q<cr>
-            "endif
-
-            autocmd FileType help     nnoremap <buffer> <C-q> :q<cr>
-            autocmd FileType help     nnoremap <buffer> q     :q<cr>
-            autocmd FileType floaterm nnoremap <buffer> <C-q> :q<cr>
-            autocmd FileType floaterm nnoremap <buffer> q     :q<cr>
-        augroup END
-
-        inoremap <S-Tab> <C-V><Tab>
-
-        noremap  j gj
-        vnoremap j gj
-        noremap  k gk
-        vnoremap k gk
-        vnoremap > >gv
-        vnoremap < <gv
-
-		" " H/L - jump to start/end of line (^/$)
-		" " J/K - jump down/up half a screen (C-d/C-u)
-		" nnoremap H ^
-		" nnoremap L $
-		" nnoremap gj <C-d>
-		" nnoremap gk <C-u>
-
-        " https://www.reddit.com/r/vim/comments/53bpb4/alternatives_to_esc/
-        " https://stackoverflow.com/questions/3776117/what-is-the-difference-between-the-remap-noremap-nnoremap-and-vnoremap-mapping
-        " @ver1: using jj, but how about the select-mode, the 'j' as move
-        "noremap   jj <Esc>
-        "noremap!  jj <Esc>
-        " @ver2: want input ';' at the end of current line, then exit by hit two ';;', which will auto remove the first wanted ';'
-        "nnoremap ;; <Esc>
-        "inoremap ;; <Esc>
-        "vnoremap ;; <Esc>
-        " @ver3: confuse it's insert mode or normal mode, or if enter multiple i
-        "noremap   ii <Esc>
-        "noremap!  ii <Esc>
-        " @ver4:
-        inoremap ,, <Esc>`^
-        onoremap ,, <Esc>`^
-        vnoremap ,, <Esc>`<
-        cnoremap ,, <c-u><Esc>
-        " @ver5: save & exit insert-mode
-        inoremap jj <c-o>:w<cr><ESC>
-
-        " Save in insert mode, comment out it for anoy when you input the letter 'k'.
-        "inoremap kk <c-o>:w<cr>
-
-        "nnoremap <silent> ;ww :w!<cr>
-        " Temporarily turns off search highlighting
-        nnoremap <silent> <Return> :nohls<Return><Return>
-
-        " Lazy macro repeat
-        nmap <leader>.  @@
-
-
     " view {{{2
         " toggles the quickfix window.
         command -bang -nargs=? QFix call QFixToggle(<bang>0)
@@ -198,44 +111,6 @@ endif
 
 
     " Sugar {{{2
-        " Finger candy: same-bind a-, c-, leader-
-        " Alt+HJKL   move around tmux pane
-        " Ctrl+HJKL  move around vim-window/tmux-pane
-        nnoremap <silent> <a-o>   :colder<cr>
-        nnoremap <silent> <a-i>   :cnewer<cr>
-
-        nnoremap <silent> <leader>o <C-o>
-        nnoremap <silent> <leader>i <C-i>
-        nnoremap <silent> <leader>; <C-]>
-        "inoremap <silent> <leader>[ <C-[>
-
-        " Take as map hole
-        "nnoremap <silent> <leader>,,,
-
-        " Substitue for MaboXterm diable <c-h>
-        nnoremap <leader>h <c-w>h
-        nnoremap <leader>j <c-w>j
-        nnoremap <leader>k <c-w>k
-        nnoremap <leader>l <c-w>l
-
-        " Replace by vim-tmux-navigator
-        "nnoremap <c-h> <c-w>h
-        "nnoremap <c-j> <c-w>j
-        "nnoremap <c-k> <c-w>k
-        "nnoremap <c-l> <c-w>l
-
-        " Go to end of parenthesis/brackets/quotes
-        " <C-o> is used to issue a normal mode command without leaving insert mode.
-        inoremap <C-e>      <C-o>A
-
-        " Navigate quickfix
-        nnoremap <silent> <c-n> :cn<cr>
-        nnoremap <silent> <c-p> :cp<cr>
-
-        " Navigate locallist
-        nnoremap <silent> <leader>n :lne<cr>
-        nnoremap <silent> <leader>p :lp<cr>
-
         " bookmark/color
         if HasPlug('vim-mark')
             nnoremap <silent> <leader>mm  :<c-u>silent! call mark#MarkCurrentWord(expand('<cword>'))<cr>
@@ -298,30 +173,6 @@ endif
         "vnoremap <silent> <leader>ll :<c-u>call log#log(expand('%'))<CR>
         " Lint: -i ignore-error and continue, -s --silent --quiet
 
-    " Filetype autocmd Keymaps {{{2
-        " function! SingleCompileSplit()
-        "     if winwidth(0) > 200
-        "         let g:SingleCompile_split = "vsplit"
-        "         let g:SingleCompile_resultsize = winwidth(0)/2
-        "     else
-        "         let g:SingleCompile_split = "split"
-        "         let g:SingleCompile_resultsize = winheight(0)/3
-        "     endif
-        " endfunction
-
-
-        " augroup filetype_auto_eval
-        "     if HasPlug('vim-eval')
-        "         autocmd FileType vim nnoremap <buffer> <leader>ee <Plug>eval_viml
-        "         autocmd FileType vim vnoremap <buffer> <leader>ee <Plug>eval_viml_region
-        "     elseif HasPlug('vim-quickrun')
-        "         autocmd FileType vim noremap <buffer> <leader>ee :QuickRun<cr>
-        "     endif
-
-        "     autocmd FileType javascript nnoremap <buffer> <leader>ee  :DB mongodb:///test < %
-        "     autocmd FileType javascript vnoremap <buffer> <leader>ee  :'<,'>w! /tmp/vim.js<cr><cr> \| :DB mongodb:///test < /tmp/vim.js<cr><cr>
-        " augroup END
-
     " Format {{{2
         " Reserve to cscope/ctags
         " vnoremap <Leader>ff =<cr>
@@ -348,31 +199,6 @@ endif
 
         "nnoremap <leader>el :VlogDisplay \| Messages \| VlogClear<CR><CR>
 
-
-    " nvim.terminal map {{{2
-        if has("nvim")
-            let b:terminal_scrollback_buffer_size = 2000
-            let g:terminal_scrollback_buffer_size = 2000
-
-            " Terminal exit-to-text-mode, i: enter interact-mode
-            " conflict with gdb mode
-            "   tnoremap <Esc> <C-\><C-n>
-            tnoremap <c-o>     <C-\><C-n>
-
-            "tnoremap <leader>h <C-\><C-n><c-w>h
-            "tnoremap <leader>j <C-\><C-n><c-w>j
-            "tnoremap <leader>k <C-\><C-n><c-w>k
-            "tnoremap <leader>l <C-\><C-n><c-w>l
-
-            tnoremap <c-h> <C-\><C-n><C-w>h
-            tnoremap <c-j> <C-\><C-n><C-w>j
-            tnoremap <c-k> <C-\><C-n><C-w>k
-            tnoremap <c-l> <C-\><C-n><C-w>l
-        endif
-
-    " Show current color's name: zS show syntax[vim-scriptease]
-    nnoremap zC :echomsg synIDattr(synIDtrans(synID(line("."), col("."), 1)), "name")<cr>
-    nnoremap zc :echomsg synIDattr(synIDtrans(synID(line("."), col("."), 1)), "fg")<cr>
 
     " Copy/paste {{{2
         " " vp doesn't replace paste buffer
@@ -402,21 +228,6 @@ endif
             Shortcut! Y     Text copy to client-remote-OS
         endif
 
-        " Automatically jump to end of text you pasted
-        "vnoremap <silent> y y`]
-        vnoremap <silent> p p`]
-        nnoremap <silent> p p`]
-
-        " now it is possible to paste many times over selected text
-        xnoremap <expr> p 'pgv"'.v:register.'y'
-
-        " Paste in insert mode
-        inoremap <silent> <a-i> <c-r>"
-        Shortcut! <leader><a-i> Paste in insert mode
-
-
-        map W <Plug>(expand_region_expand)
-        map B <Plug>(expand_region_shrink)
 
         vnoremap <silent> <leader>yy :<c-u>call utils#GetSelected('v', "/tmp/vim.yank")<CR>
         nnoremap <silent> <leader>yy :<c-u>call vimuxscript#Copy() <CR>

@@ -1,9 +1,9 @@
 " Version:      1.0
 
-if exists('g:loaded_local_command') || &compatible
+if exists('g:loaded_hw_command') || &compatible
   finish
 else
-  let g:loaded_local_command = 'yes'
+  let g:loaded_hw_command = 'yes'
 endif
 
 
@@ -112,25 +112,6 @@ if g:vim_confi_option.auto_qf_height
     " augroup END
 endif
 
-"autocmd BufWinEnter,WinEnter term://* startinsert
-autocmd BufEnter * if &buftype == 'terminal' | silent! normal A | endif
-autocmd BufWinEnter,WinEnter * if &buftype == 'terminal' | silent! normal A | endif
-
-if g:vim_confi_option.upper_keyfixes
-    if has("user_commands")
-        command! -bang -nargs=* -complete=file E e<bang> <args>
-        command! -bang -nargs=* -complete=file W w<bang> <args>
-        command! -bang -nargs=* -complete=file Wq wq<bang> <args>
-        command! -bang -nargs=* -complete=file WQ wq<bang> <args>
-        command! -bang Wa wa<bang>
-        command! -bang WA wa<bang>
-        command! -bang Q q<bang>
-        command! -bang QA qa<bang>
-        command! -bang Qa qa<bang>
-    endif
-
-    "cmap Tabe tabe
-endif
 
 " Autocmd {{{2
 
@@ -154,70 +135,6 @@ endif
         elseif (my_ft == 'vimwiki')
             execute ':C0'
         endif
-    endfunction
-
-    " Support:
-    "   - Plug 'tpope/vim-sensible'
-    "   - Note 'tpope/vim-sensible'
-    "   - note:readme
-    "   - @note readme
-    function! s:plug_note_getname(beginwith)
-        " |/\zs|	\zs	\zs	anything, sets start of match
-        " |/\ze|	\ze	\ze	anything, sets end of match
-        "
-        " echo matchstr("Plug 'tpope/vim-sensible'", 'Plug\s\+''\zs[^'']\+\ze''\{-\}')
-        " echo matchstr("note:z.lua", 'note[.: @]\zs\S\+\ze[\s|$]\{-\}')
-        " echo matchstr("'@note:z.lua'", '\([''"]\)\zs.\{-}\ze\1')
-        " echo matchstr("@note:nvim", 'note[.: @]\zs.\{-}\ze[\}\]\) ,;''"]\{-\}$')
-        "
-        " echo matchstr("@note readme", '@note\s\+\zs\w\+\ze[\s|$]\{-\}')
-        " echo matchstr("@note z.lua ", '@note\s\+\zs\S\+\ze[\s|$]\{-\}')
-        " echo matchstr("@note:z.lua ", '@note\s\+\zs\w\+\ze[\s|$]\{-\}')
-        "
-        let curline = getline('.')
-        let notename = matchstr(curline, a:beginwith. '\s\+''\zs[^'']\+\ze''\{-\}')
-        if empty(notename)
-            let notename = matchstr(curline, 'note[.: @]\zs.\{-}\ze[\}\]\) ,;''"]\{-\}$')
-            if empty(notename) | return "" | endif
-        endif
-
-        let items = split(notename, '/')
-        if len(items) < 2
-          return notename
-        else
-          return items[1]
-        endif
-    endfunction
-
-    function! s:plug_note()
-        "if &ft ==# 'notes' | q | return | endif
-
-        let name = s:plug_note_getname("Plug")
-        if empty(name) | let name = s:plug_note_getname("Note") | endif
-
-        " Forwardto K's handler
-        if empty(name) | call feedkeys("K", 'n') | return | endif
-
-        "if has_key(g:plugs, name)
-            if CheckPlug('vim-notes', 1)
-                if g:notes_dir_order != g:notes_dir_order_type.vim
-                    let g:notes_directories = reverse(g:notes_directories)
-                endif
-
-                vsp | exec 'Note' name
-
-                if g:notes_dir_order != g:notes_dir_order_type.vim
-                    let g:notes_directories = reverse(g:notes_directories)
-                endif
-            elseif CheckPlug(g:vim_confi_option.plug_note, 1)
-                let dir = PlugGetDir(g:vim_confi_option.plug_note)
-                exec 'tabe '. dir. 'docs/'. name. '.note'
-            else
-                for doc in split(globpath(g:plugs[name].dir, 'doc/*.txt'), '\n')
-                    exec 'tabe' doc
-                endfor
-            endif
-        "endif
     endfunction
 
     augroup filetype_auto
@@ -297,38 +214,12 @@ endif
             autocmd FileType cpp setlocal keywordprg=:te\ cppman
         endif
 
-        if !empty(g:vim_confi_option.plug_note)
-           "autocmd FileType vim,zsh,vimwiki,markdown,media nnoremap <buffer> <silent> K :call <sid>plug_note()<cr>
-
-           ""autocmd FileType notes nnoremap <buffer> <silent> K :call <sid>plug_note()<cr>
-           ""
-           ""command! ShowPlugNote call <sid>plug_note()
-           ""autocmd FileType vim setlocal keywordprg=:ShowPlugNote
-        endif
-
     augroup END
 
 "}}}
 
 
 " Commands {{{2
-    command! -nargs=* Wrap set wrap linebreak nolist
-    "command! -nargs=* Wrap PencilSoft
-
-    ""command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
-    "command! -nargs=+ -bang -complete=shellcmd
-    "      \ NeoMake execute ':NeomakeCmd make '. <q-args>
-
-    command! -nargs=1 Silent
-      \ | execute ':silent !'.<q-args>
-      \ | execute ':redraw!'
-
-    command! -nargs=* C0  setlocal autoindent cindent expandtab   tabstop=4 shiftwidth=4 softtabstop=4
-    command! -nargs=* C08 setlocal autoindent cindent expandtab   tabstop=8 shiftwidth=2 softtabstop=8
-    command! -nargs=* C2  setlocal autoindent cindent expandtab   tabstop=2 shiftwidth=2 softtabstop=2
-    command! -nargs=* C4  setlocal autoindent cindent noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
-    command! -nargs=* C8  setlocal autoindent cindent noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
-
     " :R ls -l   grab command output int new buffer
     " :R! ls -l   only show output in another tab
     "command! -nargs=+ -bang -complete=shellcmd R call s:R(<bang>1, <q-args>)
@@ -344,28 +235,6 @@ endif
     "add commas to a number, e.g. change 31415926 to 31,415,926
     "command! Int3 execute ':%s/\(\d\)\(\(\d\d\d\)\+\d\@!\)\@=/\1,/g'
 "}}}
-
-
-if HasPlug('vim-venu')
-    let s:menu1 = venu#create('My first V̂enu')
-    call venu#addItem(s:menu1, 'Item of first menu', 'echo "Called first item"')
-    call venu#register(s:menu1)
-
-    function! s:myfunction() abort
-        echo "I called myfunction"
-    endfunction
-
-    let s:menu2 = venu#create('My second V̂enu')
-    call venu#addItem(s:menu2, 'Call a function ref', function("s:myfunction"))
-
-    let s:submenu = venu#create('My awesome subV̂enu')
-    call venu#addItem(s:submenu, 'Item 1', ':echo "First item of submenu!"')
-    call venu#addItem(s:submenu, 'Item 2', ':echo "Second item of submenu!"')
-
-    " Add the submenu to the second menu
-    call venu#addItem(s:menu2, 'Sub menu', s:submenu)
-    call venu#register(s:menu2)
-endif
 
 
 if HasPlug('accelerated-jk')
@@ -384,30 +253,10 @@ endif
 if HasPlug('vim.config')
     " Section 'String'
         "map <leader>ds :call Asm() <CR>
-        nnoremap <leader>dt :%s/\s\+$//g
-        nnoremap <leader>dd :g/<C-R><C-w>/ norm dd
-        vnoremap <leader>dd :<c-u>g/<C-R>*/ norm dd
         " For local replace
         "nnoremap <leader>vm [[ma%mb:call signature#sign#Refresh(1) <CR>
         nnoremap <leader>vr :<C-\>e SelectedReplace('n')<CR><left><left><left>
         vnoremap <leader>vr :<C-\>e SelectedReplace('v')<CR><left><left><left>
-        " remove space from emptyline
-        "nnoremap <leader>v<space> :%s/^\s\s*$//<CR>
-        "vnoremap <leader>v<space> :s/^\s\s*$//<cr>
-
-        " count the number of occurrences of a word
-        "nnoremap <leader>vc :%s/<C-R>=expand('<cword>')<cr>//gn<cr>
-        nnoremap <leader>vn :%s///gn<cr>
-        Shortcut! <space>vn    Tool count
-
-        " For global replace
-        nnoremap <leader>vR gD:%s/<C-R>///g<left><left>
-        "
-        "nnoremap <leader>vr :Replace <C-R>=expand('<cword>') <CR> <C-R>=expand('<cword>') <cr>
-        "vnoremap <leader>vr ""y:%s/<C-R>=escape(@", '/\')<CR>/<C-R>=escape(@", '/\')<CR>/g<Left><Left>
-        "
-        "vnoremap <leader>vr :<C-\>e tmp#CurrentReplace() <CR>
-        "nnoremap <leader>vr :Replace <C-R>=expand('<cword>') <CR> <C-R>=expand('<cword>') <cr>
 
     " Section 'Execute'
         " Plug : asynctasks.vim : ~/.vim_tasks.ini : wad|sysinit
@@ -447,108 +296,6 @@ if HasPlug('vim.config')
         endif
     endfunction
 
-
-    " Check is git repo
-    function! YvIsGit()
-        silent! !git rev-parse --is-inside-work-tree
-        if v:shell_error == 0
-            return 1
-        endif
-    endfunction
-
-
-    " function! TwikiPreview(query, preview)
-    "     let __func__ = "TwikiPreview() "
-
-    "     if !CheckPlug('fzf.vim', 1) | return | endif
-
-    "     if a:query ==# 'n'
-    "         silent! call s:log.info(__func__, " from nmap ", a:query)
-    "         let query = utils#GetSelected('n')
-    "     elseif a:query ==# 'v'
-    "         silent! call s:log.info(__func__, " from vmap ", a:query)
-    "         let query = utils#GetSelected('v')
-    "     else
-    "         silent! call s:log.info(__func__, " from N/A ", a:query)
-    "         let query = a:query
-    "     endif
-
-    "     let char1st = strcharpart(query, 0, 1)
-    "     if char1st !=# '"' && char1st !=# "'"
-    "         let query = "'". query. "'"
-    "     endif
-
-    "     " Don't use --vimgrep, for it output the same file:line several times
-    "     "   rg -H --no-heading --vimgrep -w
-    "     let cmdStr = "rg -L -H --color never --no-heading --no-column --with-filename --line-number ". query. " $MYPATH_WIKI"
-    "     silent! call s:log.info(__func__, cmdStr)
-
-    "     call fzf#vim#grep(
-    "                 \   cmdStr, 0,
-    "                 \   a:preview ? fzf#vim#with_preview('up:60%')
-    "                 \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-    "                 \   a:preview)
-    " endfunction
-
-    " nnoremap <silent> <leader>fw    :<c-u>call TwikiPreview(' ', 1)<cr>
-    " vnoremap <silent> <leader>fw    :<c-u>call TwikiPreview('v', 1)<cr>
-    " Shortcut! <space>fw    Wiki search, [n]All, [v]Text
-
-
-    if !empty(g:vim_confi_option.fzf_files)
-        "@evalStart
-        let g:vim_confi_option.transformer =<< END
-            | awk -F: '
-            function basename(file) {
-                sub(".*/", "", file);
-                return file;
-            }
-            BEGIN { OFS = FS } /:2:/{
-                fname = basename($1);
-                tag = $3;
-                if (fname == $3)
-                    tag = "";
-
-                $3 = $3 ":" fname ":" tag;
-                print;
-            }'
-END
-        "echo "test:[". join(g:vim_confi_option.transformer). "]"
-        "@evalEnd
-
-        command! -bang -nargs=* Cheat
-                    \ call fzf#vim#grep(
-                    \   'grep --color=no -rn -m2 "" -- '..join(g:vim_confi_option.fzf_files)..' '..shellescape(<q-args>)..join(g:vim_confi_option.transformer),
-                    \   1,
-                    \   fzfpreview#p(<bang>0, { 'options': '--delimiter=: --with-nth=4..' }),
-                    \   <bang>0)
-
-        Shortcut! Cheats note find command
-                    \ nnoremap <Space>,,i      :WikiRgBug<Space>
-    endif
-
-    command! -bang -nargs=* WikiRgBug call fzf#vim#grep('rg
-                \ --column --line-number --no-heading --no-column --color=never --sort-files
-                \ --smart-case --type md <q-args> "$MYPATH_WIKI"',
-                \ 1, fzf#vim#with_preview(), <bang>0)
-
-    command! -bang -nargs=* WikiRgDot call fzf#vim#grep('rg
-                \ --column --line-number --no-heading --no-column --color=never --sort-files
-                \ --smart-case --type md <q-args> "$HOME/dotwiki"',
-                \ 1, fzf#vim#with_preview(), <bang>0)
-
-    command! -bang -nargs=* WikiRgLinux call fzf#vim#grep('rg
-                \ --column --line-number --no-heading --no-column --color=never --sort-files
-                \ --smart-case --type md <q-args> "$HOME/wiki"',
-                \ 1, fzf#vim#with_preview(), <bang>0)
-
-    "autocmd FileType vimwiki nnoremap <buffer> <leader>wf :WikiRg<Space>
-    Shortcut! Wiki(bug) search full text
-			\ nnoremap <Space>,,d      :WikiRgBug<Space>
-    Shortcut! Wiki(dot) search full text
-			\ nnoremap <Space>,,e      :WikiRgDot<Space>
-    Shortcut! Wiki(linux) search full text
-			\ nnoremap <Space>,,f      :WikiRgLinux<Space>
 endif
 
 

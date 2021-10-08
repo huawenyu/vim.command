@@ -197,7 +197,7 @@ if CheckPlug('vim-emacscommandline', 1)
 endif
 
 
-if CheckPlug('coc.nvim', 1)
+if HasPlug('coc.nvim')
     " using coc.vim/ale with ccls-cache which base on clang
     nmap <silent> <a-]> <Plug>(coc-definition)
     nmap <silent> <a-\> <Plug>(coc-references)

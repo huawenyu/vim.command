@@ -146,7 +146,8 @@ endif
     " File helper {{{2
         nnoremap <leader>ss     :<c-u>FileSaveAs<space>
         nnoremap        ;ss     :FileSaveAs<cr>
-        nnoremap <leader>fo     :<c-u>call FileOpenDoc()<cr>
+        nnoremap <leader>fo     :W3m <c-r>=hw#misc#GetWord('http')<cr><cr>
+
         Shortcut! <space>ss     File Saveas
         Shortcut!       ;ss     File Save directly
         Shortcut! <space>fo     File Open doc

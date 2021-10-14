@@ -184,15 +184,15 @@ endif
         autocmd BufWritePre [\,:;'"\]\)\}]* throw 'Forbidden file name: ' . expand('<afile>')
 
         "autocmd filetype vimwiki  nnoremap <buffer> <a-o> :VoomToggle vimwiki<CR>
-        autocmd filetype vimwiki  nnoremap <buffer> <a-'> :VoomToggle markdown<CR>
+        autocmd filetype vimwiki  C0 <bar> nnoremap <buffer> <a-'> :VoomToggle markdown<CR>
         "autocmd filetype vimwiki  nnoremap <a-n> :VimwikiMakeDiaryNote<CR>
         "autocmd filetype vimwiki  nnoremap <a-i> :VimwikiDiaryGenerateLinks<CR>
 
-        autocmd filetype markdown nnoremap <buffer> <a-'> :VoomToggle markdown<CR>
+        autocmd filetype markdown C0 <bar> nnoremap <buffer> <a-'> :VoomToggle markdown<CR>
         autocmd filetype python   nnoremap <buffer> <a-'> :VoomToggle python<CR>
         autocmd filetype c,cpp    nnoremap <buffer> <a-'> :VoomToggle txt2tags<CR>
 
-        autocmd filetype vim,vimwiki,tmux,txt  C0
+        autocmd filetype vim,tmux,txt  C0
         "autocmd filetype c,cpp,diff      C8
         "autocmd filetype zsh,bash        C2
         "autocmd filetype vim,markdown    C08

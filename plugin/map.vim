@@ -27,12 +27,6 @@ if HasPlug('vim-table-mode')
 endif
 
 
-if HasPlug('fzf-cscope.vim')
-    let g:fzf_cscope_map = 1
-    let g:fzf_cscope_tag_filter = 'wad_'
-endif
-
-
 " Buffer & lines
 if HasPlug('fzf.vim')
     nnoremap <silent> <leader>fb    :Buffers<cr>

@@ -146,11 +146,9 @@ endif
     " File helper {{{2
         nnoremap <leader>ss     :<c-u>FileSaveAs<space>
         nnoremap        ;ss     :FileSaveAs<cr>
-        nnoremap <leader>fo     :W3m <c-r>=hw#misc#GetWord('http')<cr><cr>
 
         Shortcut! <space>ss     File Saveas
         Shortcut!       ;ss     File Save directly
-        Shortcut! <space>fo     File Open doc
         "Shortcut! <space>fi     Terminal Open
 
         "[Cause command mode pause when press 'w', note:map](https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
@@ -260,34 +258,6 @@ endif
             vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
                   \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
             onoremap s :normal vs<CR>
-
-            nnoremap         ;bb    :Rg <c-r>=utils#GetSelected('n')<cr>
-            nnoremap  <leader>bb    :Rg <c-r>=utils#GetSelected('n')<cr>
-            " vnoremap         ;bb    :<c-u>Rg <c-r>=utils#GetSelected('v')<cr>
-            " vnoremap  <leader>bb    :<c-u>Rg <c-r>=utils#GetSelected('v')<cr>
-
-            nnoremap         ;gg    :<C-\>e utilgrep#Grep(0, 0, "daemon/wad", 1)<cr>
-            nnoremap  <leader>gg    :<C-\>e utilgrep#Grep(0, 0, "daemon/wad", 1)<cr>
-            vnoremap         ;gg    :<C-\>e utilgrep#Grep(0, 1, "daemon/wad", 1)<cr>
-            vnoremap  <leader>gg    :<C-\>e utilgrep#Grep(0, 1, "daemon/wad", 1)<cr>
-
-            nnoremap         ;vv    :<C-\>e utilgrep#Grep(0, 0, "", 1)<cr>
-            nnoremap  <leader>vv    :<C-\>e utilgrep#Grep(0, 0, "", 1)<cr>
-            vnoremap         ;vv    :<C-\>e utilgrep#Grep(0, 1, "", 1)<cr>
-            vnoremap  <leader>vv    :<C-\>e utilgrep#Grep(0, 1, "", 1)<cr>
-
-            Shortcut!  ;gg    Search wad
-            Shortcut!  ;vv    Search all
-
-            " Giveback the 'g' to git
-            " nnoremap ;gg :<C-\>e utilgrep#Grep(0, 0, "daemon/wad", 0)<cr>
-            " vnoremap ;gg :<C-\>e utilgrep#Grep(0, 1, "daemon/wad", 0)<cr>
-            " nnoremap ;vv :<C-\>e utilgrep#Grep(0, 0, "", 0)<cr>
-            " vnoremap ;vv :<C-\>e utilgrep#Grep(0, 1, "", 0)<cr>
-
-            nnoremap gf :<c-u>call utils#GotoFileWithLineNum(0)<CR>
-            nnoremap <silent> <leader>gf :<c-u>call utils#GotoFileWithPreview()<CR>
-            Shortcut! <space>gf    File Goto preview
 
         " Git {{{3
             if HasPlug('vim-gitgutter')

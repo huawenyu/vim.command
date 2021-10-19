@@ -187,7 +187,7 @@ endif
             C0
             nnoremap <buffer> <a-'> :VoomToggle markdown<cr>
         endfunc
-        "autocmd filetype markdown,vimwiki call <sid>ftMarkdown()
+        autocmd filetype markdown,vimwiki call <sid>ftMarkdown()
         "autocmd filetype vimwiki  nnoremap <buffer> <a-o> :VoomToggle vimwiki<CR>
         "autocmd filetype vimwiki  nnoremap <a-n> :VimwikiMakeDiaryNote<CR>
         "autocmd filetype vimwiki  nnoremap <a-i> :VimwikiDiaryGenerateLinks<CR>

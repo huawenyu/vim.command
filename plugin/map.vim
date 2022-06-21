@@ -68,8 +68,8 @@ if HasPlug('c-utils.vim')
         endif
     endfunction
 
-    nnoremap <silent> <leader><leader>  :<c-u>call <SID>JumpComma(0)<cr>
-    vnoremap          <leader><leader>  :<c-u>call <SID>JumpComma(1)<cr>
+    nnoremap <silent> <leader><leader>  :<c-u>call VimMotionPreview()<cr>
+    vnoremap          <leader><leader>  :<c-u>call VimMotionPreview()<cr>
 endif
 
 
@@ -405,3 +405,42 @@ if CheckPlug('vim-argwrap', 1) | " {{{1
     Shortcut! <space>A    Format arguments
 endif
 
+func! CreateVwmLayout()
+    let l:node = {}
+    let l:node.name = "wilsonlayout"
+    " Store root dependent infromation in a temprorary var
+    let l:node.tmp =  ['edit ~/tmp/log.0']
+    let l:node.tmp += ['call setpos(".", [0,0,0])']
+
+    let l:node.opnAftr = ['redraw']
+    "let l:node.opnAftr += ['call vwm#close("' . l:node.name . '")']
+
+    let l:node.cache = 0
+    let l:content = {
+                \  'set': ['nobl', 'bh=wipe', 'noswapfile', 'ft=vkmap', 'nomodifiable', 'nomodified', 'nornu', 'nonu'],
+                \  'focus': 1
+                \}
+    let l:content.init = l:node.tmp
+    unlet l:node.tmp
+
+    let l:height = 16
+    let l:pos = 'bot'
+    if l:pos == 'top' || l:pos == 'bot'
+        let l:content.h_sz = l:height
+
+    else
+        let l:content.v_sz = l:height
+
+    endif
+
+    execute('let l:node.' . l:pos . ' = l:content')
+
+    "echomsg g:vwm#layouts
+    call add(g:vwm#layouts, l:node)
+    if exists('g:vwm#active')
+        VwmReinit
+    endif
+endfun
+
+call CreateVwmLayout()
+noremap <F10> :<C-u>VwmOpen "wilsonlayout"<CR>

@@ -13,17 +13,17 @@ if HasPlug('vim-workspace')
     " restore-session: vim -S
     "nnoremap <C-s> :Obsess
     "nnoremap <C-s> :Savews<cr>
-    Shortcut! <C-s>    Workspace save
+    silent! Shortcut! <C-s>    Workspace save
 endif
 
 if HasPlug('c-utils.vim')
     nnoremap <C-s>      :Savews<cr>
-    Shortcut! <C-s>     Save Workspace
+    silent! Shortcut! <C-s>     Save Workspace
 endif
 
 if HasPlug('vim-table-mode')
     nnoremap <leader>tm :TableModeToggle<cr>
-    Shortcut! <space>tm    Switch table mode
+    silent! Shortcut! <space>tm    Switch table mode
 endif
 
 
@@ -34,28 +34,28 @@ if HasPlug('fzf.vim')
     nnoremap <silent> <leader>fl    :BLines<cr>
     vnoremap <silent> <leader>fl    :<c-u>BLines<cr>
 
-    Shortcut! <space>fb    Jump find buffer
-    Shortcut! <space>fl    Jump find line
+    silent! Shortcut! <space>fb    Jump find buffer
+    silent! Shortcut! <space>fl    Jump find line
 
 endif
 
 
 if HasPlug('fzf-preview.vim')
-    Shortcut find history
+    silent! Shortcut find history
                 \ nnoremap <Space>fF      :FZFFiles<cr>
-    Shortcut find quickfix
+    silent! Shortcut find quickfix
                 \ nnoremap <Space>fq      :FZFQuickFix<cr>
-    Shortcut find history
+    silent! Shortcut find history
                 \ nnoremap <Space>fh      :FZFHistory<cr>
 
 
     nnoremap  <Space>fg      :FZFRg <c-r>=utils#GetSelected('n')<cr><cr>
     vnoremap  <Space>fg      :<c-u>FZFRg <c-r>=utils#GetSelected('v')<cr>
-    Shortcut! <Space>fg      find grep
+    silent! Shortcut! <Space>fg      find grep
 
     " Shortcut select map style
     noremap <silent> <Space>,,x    :<c-u>exec 'FZFRg '..g:my_selstr<cr>
-    Shortcut!        <Space>,,x    find grep
+    silent! Shortcut!        <Space>,,x    find grep
 
 endif
 
@@ -402,6 +402,6 @@ endif
 
 if CheckPlug('vim-argwrap', 1) | " {{{1
     nnoremap <silent> <leader>A :ArgWrap<CR>
-    Shortcut! <space>A    Format arguments
+    silent! Shortcut! <space>A    Format arguments
 endif
 

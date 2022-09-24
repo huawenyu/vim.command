@@ -93,21 +93,21 @@ endif
         "nnoremap <silent> <a-]> :Null<CR>
         "nnoremap <silent> <a-\> :Null<CR>
 
-        Shortcut!  <a-'>    View outline
-        Shortcut!  <a-;>    View taglist
-        Shortcut!  <a-e>    View NerdTree
-        Shortcut!  <a-w>    View Maximize window
+        silent! Shortcut!  <a-'>    View outline
+        silent! Shortcut!  <a-;>    View taglist
+        silent! Shortcut!  <a-e>    View NerdTree
+        silent! Shortcut!  <a-w>    View Maximize window
 
         nnoremap          <leader>f] :AsyncStop! <bar> AsyncTask! tagme<cr>
         nnoremap <silent> <leader>vi :call utils#VoomInsert(0) <CR>
         vnoremap <silent> <leader>vi :call utils#VoomInsert(1) <CR>
-        Shortcut!  <space>vi    Help outline insert
-        Shortcut!  <space>f]    Tag generate
+        silent! Shortcut!  <space>vi    Help outline insert
+        silent! Shortcut!  <space>f]    Tag generate
 
         nnoremap <silent> <leader>vc :<c-u>Goyo<CR>
         nnoremap <silent> <leader>vp :<c-u>TogglePencil<CR>
-        Shortcut!  <space>vc    Toggle Goyo
-        Shortcut!  <space>vp   Toggle Pencil
+        silent! Shortcut!  <space>vc    Toggle Goyo
+        silent! Shortcut!  <space>vp   Toggle Pencil
 
 
     " Sugar {{{2
@@ -117,8 +117,8 @@ endif
             "vnoremap <silent> <leader>mm  :<c-u>silent! call mark#GetVisualSelection()<cr>
             nnoremap <silent> <leader>mx  :<c-u>silent! call mark#ClearAll()<cr>
 
-            Shortcut! <space>mm    Toggle Mark current-word
-            Shortcut! <space>mx    Toggle Mark clear all
+            silent! Shortcut! <space>mm    Toggle Mark current-word
+            silent! Shortcut! <space>mx    Toggle Mark clear all
         endif
 
 
@@ -127,13 +127,13 @@ endif
         if HasPlug('vim-macroscope')
             nnoremap <leader>mr     :<c-u>Macroscope
             nnoremap <leader>mp     :<c-u>Macroplay<cr>
-            Shortcut! <space>mr    Macro edit `qq`, save by `s`, play by `mp`
+            silent! Shortcut! <space>mr    Macro edit `qq`, save by `s`, play by `mp`
         endif
 
 
         if HasPlug('rainbow_parentheses.vim')
             nnoremap <silent> <leader>m[   :<c-u>RainbowParentheses!!<cr>
-            Shortcut! <space>m[    Toggle RainbowParentheses
+            silent! Shortcut! <space>m[    Toggle RainbowParentheses
         endif
 
 
@@ -147,9 +147,9 @@ endif
         nnoremap <leader>ss     :<c-u>FileSaveAs<space>
         nnoremap        ;ss     :FileSaveAs<cr>
 
-        Shortcut! <space>ss     File Saveas
-        Shortcut!       ;ss     File Save directly
-        "Shortcut! <space>fi     Terminal Open
+        silent! Shortcut! <space>ss     File Saveas
+        silent! Shortcut!       ;ss     File Save directly
+        "silent! Shortcut! <space>fi     Terminal Open
 
         "[Cause command mode pause when press 'w', note:map](https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
         "For when you forget to sudo.. Really Write the file.
@@ -158,14 +158,14 @@ endif
         " Toggle source/header
         "nnoremap <silent> <leader>a  :<c-u>FuzzyOpen <C-R>=printf("%s\\.", expand('%:t:r'))<cr><cr>
         nnoremap <silent> <leader>a  :<c-u>call CurtineIncSw()<cr>
-        Shortcut!  <space>a    Toggle header c/h
+        silent! Shortcut!  <space>a    Toggle header c/h
 
         if HasPlug('vim-sleuth')
             nnoremap <leader>fd :Sleuth<cr>
         elseif HasPlug('detectindent')
             nnoremap <leader>fd :DetectIndent<cr>
         endif
-        Shortcut!  <space>fd    Help Detect Indent
+        silent! Shortcut!  <space>fd    Help Detect Indent
 
         " Set log
         "nnoremap <silent> <leader>ll :<c-u>call log#log(expand('%'))<CR>
@@ -181,7 +181,7 @@ endif
         "     vnoremap qq c<C-R>=system('wc -c | perl -pe chomp', @")<CR><ESC>
         "autocmd FileType vimwiki vnoremap <leader>ff :!fmt -c -w 100 -u -s <cr>
         vnoremap <leader>ft :!fmt -c -w 100 -u -s <cr>
-        Shortcut! <space>ft    Format align lines
+        silent! Shortcut! <space>ft    Format align lines
 
     " repl/execute {{{2
         "if mapcheck('<leader>ee', 'n') == ""
@@ -190,9 +190,9 @@ endif
         "    "            \ :tabnew<CR>:r /tmp/vim.tmpx<CR>:silent !rm /tmp/vim.tmpx<CR>:redraw!<CR>
         "    "vnoremap <silent> <unique> <leader>ee :NR<CR> \| :w! /tmp/1.c<cr> \| :e /tmp/1.c<cr>
 
-        "    Shortcut! <space>ee    Tool compile & run
+        "    silent! Shortcut! <space>ee    Tool compile & run
         "    nnoremap <leader>ee :call SingleCompileSplit() \| SCCompileRun<CR>
-        "    Shortcut! <leader>eo    Tool View Result
+        "    silent! Shortcut! <leader>eo    Tool View Result
         "    nnoremap <leader>eo :SCViewResult<CR>
         "endif
 
@@ -224,14 +224,14 @@ endif
             let g:oscyank_term = 'tmux'
             vnoremap Y :OSCYank<CR>
             "vnoremap Y :call YankOSC52(getreg('+'))<CR>
-            Shortcut! Y     Text copy to client-remote-OS
+            silent! Shortcut! Y     Text copy to client-remote-OS
         endif
 
 
         vnoremap <silent> <leader>yy :<c-u>call utils#GetSelected('v', "/tmp/vim.yank")<CR>
         nnoremap <silent> <leader>yy :<c-u>call vimuxscript#Copy() <CR>
         nnoremap <silent> <leader>yp :r! cat /tmp/vim.yank<CR>
-        Shortcut! <space>yy     Text copy to a tmp/file
+        silent! Shortcut! <space>yy     Text copy to a tmp/file
 
         xnoremap * :<C-u>call utils#VSetSearch('/')<CR>/<C-R>=@/<CR>
         xnoremap # :<C-u>call utils#VSetSearch('?')<CR>?<C-R>=@/<CR>
@@ -245,11 +245,11 @@ endif
         nnoremap <leader>tos :JustOneInnerSpace<CR>
         nnoremap <leader>tts :RemoveTrailingSpaces<CR>
 
-        Shortcut! <space>tc     Text Capitalize word
-        Shortcut! <space>tu     Text UPPERCASE word
-        Shortcut! <space>tl     Text lowercase word
-        Shortcut! <space>tos    Text Just one space   " just one space on the line, preserving indent
-        Shortcut! <space>tts    Text remove trailing spaces
+        silent! Shortcut! <space>tc     Text Capitalize word
+        silent! Shortcut! <space>tu     Text UPPERCASE word
+        silent! Shortcut! <space>tl     Text lowercase word
+        silent! Shortcut! <space>tos    Text Just one space   " just one space on the line, preserving indent
+        silent! Shortcut! <space>tts    Text remove trailing spaces
 
     " Git/grep {{{2
         " Search {{{3
@@ -284,12 +284,12 @@ endif
                 nnoremap <silent> <leader>ga   <Plug>(GitGutterStageHunk)
                 nnoremap <silent> <leader>gu   <Plug>(GitGutterUndoHunk)
 
-                Shortcut! <space>gv    Git Gutter Toggle
-                Shortcut! <space>gq    Git Gutter Quickfix
-                Shortcut! <space>gn    Git Hunk Next
-                Shortcut! <space>gp    Git Hunk Prev
-                Shortcut! <space>ga    Git Hunk Stage
-                Shortcut! <space>gu    Git Hunk Undo
+                silent! Shortcut! <space>gv    Git Gutter Toggle
+                silent! Shortcut! <space>gq    Git Gutter Quickfix
+                silent! Shortcut! <space>gn    Git Hunk Next
+                silent! Shortcut! <space>gp    Git Hunk Prev
+                silent! Shortcut! <space>ga    Git Hunk Stage
+                silent! Shortcut! <space>gu    Git Hunk Undo
             endif
 
             if HasPlug('vim-fugitive')
@@ -301,12 +301,12 @@ endif
                 nnoremap        ;bb     :Git blame<cr>
                 nnoremap <leader>gs     :Gstatus<cr>
 
-                Shortcut! <space>gl     Git log
-                Shortcut! <space>gd     Git diff vertical
-                Shortcut! <space>gD     Git diff side by side
-                Shortcut! <space>gb     Git blame
-                Shortcut!       ;gb     Git blame
-                Shortcut! <space>gs     Git status
+                silent! Shortcut! <space>gl     Git log
+                silent! Shortcut! <space>gd     Git diff vertical
+                silent! Shortcut! <space>gD     Git diff side by side
+                silent! Shortcut! <space>gb     Git blame
+                silent! Shortcut!       ;gb     Git blame
+                silent! Shortcut! <space>gs     Git status
             endif
 
             if HasPlug('tig-explorer.vim')
@@ -314,15 +314,15 @@ endif
                 nnoremap <leader>gtL     :Tig --first-parent -m<cr>
                 nnoremap <leader>gtm     :Tig --first-parent --all<cr>
                 nnoremap <leader>gtb     :TigBlame<cr>
-                Shortcut! <space>gtl     Git(tig) log
-                Shortcut! <space>gtL     Git(tig) log --first-parent -m
-                Shortcut! <space>gtb     Git(tig) blame
+                silent! Shortcut! <space>gtl     Git(tig) log
+                silent! Shortcut! <space>gtL     Git(tig) log --first-parent -m
+                silent! Shortcut! <space>gtb     Git(tig) blame
             endif
 
             nnoremap <leader>gc     :AsyncStop! <bar> AsyncTask gitclean-dryrun<cr>
             nnoremap <leader>gx     :AsyncStop! <bar> AsyncTask gitclean<cr>
-            Shortcut! <space>gc     Git clean dryrun
-            Shortcut! <space>gx     Git clean
+            silent! Shortcut! <space>gc     Git clean dryrun
+            silent! Shortcut! <space>gx     Git clean
 
 
 " Helper fucntion {{{1

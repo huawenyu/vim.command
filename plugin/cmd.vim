@@ -270,11 +270,11 @@ if HasPlug('vim.config')
         nnoremap <leader>mf :call utilquickfix#QuickFixFilter() <CR>
         nnoremap <leader>mc :call utilquickfix#QuickFixFunction() <CR>
 
-        Shortcut! <space>mk    Make wad
-        Shortcut! <space>ma    Make init
-        Shortcut! <space>mf    QuickFix filter
-        Shortcut! <space>mc    QuickFix show caller
-        Shortcut! <space>mw    Tool dictionary
+        silent! Shortcut! <space>mk    Make wad
+        silent! Shortcut! <space>ma    Make init
+        silent! Shortcut! <space>mf    QuickFix filter
+        silent! Shortcut! <space>mc    QuickFix show caller
+        silent! Shortcut! <space>mw    Tool dictionary
 
     function MyMenuExec(...)
         let strCmd = join(a:000, '')

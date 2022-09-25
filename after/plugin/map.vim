@@ -48,12 +48,16 @@ endif
         endfunction
 
         "nnoremap <f3> :VimwikiFollowLink
+
         if HasPlug('vim-maximizer')
-            nnoremap <silent> <a-w> :MaximizerToggle<CR>
+            nnoremap <silent> <a-w>                                             :MaximizerToggle<cr>
+            nnoremap <silent> <leader>vw     :"(view)maximize Windows      "<c-U>MaximizerToggle<cr>
         elseif HasPlug('maximize')
-            nnoremap <silent> <a-w> :MaximizeWindow<CR>
+            nnoremap <silent> <a-w>                                             :MaximizeWindow<cr>
+            nnoremap <silent> <leader>vw     :"(view)maximize Windows      "<c-U>MaximizeWindow<cr>
         else
-            nnoremap <silent> <a-w> :ZoomToggle<CR>
+            nnoremap <silent> <a-w>                                              :ZoomToggle<cr>
+            nnoremap <silent>  <leader>vw     :"(view)maximize Windows      "<c-U>ZoomToggle<cr>
 
             " Zoom / Restore window.
             function! s:ZoomToggle() abort
@@ -70,22 +74,25 @@ endif
 
             command! ZoomToggle call s:ZoomToggle()
         endif
-        if HasPlug('vim-nerdtree-tabs')
-            nnoremap <silent> <a-e> :NERDTreeTabsToggle<cr>
-        elseif HasPlug('nerdtree')
-            nnoremap <silent> <a-e> :NERDTreeToggle<cr>
-        endif
 
-        "nnoremap <silent> <a-f> :Null<CR>
-        "nnoremap <silent> <a-g> :Null<CR>
-        "nnoremap <silent> <a-q> :Null<CR>
+        if HasPlug('vim-nerdtree-tabs')
+            nnoremap <silent> <a-e>                                     :NERDTreeTabsToggle<cr>
+            nnoremap <silent>  <leader>ve    :"(view)Explore       "<c-U>NERDTreeTabsToggle<cr>
+        elseif HasPlug('nerdtree')
+            nnoremap <silent> <a-e>                                     :NERDTreeToggle<cr>
+            nnoremap <silent>  <leader>ve    :"(view)Explore       "<c-U>NERDTreeToggle<cr>
+        endif
 
         " Paste in insert mode: don't know who reset this, set again here
         inoremap <silent> <a-i> <c-r>"
 
-        nnoremap <silent> <a-'> :VoomToggle<cr>
-        nnoremap <silent> <a-;> :QFix<CR>
-        nnoremap <silent> <a-/> :<c-u>call <SID>ToggleTagbar()<CR>
+        nnoremap <silent>  <a-'>   :VoomToggle<cr>
+        nnoremap <silent>  <a-;>   :QFix<cr>
+        nnoremap <silent>  <a-/>   :call <SID>ToggleTagbar()<cr>
+        nnoremap <silent>  <leader>vo     :"(view)Outline          "<c-U>VoomToggle<cr>
+        nnoremap <silent>  <leader>vq     :"(view)Quickfix         "<c-U>QFix<cr>
+        nnoremap <silent>  <leader>vt     :"(view)Taglist          "<c-U>call <SID>ToggleTagbar()<cr>
+
         "nnoremap <silent> <a-;> :TMToggle<CR>
         "nnoremap <silent> <a-.> :BuffergatorToggle<CR>
         "nnoremap <silent> <a-,> :VoomToggle<CR>
@@ -93,63 +100,40 @@ endif
         "nnoremap <silent> <a-]> :Null<CR>
         "nnoremap <silent> <a-\> :Null<CR>
 
-        silent! Shortcut!  <a-'>    View outline
-        silent! Shortcut!  <a-;>    View taglist
-        silent! Shortcut!  <a-e>    View NerdTree
-        silent! Shortcut!  <a-w>    View Maximize window
+        nnoremap        <leader>f]      :"(tool)Auto generate tags          "<c-U>AsyncStop! <bar> AsyncTask! tagme<cr>
+        nnoremap <silent>   ;vi         :"(helper)Insert outline header     "<c-U>call utils#VoomInsert(0) <CR>
+        vnoremap <silent>   ;vi                                             :<c-U>call utils#VoomInsert(1) <CR>
 
-        nnoremap          <leader>f] :AsyncStop! <bar> AsyncTask! tagme<cr>
-        nnoremap <silent> <leader>vi :call utils#VoomInsert(0) <CR>
-        vnoremap <silent> <leader>vi :call utils#VoomInsert(1) <CR>
-        silent! Shortcut!  <space>vi    Help outline insert
-        silent! Shortcut!  <space>f]    Tag generate
-
-        nnoremap <silent> <leader>vc :<c-u>Goyo<CR>
-        nnoremap <silent> <leader>vp :<c-u>TogglePencil<CR>
-        silent! Shortcut!  <space>vc    Toggle Goyo
-        silent! Shortcut!  <space>vp   Toggle Pencil
-
+        nnoremap <silent>   ;vc         :"(mode)Goyo reader/present         "<c-U>Goyo<CR>
+        nnoremap <silent>   ;vp         :"(mode)Pencil                      "<c-U>TogglePencil<CR>
 
     " Sugar {{{2
+        silent! Shortcut! <space>m    [vim.command] 1.Marks colorize word; 2.Make; 3.Improve quickfix; 4.Macro record/play;
+
         " bookmark/color
         if HasPlug('vim-mark')
-            nnoremap <silent> <leader>mm  :<c-u>silent! call mark#MarkCurrentWord(expand('<cword>'))<cr>
+            nnoremap <silent> <leader>mm  :"(color)Toggle Colorize word        "<c-U>silent! call mark#MarkCurrentWord(expand('<cword>'))<cr>
             "vnoremap <silent> <leader>mm  :<c-u>silent! call mark#GetVisualSelection()<cr>
-            nnoremap <silent> <leader>mx  :<c-u>silent! call mark#ClearAll()<cr>
-
-            silent! Shortcut! <space>mm    Toggle Mark current-word
-            silent! Shortcut! <space>mx    Toggle Mark clear all
+            nnoremap <silent> <leader>mx  :"(color)Clear all colorize word   "<c-U>silent! call mark#ClearAll()<cr>
         endif
 
 
         " Suppose record macro in register `q`:
         "vnoremap <leader>mm  :normal @q
         if HasPlug('vim-macroscope')
-            nnoremap <leader>mr     :<c-u>Macroscope
-            nnoremap <leader>mp     :<c-u>Macroplay<cr>
-            silent! Shortcut! <space>mr    Macro edit `qq`, save by `s`, play by `mp`
+            "nnoremap <leader>mr     :<c-U>Macroscope
+            "nnoremap <leader>mp     :<c-U>Macroplay<cr>
         endif
 
 
         if HasPlug('rainbow_parentheses.vim')
-            nnoremap <silent> <leader>m[   :<c-u>RainbowParentheses!!<cr>
-            silent! Shortcut! <space>m[    Toggle RainbowParentheses
+            nnoremap <silent> <leader>m[   :"Colorize brace     "<c-U>RainbowParentheses!!<cr>
         endif
 
 
-        "nnoremap <leader>mf :echo(statusline#GetFuncName())<CR>
-        "nnoremap <leader>mo :BookmarkLoad Default
-        "nnoremap <leader>ma :BookmarkShowAll <CR>
-        "nnoremap <leader>mg :BookmarkGoto <C-R><c-w>
-        "nnoremap <leader>mc :BookmarkDel <C-R><c-w>
-
     " File helper {{{2
-        nnoremap <leader>ss     :<c-u>FileSaveAs<space>
-        nnoremap        ;ss     :FileSaveAs<cr>
-
-        silent! Shortcut! <space>ss     File Saveas
-        silent! Shortcut!       ;ss     File Save directly
-        "silent! Shortcut! <space>fi     Terminal Open
+        nnoremap <leader>ss     :"Save file as          "<c-U>FileSaveAs<space>
+        nnoremap        ;ss     :"Save file as          "<c-U>FileSaveAs<cr>
 
         "[Cause command mode pause when press 'w', note:map](https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
         "For when you forget to sudo.. Really Write the file.
@@ -157,15 +141,13 @@ endif
 
         " Toggle source/header
         "nnoremap <silent> <leader>a  :<c-u>FuzzyOpen <C-R>=printf("%s\\.", expand('%:t:r'))<cr><cr>
-        nnoremap <silent> <leader>a  :<c-u>call CurtineIncSw()<cr>
-        silent! Shortcut!  <space>a    Toggle header c/h
+        nnoremap <silent> <leader>a  :"(*)Toggle source/header   "<c-U>call CurtineIncSw()<cr>
 
         if HasPlug('vim-sleuth')
-            nnoremap <leader>fd :Sleuth<cr>
+            nnoremap <leader>fd :"Auto detect indent   "<c-U>Sleuth<cr>
         elseif HasPlug('detectindent')
-            nnoremap <leader>fd :DetectIndent<cr>
+            nnoremap <leader>fd :"Auto detect indent   "<c-U>DetectIndent<cr>
         endif
-        silent! Shortcut!  <space>fd    Help Detect Indent
 
         " Set log
         "nnoremap <silent> <leader>ll :<c-u>call log#log(expand('%'))<CR>
@@ -180,8 +162,8 @@ endif
         "     Most UNIX-like programming environments offer generic tools for formatting text. These include fmt, fold, sed, perl, and par. 
         "     vnoremap qq c<C-R>=system('wc -c | perl -pe chomp', @")<CR><ESC>
         "autocmd FileType vimwiki vnoremap <leader>ff :!fmt -c -w 100 -u -s <cr>
-        vnoremap <leader>ft :!fmt -c -w 100 -u -s <cr>
-        silent! Shortcut! <space>ft    Format align lines
+        nnoremap <leader>ft     (V):"(*)Auto wrapline paragraph   "<c-U>'<,'>!fmt -c -w 100 -u -s <cr>
+        vnoremap <leader>ft     :!fmt -c -w 100 -u -s <cr>
 
     " repl/execute {{{2
         "if mapcheck('<leader>ee', 'n') == ""
@@ -224,32 +206,28 @@ endif
             let g:oscyank_term = 'tmux'
             vnoremap Y :OSCYank<CR>
             "vnoremap Y :call YankOSC52(getreg('+'))<CR>
-            silent! Shortcut! Y     Text copy to client-remote-OS
         endif
 
 
-        vnoremap <silent> <leader>yy :<c-u>call utils#GetSelected('v', "/tmp/vim.yank")<CR>
-        nnoremap <silent> <leader>yy :<c-u>call vimuxscript#Copy() <CR>
-        nnoremap <silent> <leader>yp :r! cat /tmp/vim.yank<CR>
-        silent! Shortcut! <space>yy     Text copy to a tmp/file
+        silent! Shortcut! <space>y     [vim.command] Copy: yy-Copy-to-tmpfile, yp-Paste-from-tmpfile
 
-        xnoremap * :<C-u>call utils#VSetSearch('/')<CR>/<C-R>=@/<CR>
-        xnoremap # :<C-u>call utils#VSetSearch('?')<CR>?<C-R>=@/<CR>
-        vnoremap // y:vim /\<<C-R>"\C/gj %
+        vnoremap <silent> <leader>yy    :<c-u>call utils#GetSelected('v', "/tmp/vim.yank")<CR>
+        nnoremap <silent> <leader>yy    :"Copy text to tmpfile       "<c-U>call vimuxscript#Copy() <CR>
+        nnoremap <silent> <leader>yp    :"Paste text from tmpfile    "<c-U>r! cat /tmp/vim.yank<CR>
+
+        xnoremap *      :<c-u>call utils#VSetSearch('/')<CR>/<C-R>=@/<CR>
+        xnoremap #      :<c-u>call utils#VSetSearch('?')<CR>?<C-R>=@/<CR>
+        vnoremap // y   :vim /\<<C-R>"\C/gj %
 
 
     " Text/Motion {{{2
-        nnoremap <leader>tc :CapitalizeWord<CR>
-        nnoremap <leader>tu :UppercaseWord<CR>
-        nnoremap <leader>tl :LowercaseWord<CR>
-        nnoremap <leader>tos :JustOneInnerSpace<CR>
-        nnoremap <leader>tts :RemoveTrailingSpaces<CR>
+        silent! Shortcut! <space>t     [vim.command] Text Uppercase word: Capitalize, Uppercase, Lowercase
 
-        silent! Shortcut! <space>tc     Text Capitalize word
-        silent! Shortcut! <space>tu     Text UPPERCASE word
-        silent! Shortcut! <space>tl     Text lowercase word
-        silent! Shortcut! <space>tos    Text Just one space   " just one space on the line, preserving indent
-        silent! Shortcut! <space>tts    Text remove trailing spaces
+        nnoremap <leader>tc :"Text Capitalize word        "<c-U>CapitalizeWord<CR>
+        nnoremap <leader>tu :"Text UPPERCASE word         "<c-U>UppercaseWord<CR>
+        nnoremap <leader>tl :"Text lowercase word         "<c-U>LowercaseWord<CR>
+        nnoremap <leader>tos :"Text Just one space        "<c-U>JustOneInnerSpace<CR>
+        nnoremap <leader>tts :"Text remove trailing spaces"<c-U>RemoveTrailingSpaces<CR>
 
     " Git/grep {{{2
         " Search {{{3
@@ -272,9 +250,11 @@ endif
                 "     nmap ;gr call PullAndRefresh()
                 " " --End
 
-                nnoremap <silent> <leader>gv   :GitGutterToggle <cr>
-                nnoremap <silent> <leader>gr   :GitGutter <cr>
-                "nnoremap <silent> <leader>gf   :GitGutterQuickFix \| copen <cr>
+                silent! Shortcut! <space>g     [vim.command] Git: gutteR, Nexthunk, PrevHunk, stAge, Undo
+
+                nnoremap <silent> <leader>gv   :"(git)GutterToggle          "<c-U>GitGutterToggle <cr>
+                nnoremap <silent> <leader>gr   :"(git)Gutter                "<c-U>GitGutter <cr>
+                "nnoremap <silent> <leader>gf  :"(git)Gutter sink-to QuickFix "<c-U>GitGutterQuickFix \| copen <cr>
 
                 " Jump between hunks
                 nnoremap <silent> <leader>gn   <Plug>(GitGutterNextHunk)
@@ -283,46 +263,29 @@ endif
                 " Hunk-add and hunk-revert for chunk staging
                 nnoremap <silent> <leader>ga   <Plug>(GitGutterStageHunk)
                 nnoremap <silent> <leader>gu   <Plug>(GitGutterUndoHunk)
-
-                silent! Shortcut! <space>gv    Git Gutter Toggle
-                silent! Shortcut! <space>gq    Git Gutter Quickfix
-                silent! Shortcut! <space>gn    Git Hunk Next
-                silent! Shortcut! <space>gp    Git Hunk Prev
-                silent! Shortcut! <space>ga    Git Hunk Stage
-                silent! Shortcut! <space>gu    Git Hunk Undo
             endif
 
             if HasPlug('vim-fugitive')
-                "nnoremap <leader>bb :VCBlame<cr>
-                nnoremap <leader>gl     :GV<CR>
-                nnoremap <leader>gd     :Gvdiff<CR>
-                nnoremap <leader>gD     :DiffReview git show
-                nnoremap <leader>gb     :Git blame<cr>
-                nnoremap        ;bb     :Git blame<cr>
-                nnoremap <leader>gs     :Gstatus<cr>
+                silent! Shortcut! <space>g     [vim.command] Git: gt*-tig-explore;  g*: Diff, Diff-review, Blame, Status
 
-                silent! Shortcut! <space>gl     Git log
-                silent! Shortcut! <space>gd     Git diff vertical
-                silent! Shortcut! <space>gD     Git diff side by side
-                silent! Shortcut! <space>gb     Git blame
-                silent! Shortcut!       ;gb     Git blame
-                silent! Shortcut! <space>gs     Git status
+                "nnoremap <leader>bb :VCBlame<cr>
+                nnoremap <leader>gl     :"(git)Log side by side    "<c-U>GV<cr>
+                nnoremap <leader>gd     :"(git)Diff review         "<c-U>Gvdiff<cr>
+                nnoremap <leader>gD     :"(git)Diff review tabs    "<c-U>DiffReview git show
+                nnoremap <leader>gb     :"(git)Blame               "<c-U>Git blame<cr>
+                nnoremap        ;bb     :"(git)Blame               "<c-U>Git blame<cr>
+                nnoremap <leader>gs     :"(git)Status              "<c-U>Gstatus<cr>
             endif
 
             if HasPlug('tig-explorer.vim')
-                nnoremap <leader>gtl     :Tig<cr>
-                nnoremap <leader>gtL     :Tig --first-parent -m<cr>
-                nnoremap <leader>gtm     :Tig --first-parent --all<cr>
-                nnoremap <leader>gtb     :TigBlame<cr>
-                silent! Shortcut! <space>gtl     Git(tig) log
-                silent! Shortcut! <space>gtL     Git(tig) log --first-parent -m
-                silent! Shortcut! <space>gtb     Git(tig) blame
+                nnoremap <leader>gL     :"(tig)Log                 "<c-U>Tig<cr>
+                nnoremap <leader>gp     :"(tig)Log --parent        "<c-U>Tig --first-parent -m<cr>
+                nnoremap <leader>gP     :"(tig)Log --parent all    "<c-U>Tig --first-parent --all<cr>
+                nnoremap <leader>gB     :"(tig)Blame               "<c-U>TigBlame<cr>
             endif
 
-            nnoremap <leader>gc     :AsyncStop! <bar> AsyncTask gitclean-dryrun<cr>
-            nnoremap <leader>gx     :AsyncStop! <bar> AsyncTask gitclean<cr>
-            silent! Shortcut! <space>gc     Git clean dryrun
-            silent! Shortcut! <space>gx     Git clean
+            nnoremap <leader>gc         :"(git)clean-dryrun        "<c-U>AsyncStop! <bar> AsyncTask gitclean-dryrun<cr>
+            nnoremap <leader>gx         :"(git)clean               "<c-U>AsyncStop! <bar> AsyncTask gitclean<cr>
 
 
 " Helper fucntion {{{1

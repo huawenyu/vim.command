@@ -258,23 +258,17 @@ if HasPlug('vim.config')
         "map <leader>ds :call Asm() <CR>
         " For local replace
         "nnoremap <leader>vm [[ma%mb:call signature#sign#Refresh(1) <CR>
-        nnoremap <leader>vr :<C-\>e SelectedReplace('n')<CR><left><left><left>
-        vnoremap <leader>vr :<C-\>e SelectedReplace('v')<CR><left><left><left>
+        nnoremap <leader>vr :"Replace                   "<c-U><C-\>e SelectedReplace('n')<CR><left><left><left>
+        vnoremap <leader>vr                                  :<C-\>e SelectedReplace('v')<CR><left><left><left>
 
     " Section 'Execute'
         " Plug : asynctasks.vim : ~/.vim_tasks.ini : wad|sysinit
-        nnoremap <leader>mk :AsyncStop! <bar> AsyncTask! wad<CR>
-        nnoremap <leader>ma :AsyncStop! <bar> AsyncTask! sysinit<CR>
+        nnoremap  <leader>mk     :"(diag)Make wad                   "<c-U>AsyncStop! <bar> AsyncTask! wad<CR>
+        nnoremap  <leader>ma     :"(diag)Make all                   "<c-U>AAsyncStop! <bar> AsyncTask! sysinit<CR>
 
-        nnoremap <leader>mw :R! ~/tools/dict <C-R>=expand('<cword>') <cr>
-        nnoremap <leader>mf :call utilquickfix#QuickFixFilter() <CR>
-        nnoremap <leader>mc :call utilquickfix#QuickFixFunction() <CR>
-
-        silent! Shortcut! <space>mk    Make wad
-        silent! Shortcut! <space>ma    Make init
-        silent! Shortcut! <space>mf    QuickFix filter
-        silent! Shortcut! <space>mc    QuickFix show caller
-        silent! Shortcut! <space>mw    Tool dictionary
+        nnoremap  <leader>mw     :"(tool)Dictionary                 "<c-U>R! ~/tools/dict <C-R>=expand('<cword>') <cr>
+        nnoremap  <leader>mf     :"(quickfix)filter            "<c-U>call utilquickfix#QuickFixFilter() <CR>
+        nnoremap  <leader>mc     :"(quickfix)add caller field    "<c-U>call utilquickfix#QuickFixFunction() <CR>
 
     function MyMenuExec(...)
         let strCmd = join(a:000, '')

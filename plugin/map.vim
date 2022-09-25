@@ -13,50 +13,38 @@ if HasPlug('vim-workspace')
     " restore-session: vim -S
     "nnoremap <C-s> :Obsess
     "nnoremap <C-s> :Savews<cr>
-    silent! Shortcut! <C-s>    Workspace save
+    silent! Shortcut! <C-s>    [vim.command] Workspace save
 endif
 
 if HasPlug('c-utils.vim')
     nnoremap <C-s>      :Savews<cr>
-    silent! Shortcut! <C-s>     Save Workspace
+    silent! Shortcut! <C-s>    [vim.command] Save Workspace
 endif
 
+
+silent! Shortcut! <space>v    [vim.command] Views (<a-*> or '<space>v*') Explore<a-e>, Outline<a-'>, Quickfix<a-;>, Taglist<a-/>, Maximize<a-w>
+silent! Shortcut! ;v          [vim.command] Mode (;v*) Goyo_Column, _Pencil, Quickfix<a-;>, Taglist<a-/>, Maximize<a-w>
+
 if HasPlug('vim-table-mode')
-    nnoremap <leader>tm :TableModeToggle<cr>
-    silent! Shortcut! <space>tm    Switch table mode
+    nnoremap  ;vt   :TableModeToggle<cr>
 endif
 
 
 " Buffer & lines
 if HasPlug('fzf.vim')
-    nnoremap <silent> <leader>fb    :Buffers<cr>
-    vnoremap <silent> <leader>fb    :<c-u>Buffers<cr>
-    nnoremap <silent> <leader>fl    :BLines<cr>
-    vnoremap <silent> <leader>fl    :<c-u>BLines<cr>
-
-    silent! Shortcut! <space>fb    Jump find buffer
-    silent! Shortcut! <space>fl    Jump find line
-
+    nnoremap <silent> <leader>fb    :"(fzf)Buffers          "<c-U>Buffers<cr>
+    vnoremap <silent> <leader>fb                            :<c-U>Buffers<cr>
+    nnoremap <silent> <leader>fl    :"(fzf)Lines            "<c-U>BLines<cr>
+    vnoremap <silent> <leader>fl                            :<c-U>BLines<cr>
 endif
 
 
 if HasPlug('fzf-preview.vim')
-    silent! Shortcut find history
-                \ nnoremap <Space>fF      :FZFFiles<cr>
-    silent! Shortcut find quickfix
-                \ nnoremap <Space>fq      :FZFQuickFix<cr>
-    silent! Shortcut find history
-                \ nnoremap <Space>fh      :FZFHistory<cr>
-
-
-    nnoremap  <Space>fg      :FZFRg <c-r>=utils#GetSelected('n')<cr><cr>
-    vnoremap  <Space>fg      :<c-u>FZFRg <c-r>=utils#GetSelected('v')<cr>
-    silent! Shortcut! <Space>fg      find grep
-
-    " Shortcut select map style
-    noremap <silent> <Space>,,x    :<c-u>exec 'FZFRg '..g:my_selstr<cr>
-    silent! Shortcut!        <Space>,,x    find grep
-
+    nnoremap <Space>fF      :"(fzf)All files            "<c-U>FZFFiles<cr>
+    nnoremap <Space>fq      :"(fzf)Quickfix             "<c-U>FZFQuickFix<cr>
+    nnoremap <Space>fh      :"(fzf)History              "<c-U>FZFHistory<cr>
+    nnoremap <Space>fg      :"(fzf)Grep                 "<c-U>FZFRg <c-r>=utils#GetSelected('n')<cr><cr>
+    vnoremap <Space>fg                                  :<c-U>FZFRg <c-r>=utils#GetSelected('v')<cr>
 endif
 
 
@@ -68,8 +56,8 @@ if HasPlug('c-utils.vim')
         endif
     endfunction
 
-    nnoremap <silent> <leader><leader>  :<c-u>call VimMotionPreview()<cr>
-    vnoremap          <leader><leader>  :<c-u>call VimMotionPreview()<cr>
+    nnoremap <silent> <leader><leader>  :"(*)Preview Tag at right-side-window         "<c-U>call VimMotionPreview()<cr>
+    vnoremap          <leader><leader>                                             :<c-U>call VimMotionPreview()<cr>
 endif
 
 
@@ -137,26 +125,26 @@ if CheckPlug('vim-gutentags', 1)
         " gutentags_plus
         let g:fzf_cscope_map = 0
         let g:gutentags_plus_nomap = 1
-        noremap <silent> <leader>fs :GscopeFind s <C-R><C-W><cr>
-        noremap <silent> <leader>fg :GscopeFind g <C-R><C-W><cr>
-        noremap <silent> <leader>fc :GscopeFind c <C-R><C-W><cr>
-        noremap <silent> <leader>ft :GscopeFind t <C-R><C-W><cr>
-        noremap <silent> <leader>fe :GscopeFind e <C-R><C-W><cr>
-        "noremap <silent> <leader>ff :GscopeFind f <C-R>=expand("<cfile>")<cr><cr>
-        noremap <silent> <leader>fi :GscopeFind i <C-R>=expand("<cfile>")<cr><cr>
-        noremap <silent> <leader>fd :GscopeFind d <C-R><C-W><cr>
-        noremap <silent> <leader>fa :GscopeFind a <C-R><C-W><cr>
+        noremap <silent> <leader>fs     :GscopeFind s <C-R><C-W><cr>
+        noremap <silent> <leader>fg     :GscopeFind g <C-R><C-W><cr>
+        noremap <silent> <leader>fc     :GscopeFind c <C-R><C-W><cr>
+        noremap <silent> <leader>ft     :GscopeFind t <C-R><C-W><cr>
+        noremap <silent> <leader>fe     :GscopeFind e <C-R><C-W><cr>
+        "noremap <silent> <leader>ff    :GscopeFind f <C-R>=expand("<cfile>")<cr><cr>
+        noremap <silent> <leader>fi     :GscopeFind i <C-R>=expand("<cfile>")<cr><cr>
+        noremap <silent> <leader>fd     :GscopeFind d <C-R><C-W><cr>
+        noremap <silent> <leader>fa     :GscopeFind a <C-R><C-W><cr>
 
         "let g:gutentags_plus_nomap = 1
-        "noremap <silent> <leader>fs :cs find s <C-R><C-W><cr>
-        "noremap <silent> <leader>fg :cs find g <C-R><C-W><cr>
-        "noremap <silent> <leader>fc :cs find c <C-R><C-W><cr>
-        "noremap <silent> <leader>ft :cs find t <C-R><C-W><cr>
-        "noremap <silent> <leader>fe :cs find e <C-R><C-W><cr>
-        ""noremap <silent> <leader>ff :cs find f <C-R>=expand("<cfile>")<cr><cr>
-        "noremap <silent> <leader>fi :cs find i <C-R>=expand("<cfile>")<cr><cr>
-        "noremap <silent> <leader>fd :cs find d <C-R><C-W><cr>
-        "noremap <silent> <leader>fa :cs find a <C-R><C-W><cr>
+        "noremap <silent> <leader>fs    :cs find s <C-R><C-W><cr>
+        "noremap <silent> <leader>fg    :cs find g <C-R><C-W><cr>
+        "noremap <silent> <leader>fc    :cs find c <C-R><C-W><cr>
+        "noremap <silent> <leader>ft    :cs find t <C-R><C-W><cr>
+        "noremap <silent> <leader>fe    :cs find e <C-R><C-W><cr>
+        ""noremap <silent> <leader>ff   :cs find f <C-R>=expand("<cfile>")<cr><cr>
+        "noremap <silent> <leader>fi    :cs find i <C-R>=expand("<cfile>")<cr><cr>
+        "noremap <silent> <leader>fd    :cs find d <C-R><C-W><cr>
+        "noremap <silent> <leader>fa    :cs find a <C-R><C-W><cr>
     endif
 endif
 
@@ -276,7 +264,7 @@ if CheckPlug('vim-tmux-runner', 1)
 endif
 
 
-if CheckPlug('taboo.vim', 1)
+if HasPlug('vim.config')
     nnoremap <silent> ;1     1gt
     nnoremap <silent> ;2     2gt
     nnoremap <silent> ;3     3gt
@@ -288,21 +276,16 @@ if CheckPlug('taboo.vim', 1)
     nnoremap <silent> ;9     9gt
     nnoremap <silent> ;0     10gt
 
-    nnoremap <silent> ;tt   :TabooOpen new-tab<CR>
+    "nnoremap <silent> ;tt     :$tab tag <c-r>=utils#GetSelected('n')<cr><cr>
+    nnoremap <silent> ;tt      :"(*)Tag word into new tab          "<c-U>$tab split<cr>:exec("silent! tag "..utils#GetSelected('n'))<cr>
+    vnoremap <silent> ;tt                                       :<c-U>$tab split<cr>:exec("silent! tag "..utils#GetSelected('v'))<cr>
+endif
+
+if CheckPlug('taboo.vim', 1)
+    "nnoremap <silent> ;tt   :TabooOpen new-tab<CR>
     nnoremap <silent> ;tc   :tabclose<CR>
     nnoremap          ;tr   :TabooRename <C-R>=expand('%:t:r')<CR>
 elseif CheckPlug('vim-tabber', 1)
-    nnoremap <silent> ;1     1gt
-    nnoremap <silent> ;2     2gt
-    nnoremap <silent> ;3     3gt
-    nnoremap <silent> ;4     4gt
-    nnoremap <silent> ;5     5gt
-    nnoremap <silent> ;6     6gt
-    nnoremap <silent> ;7     7gt
-    nnoremap <silent> ;8     8gt
-    nnoremap <silent> ;9     9gt
-    nnoremap <silent> ;0     10gt
-
     "set tabline=%!tabber#TabLine()
     "
     "let g:tabber_wrap_when_shifting = 1
@@ -313,7 +296,7 @@ elseif CheckPlug('vim-tabber', 1)
     let g:tabber_divider_style = 'unicode'
     "let g:tabber_divider_style = 'fancy'
 
-    nnoremap <silent> ;tt   :TabberNew<CR>
+    "nnoremap <silent> ;tt   :TabberNew<CR>
     "nnoremap          ;tc   :tabclose<CR>
     "nnoremap          ;tr   :TabberLabel <C-R>=expand('%:t:r')<CR>
     "nnoremap          ;tm   :TabberMove<CR>
@@ -401,7 +384,6 @@ endif
 
 
 if CheckPlug('vim-argwrap', 1) | " {{{1
-    nnoremap <silent> <leader>A :ArgWrap<CR>
-    silent! Shortcut! <space>A    Format arguments
+    nnoremap <silent> <leader>fa :"(*)Toggle source/header         "<c-U>ArgWrap<CR>
 endif
 

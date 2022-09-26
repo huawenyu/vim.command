@@ -209,7 +209,7 @@ endif
         endif
 
 
-        silent! Shortcut! <space>y     [vim.command] Copy: yy-Copy-to-tmpfile, yp-Paste-from-tmpfile
+        silent! Shortcut! <space>y     [vim.command] Copy: <y*> yy-Copy-to-tmpfile, yp-Paste-from-tmpfile
 
         vnoremap <silent> <leader>yy    :<c-u>call utils#GetSelected('v', "/tmp/vim.yank")<CR>
         nnoremap <silent> <leader>yy    :"Copy text to tmpfile       "<c-U>call vimuxscript#Copy() <CR>
@@ -221,7 +221,7 @@ endif
 
 
     " Text/Motion {{{2
-        silent! Shortcut! <space>t     [vim.command] Text Uppercase word: Capitalize, Uppercase, Lowercase
+        silent! Shortcut! <space>t     [vim.command] Text Uppercase word: <t*> Capitalize, Uppercase, Lowercase
 
         nnoremap <leader>tc :"Text Capitalize word        "<c-U>CapitalizeWord<CR>
         nnoremap <leader>tu :"Text UPPERCASE word         "<c-U>UppercaseWord<CR>
@@ -250,7 +250,7 @@ endif
                 "     nmap ;gr call PullAndRefresh()
                 " " --End
 
-                silent! Shortcut! <space>g     [vim.command] Git: gutteR, Nexthunk, PrevHunk, stAge, Undo
+                silent! Shortcut! <space>g     [vim.command] Git: <g*> gutteR, Nexthunk, PrevHunk, stAge, Undo
 
                 nnoremap <silent> <leader>gv   :"(git)GutterToggle          "<c-U>GitGutterToggle <cr>
                 nnoremap <silent> <leader>gr   :"(git)Gutter                "<c-U>GitGutter <cr>
@@ -266,7 +266,7 @@ endif
             endif
 
             if HasPlug('vim-fugitive')
-                silent! Shortcut! <space>g     [vim.command] Git: gt*-tig-explore;  g*: Diff, Diff-review, Blame, Status
+                silent! Shortcut! <space>g     [vim.command] Git: <gt*> tig-explore;  <g*> Diff, Diff-review, Blame, Status
 
                 "nnoremap <leader>bb :VCBlame<cr>
                 nnoremap <leader>gl     :"(git)Log side by side    "<c-U>GV<cr>

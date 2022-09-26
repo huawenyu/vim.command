@@ -87,55 +87,10 @@ if g:vim_confi_option.auto_qf_height
         set nolazyredraw
     endfunction
 
-
-    " function! AdjustWindowHeight(minheight, maxheight)
-    "     return
-    "     let l = 1
-    "     let n_lines = 0
-    "     let w_width = winwidth(0)
-    "     while l <= line('$')
-    "         " number to float for division
-    "         let l_len = strlen(getline(l)) + 0.0
-    "         let line_width = l_len/w_width
-    "         let n_lines += float2nr(ceil(line_width))
-    "         let l += 1
-    "     endw
-    "     let exp_height = max([min([n_lines, a:maxheight]), a:minheight])
-    "     if (abs(winheight(0) - exp_height)) > 2
-    "         exe max([min([n_lines, a:maxheight]), a:minheight]) . "wincmd _"
-    "     endif
-    " endfunction
-
-    " augroup adjustView
-    "     autocmd!
-    "     au FileType qf call AdjustWindowHeight(2, 10)
-    " augroup END
 endif
 
 
 " Autocmd {{{2
-
-    " Maximizes the current window if it is not the quickfix window.
-    function! SetIndentTabForCfiletype()
-        " auto into terminal-mode
-        if &buftype == 'quickfix'
-            call AdjustWindowHeight(2, 10)
-            return
-        endif
-
-        let my_ft = &filetype
-        if (my_ft == "c" || my_ft == "cpp" || my_ft == "diff" )
-            execute ':C8'
-
-            " If logfile reset NonText bright, this will override it.
-            "" The 'NonText' highlighting will be used for 'eol', 'extends' and 'precedes'
-            "" The 'SpecialKey' for 'nbsp', 'tab' and 'trail'.
-            "hi NonText          ctermfg=238
-            "hi SpecialKey       ctermfg=238
-        elseif (my_ft == 'vimwiki')
-            execute ':C0'
-        endif
-    endfunction
 
     augroup filetype_auto
         " Voom/VOom:
@@ -184,7 +139,7 @@ endif
         autocmd BufWritePre [\,:;'"\]\)\}]* throw 'Forbidden file name: ' . expand('<afile>')
 
         func! s:ftMarkdown()
-            C0
+            "C0
             nnoremap <buffer> <a-'> :VoomToggle markdown<cr>
         endfunc
         autocmd filetype markdown,vimwiki call <sid>ftMarkdown()
@@ -195,7 +150,7 @@ endif
         autocmd filetype python   nnoremap <buffer> <a-'> :VoomToggle python<CR>
         autocmd filetype c,cpp    nnoremap <buffer> <a-'> :VoomToggle txt2tags<CR>
 
-        autocmd filetype vim,tmux,txt  C0
+        "autocmd filetype vim,tmux,txt    C0
         "autocmd filetype c,cpp,diff      C8
         "autocmd filetype zsh,bash        C2
         "autocmd filetype vim,markdown    C08

@@ -23,7 +23,7 @@ endif
 
 
 silent! Shortcut! <space>v    [vim.command] Views (<a-*> or '<space>v*') Explore<a-e>, Outline<a-'>, Quickfix<a-;>, Taglist<a-/>, Maximize<a-w>
-silent! Shortcut! ;v          [vim.command] Mode (;v*) Goyo_Column, _Pencil, Quickfix<a-;>, Taglist<a-/>, Maximize<a-w>
+silent! Shortcut! ;v          [vim.command] Mode <;v*> Goyo_Column, _Pencil, Quickfix<a-;>, Taglist<a-/>, Maximize<a-w>
 
 if HasPlug('vim-table-mode')
     nnoremap  ;vt   :TableModeToggle<cr>

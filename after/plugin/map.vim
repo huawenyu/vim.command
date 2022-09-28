@@ -100,13 +100,8 @@ endif
         "nnoremap <silent> <a-]> :Null<CR>
         "nnoremap <silent> <a-\> :Null<CR>
 
-        nnoremap        <leader>f]      :"(tool)Auto generate tags          "<c-U>AsyncStop! <bar> AsyncTask! tagme<cr>
         nnoremap <silent>   ;vi         :"(helper)Insert outline header     "<c-U>call utils#VoomInsert(0) <CR>
         vnoremap <silent>   ;vi                                             :<c-U>call utils#VoomInsert(1) <CR>
-
-        nnoremap <silent>   ;vc         :"(mode)Goyo reader/present         "<c-U>Goyo<CR>
-        nnoremap <silent>   ;vp         :"(mode)Pencil                      "<c-U>TogglePencil<CR>
-
     " Sugar {{{2
         silent! Shortcut! <space>m    [vim.command] 1.Marks colorize word; 2.Make; 3.Improve quickfix; 4.Macro record/play;
 

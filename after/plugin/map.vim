@@ -127,8 +127,8 @@ endif
 
 
     " File helper {{{2
-        nnoremap <leader>ss     :"Save file as          "<c-U>FileSaveAs<space>
-        nnoremap        ;ss     :"Save file as          "<c-U>FileSaveAs<cr>
+        nnoremap        ;ss     :"Save file as          "<c-U>FileSaveAs<space>
+        nnoremap <leader>ss     :"Save file as          "<c-U>FileSaveAs<cr>
 
         "[Cause command mode pause when press 'w', note:map](https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
         "For when you forget to sudo.. Really Write the file.
@@ -216,13 +216,13 @@ endif
 
 
     " Text/Motion {{{2
-        silent! Shortcut! <space>t     [vim.command] Text Uppercase word: <t*> Capitalize, Uppercase, Lowercase
+        silent! Shortcut! <space>c     [vim.command] Text Uppercase word: <c*> Capitalize, Uppercase, Lowercase
 
-        nnoremap <leader>tc :"Text Capitalize word        "<c-U>CapitalizeWord<CR>
-        nnoremap <leader>tu :"Text UPPERCASE word         "<c-U>UppercaseWord<CR>
-        nnoremap <leader>tl :"Text lowercase word         "<c-U>LowercaseWord<CR>
-        nnoremap <leader>tos :"Text Just one space        "<c-U>JustOneInnerSpace<CR>
-        nnoremap <leader>tts :"Text remove trailing spaces"<c-U>RemoveTrailingSpaces<CR>
+        nnoremap <leader>cc :"Text Capitalize word        "<c-U>CapitalizeWord<CR>
+        nnoremap <leader>cu :"Text UPPERCASE word         "<c-U>UppercaseWord<CR>
+        nnoremap <leader>cl :"Text lowercase word         "<c-U>LowercaseWord<CR>
+        nnoremap <leader>c<space> :"Text Just one space        "<c-U>JustOneInnerSpace<CR>
+        nnoremap <leader>cd :"Text remove trailing spaces"<c-U>RemoveTrailingSpaces<CR>
 
     " Git/grep {{{2
         " Search {{{3

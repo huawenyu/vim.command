@@ -22,6 +22,8 @@ if HasPlug('c-utils.vim')
 endif
 
 
+silent! Shortcut! <space>w    [vim.command] Wiki (w-Enable, h-fzf Pages, t-fzf Headers, i-Index, n-new page, f-follow)
+silent! Shortcut! <space>s    [vim.command] SaveAs/Search (s - SaveAs, h - wiki, w - wiki, m - dot, w - full)
 silent! Shortcut! <space>v    [vim.command] Views (<a-*> or '<space>v*') Explore<a-e>, Outline<a-'>, Quickfix<a-;>, Taglist<a-/>, Maximize<a-w>
 silent! Shortcut! ;v          [vim.command] Mode <;v*> Goyo_Column, _Pencil, Quickfix<a-;>, Taglist<a-/>, Maximize<a-w>
 
@@ -289,7 +291,7 @@ elseif CheckPlug('vim-tabber', 1)
     "set tabline=%!tabber#TabLine()
     "
     "let g:tabber_wrap_when_shifting = 1
-    let g:tabber_predefined_labels = { 1: 'code', 2: 'config', 3: 'patch' }
+    "let g:tabber_predefined_labels = { 1: 'code', 2: 'config', 3: 'patch' }
     let g:tabber_filename_style = 'filename'    " README.md
 
     "let g:tabber_divider_style = 'compatible'

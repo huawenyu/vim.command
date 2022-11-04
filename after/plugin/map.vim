@@ -157,7 +157,7 @@ endif
         "     Most UNIX-like programming environments offer generic tools for formatting text. These include fmt, fold, sed, perl, and par. 
         "     vnoremap qq c<C-R>=system('wc -c | perl -pe chomp', @")<CR><ESC>
         "autocmd FileType vimwiki vnoremap <leader>ff :!fmt -c -w 100 -u -s <cr>
-        nnoremap <leader>ft     (V):"(*)Auto wrapline paragraph   "<c-U>'<,'>!fmt -c -w 100 -u -s <cr>
+        nnoremap <leader>ft     vip:"(*)Auto wrapline paragraph   "<c-U>'<,'>!fmt -c -w 100 -u -s <cr>
         vnoremap <leader>ft     :!fmt -c -w 100 -u -s <cr>
 
     " repl/execute {{{2

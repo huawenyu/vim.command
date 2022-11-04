@@ -127,8 +127,8 @@ endif
 
 
     " File helper {{{2
-        nnoremap        ;ss     :"Save file as          "<c-U>FileSaveAs<space>
-        nnoremap <leader>ss     :"Save file as          "<c-U>FileSaveAs<cr>
+        nnoremap                 ;ss     :"Save file as          "<c-U>FileSaveAs<space>
+        nnoremap <silent> <leader>ss     :"Save file as          "<c-U>FileSaveAs<cr>
 
         "[Cause command mode pause when press 'w', note:map](https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
         "For when you forget to sudo.. Really Write the file.

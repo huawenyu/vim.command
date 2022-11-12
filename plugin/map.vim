@@ -21,13 +21,13 @@ endif
 
 
 silent! Shortcut! ;v          [vim.command] Mode <;v*> Goyo_Column, _Pencil, Quickfix<a-;>, Taglist<a-/>, Maximize<a-w>
-silent! Shortcut! <space>w    [vim.command] Wiki (w-Enable, h-fzf Pages, t-fzf Headers, i-Index, n-new page, f-follow)
+silent! Shortcut! <space>w    [vim.command] Wiki (w-Enable, h-fzfTags, s-fzfText, f-fzfFiles, i-Index, n-new page)
 silent! Shortcut! <space>s    [vim.command] SaveAs/Search (s - SaveAs, h - wiki, w - wiki, m - dot, w - full)
 silent! Shortcut! <space>v    [vim.command] Views (<a-*> or '<space>v*') Explore<a-e>, Outline<a-'>, Quickfix<a-;>, Taglist<a-/>, Maximize<a-w>
 silent! Shortcut! <C-*>       Jump/Move (h/j/k/l-window, ]-tags, g<C-]>select-tags, i/o-history, n/p-quickfix, /-Comment)
 silent! Shortcut! [*OR]*      [vim-unimpaired] (o - enable-option, <space> - add blank lines, e - exchange lines, n - conflict, uu-URL encode)
-silent! Shortcut! H           [vim.command] (H - fzf_Files conf.'fzf_files', K - Man, Tldr - doc)
-silent! Shortcut! ;;          [vim.command] Leader:'<Space>'; <Alt-#>:Tmux_WinTab; <C-hjkl>:Vim/Tmux-panel; gC]:Tags-Select; ';#':VimTab;
+silent! Shortcut! K           [vim.command] (Leader:'<Space>', K - Man, Tldr - doc)
+silent! Shortcut! ;;          [vim.command] <Alt-#>:Tmux_WinTab; <C-hjkl>:Vim/Tmux-panel; gC]:Tags-Select; ';#':VimTab;
 
 if HasPlug('vim-table-mode')
     nnoremap  ;vt   :TableModeToggle<cr>

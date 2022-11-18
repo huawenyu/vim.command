@@ -20,14 +20,25 @@ if HasPlug('c-utils.vim')
 endif
 
 
-silent! Shortcut! ;v          [vim.command] Mode <;v*> Goyo_Column, _Pencil, Quickfix<a-;>, Taglist<a-/>, Maximize<a-w>
-silent! Shortcut! <space>w    [vim.command] Wiki (w-Enable, h-fzfTags, s-fzfText, f-fzfFiles, i-Index, n-new page)
-silent! Shortcut! <space>s    [vim.command] SaveAs/Search (s - SaveAs, h - wiki, w - wiki, m - dot, w - full)
-silent! Shortcut! <space>v    [vim.command] Views (<a-*> or '<space>v*') Explore<a-e>, Outline<a-'>, Quickfix<a-;>, Taglist<a-/>, Maximize<a-w>
-silent! Shortcut! <C-*>       Jump/Move (h/j/k/l-window, ]-tags, g<C-]>select-tags, i/o-history, n/p-quickfix, /-Comment)
-silent! Shortcut! [*OR]*      [vim-unimpaired] (o - enable-option, <space> - add blank lines, e - exchange lines, n - conflict, uu-URL encode)
-silent! Shortcut! K           [vim.command] (Leader:'<Space>', K - Man, Tldr - doc)
-silent! Shortcut! ;;          [vim.command] <Alt-#>:Tmux_WinTab; <C-hjkl>:Vim/Tmux-panel; gC]:Tags-Select; ';#':VimTab;
+silent! Shortcut! […_OR_]…    [Misc]•••■ o★enable option  ■ <space>★add blank lines  ■ e★exchange lines  ■ n★conflict
+silent! Shortcut! <space>w…   [Wiki]•••■ w★Enable  ■ h★fzfTags  ■ s★fzfText  ■ f★fzfFiles  ■ i★Index  ■ n★new page
+silent! Shortcut! <space>s…   [Save]•••■ s★SaveAs  ■ s••★SecreenJump
+silent! Shortcut! <space>y…   [Copy]•••■ yy★CopyAsTmpfile  ■ yp★Paste-from-tmpfile
+silent! Shortcut! <space>c…   [Text]•••■ w★Wrap paragraph  ■ d★Right Trim  ■ u★Uppercase  ■ c★Capitalize  ■ l★Lowercase
+silent! Shortcut! <space>f…   [Find](cscope)  ■ f(F)★Files(all)  ■ s(S)★Symbol(references)  ■ c(C)★Caller(callee)  ■ w★Assign  ■ t★tags  ■ b★buffers  ■ e★changes  ■ j★Jumps  ■ m★Marks  ■ <c-q><cr>★Sink-to-quickfix
+silent! Shortcut! <space>m…   [Mark]•••■ mm★colorize word  ■ ma★Make all  ■ mk★Make wad  ■ mc★quickfix show caller  ■ Macro record/play
+silent! Shortcut! <space>d…   [Help]•••■ t★Right trim all  ■ d★Remove search lines
+silent! Shortcut! <space>g…   [Git]••••■ b★Blame  ■ s★Status  ■ d★Diff  ■ l★Log  ■ f★Preview file
+silent! Shortcut! <space>v…   [Views]••■ Same as <A-…>
+silent! Shortcut! <C-…>       [Motion]•■ <C-h,j,k,l>★Vim/Tmux-panel  ■ <C-]>★tags  ■ g<C-]>★select tags  ■ <C-i,o>★history  ■ <C-n,p>★quickfix  ■ <C-/>★Comment
+silent! Shortcut! <A-…>       [Views]••■ <A-e>★Explore<>  ■ <A-'>★Outline  ■ <A-;>★Quickfix  ■ <A-/>★Taglist  ■ <A-w>★Maximize
+silent! Shortcut! ;f…         [Mode](clangd)  ■ f★Files  ■ <c-q><cr>★Sink-to-quickfix  ■ s★Symbol  ■ s★References  ■ c★Caller  ■ •★Callee  ■ •★Diagnostics
+silent! Shortcut! ;v…         [Mode]•••■ •★(Goyo_Column,Pencil)
+silent! Shortcut! <F…>        [gdb]••••■ F4-Continue  ■ F5-Next(S-Skip)  ■ F6-StepIn(S-Finish)  ■ F7-RunToHere  ■ F8-Evaluate(S-Watch)  ■ F9-ToggleBreak
+silent! Shortcut! K           [Help]•••■ K★Man  ■ gf★Openfile  ■ <A-#>★Tmux_WinTab  ■ ;#★VimTab
+silent! Shortcut! ;;          [••••]•••■ Leader★<space>  ■ 2nd-leader★;  ■ <space><space>★Preview Tag  ■ ;q★Smartclose  ■ <leader>q★Exit
+
+
 
 if HasPlug('vim-table-mode')
     nnoremap  ;vt   :TableModeToggle<cr>

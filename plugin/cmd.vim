@@ -1,11 +1,9 @@
 " Version:      1.0
 
-if exists('g:loaded_hw_command') || &compatible
-  finish
-else
-  let g:loaded_hw_command = 'yes'
+if exists("g:loaded_hw_command") || &cp || v:version < 700
+    finish
 endif
-
+let g:loaded_hw_command = 1
 
 " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
 " Restore cursor to file position in previous editing session
@@ -222,8 +220,10 @@ if HasPlug('vim.config')
         nnoremap  <leader>ma     :"(diag)Make all                   "<c-U>AAsyncStop! <bar> AsyncTask! sysinit<CR>
 
         nnoremap  <leader>mw     :"(tool)Dictionary                 "<c-U>R! ~/tools/dict <C-R>=expand('<cword>') <cr>
-        nnoremap  <leader>mf     :"(quickfix)filter            "<c-U>call utilquickfix#QuickFixFilter() <CR>
-        nnoremap  <leader>mc     :"(quickfix)add caller field    "<c-U>call utilquickfix#QuickFixFunction() <CR>
+        nnoremap  <leader>mf     :"(quickfix)filter                 "<c-U>call utilquickfix#QuickFixFilter() <CR>
+        nnoremap  <leader>mc     :"(quickfix)add caller field       "<c-U>call utilquickfix#QuickFixFunction() <CR>
+
+        nnoremap  <silent>;q     :"(vim.command)SmartClose          "<c-U>SmartClose<cr>
 
     function MyMenuExec(...)
         let strCmd = join(a:000, '')
@@ -248,8 +248,38 @@ if HasPlug('vim.config')
         endif
     endfunction
 
-endif
 
+    " https://github.com/szw/vim-smartclose
+    command! -bang -nargs=0 -range SmartClose :call s:smart_close(<bang>0)
+    fun! s:is_auxiliary(buffer)
+        return !getbufvar(a:buffer, '&modifiable') || !getbufvar(a:buffer, '&buflisted') || (getbufvar(a:buffer, '&buftype') != '')
+    endfun
+
+    fun! s:smart_close(bang)
+        let current_buffer = bufnr('%')
+
+        if s:is_auxiliary(current_buffer) || a:bang
+            silent! exe 'q'
+        else
+            let auxiliary_buffer = 0
+
+            for b in tabpagebuflist()
+                if s:is_auxiliary(b) && (b > auxiliary_buffer)
+                    let auxiliary_buffer = b
+                endif
+            endfor
+
+            if auxiliary_buffer
+                silent! exe 'noautocmd ' . bufwinnr(auxiliary_buffer) . 'wincmd w'
+                silent! exe 'noautocmd q'
+                silent! exe 'noautocmd ' . bufwinnr(current_buffer) . 'wincmd w'
+            else
+                silent! exe 'q'
+            endif
+        endif
+    endfun
+
+endif
 
 
 " vim:set ft=vim et sw=4:

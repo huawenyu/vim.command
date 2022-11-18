@@ -103,8 +103,6 @@ endif
         nnoremap <silent>   ;vi         :"(helper)Insert outline header     "<c-U>call utils#VoomInsert(0) <CR>
         vnoremap <silent>   ;vi                                             :<c-U>call utils#VoomInsert(1) <CR>
     " Sugar {{{2
-        silent! Shortcut! <space>m    [vim.command] 1.Marks colorize word; 2.Make; 3.Improve quickfix; 4.Macro record/play;
-
         " bookmark/color
         if HasPlug('vim-mark')
             nnoremap <silent> <leader>mm  :"(color)Toggle Colorize word        "<c-U>silent! call mark#MarkCurrentWord(expand('<cword>'))<cr>
@@ -204,8 +202,6 @@ endif
         endif
 
 
-        silent! Shortcut! <space>y     [vim.command] Copy: <y*> yy-Copy-to-tmpfile, yp-Paste-from-tmpfile
-
         vnoremap <silent> <leader>yy    :<c-u>call utils#GetSelected('v', "/tmp/vim.yank")<CR>
         nnoremap <silent> <leader>yy    :"Copy text to tmpfile       "<c-U>call vimuxscript#Copy() <CR>
         nnoremap <silent> <leader>yp    :"Paste text from tmpfile    "<c-U>r! cat /tmp/vim.yank<CR>
@@ -216,8 +212,6 @@ endif
 
 
     " Text/Motion {{{2
-        silent! Shortcut! <space>c     [vim.command] Text Uppercase word: <c*> Capitalize, Uppercase, Lowercase
-
         nnoremap <leader>cc :"Text Capitalize word        "<c-U>CapitalizeWord<CR>
         nnoremap <leader>cu :"Text UPPERCASE word         "<c-U>UppercaseWord<CR>
         nnoremap <leader>cl :"Text lowercase word         "<c-U>LowercaseWord<CR>
@@ -245,8 +239,6 @@ endif
                 "     nmap ;gr call PullAndRefresh()
                 " " --End
 
-                silent! Shortcut! <space>g     [vim.command] Git: <g*> gutteR, Nexthunk, PrevHunk, stAge, Undo
-
                 nnoremap <silent> <leader>gv   :"(git)GutterToggle          "<c-U>GitGutterToggle <cr>
                 nnoremap <silent> <leader>gr   :"(git)Gutter                "<c-U>GitGutter <cr>
                 "nnoremap <silent> <leader>gf  :"(git)Gutter sink-to QuickFix "<c-U>GitGutterQuickFix \| copen <cr>
@@ -261,8 +253,6 @@ endif
             endif
 
             if HasPlug('vim-fugitive')
-                silent! Shortcut! <space>g     [vim.command] Git: <gt*> tig-explore;  <g*> Diff, Diff-review, Blame, Status
-
                 "nnoremap <leader>bb :VCBlame<cr>
                 nnoremap <leader>gl     :"(git)Log side by side    "<c-U>GV<cr>
                 nnoremap <leader>gd     :"(git)Diff review         "<c-U>Gvdiff<cr>

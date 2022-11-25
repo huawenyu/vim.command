@@ -26,14 +26,15 @@ silent! Shortcut! <space>s…   [Save]•••■ s★SaveAs  ■ s••★Sec
 silent! Shortcut! <space>y…   [Copy]•••■ yy★CopyAsTmpfile  ■ yp★Paste-from-tmpfile
 silent! Shortcut! <space>c…   [Text]•••■ w★Wrap paragraph  ■ d★Right Trim  ■ u★Uppercase  ■ c★Capitalize  ■ l★Lowercase
 silent! Shortcut! <space>f…   [Find](cscope)  ■ f(F)★Files(all)  ■ s(S)★Symbol(references)  ■ c(C)★Caller(callee)  ■ w★Assign  ■ t★tags  ■ b★buffers  ■ e★changes  ■ j★Jumps  ■ m★Marks  ■ <c-q><cr>★Sink-to-quickfix
-silent! Shortcut! <space>m…   [Mark]•••■ mm★colorize word  ■ ma★Make all  ■ mk★Make wad  ■ mc★quickfix show caller  ■ Macro record/play
+silent! Shortcut! <space>m…   [Mark]•••■ mm★colorize word  ■ ma★Make all  ■ mk★Make wad  ■ <space>ee-execute  ■ ;ee-make buffer  ■ mf★quickfix filter  ■ mc★quickfix show caller  ■ Macro record/play
 silent! Shortcut! <space>d…   [Help]•••■ t★Right trim all  ■ d★Remove search lines
 silent! Shortcut! <space>g…   [Git]••••■ b★Blame  ■ s★Status  ■ d★Diff  ■ l★Log  ■ f★Preview file
 silent! Shortcut! <space>v…   [Views]••■ Same as <A-…>
-silent! Shortcut! <C-…>       [Motion]•■ <C-h,j,k,l>★Vim/Tmux-panel  ■ <C-]>★tags  ■ g<C-]>★select tags  ■ <C-i,o>★history  ■ <C-n,p>★quickfix  ■ <C-/>★Comment
+silent! Shortcut! <C-…>       [Motion]•■ <C-h,j,k,l>★Vim/Tmux-panel  ■ <C-]>★tags  ■ g<C-]>★select tags  ■ <C-i,o>★history  ■ <C-n,p>★quickfix  ■ <C-/>★Comment  ■ <C-w#>★Sel-window
 silent! Shortcut! <A-…>       [Views]••■ <A-e>★Explore<>  ■ <A-'>★Outline  ■ <A-;>★Quickfix  ■ <A-/>★Taglist  ■ <A-w>★Maximize
 silent! Shortcut! ;f…         [Mode](clangd)  ■ f★Files  ■ <c-q><cr>★Sink-to-quickfix  ■ s★Symbol  ■ s★References  ■ c★Caller  ■ •★Callee  ■ •★Diagnostics
 silent! Shortcut! ;v…         [Mode]•••■ •★(Goyo_Column,Pencil)
+silent! Shortcut! ;s…         [Mode]•••■ sv★vert-terminal  ■ sh★horizon-terminal
 silent! Shortcut! <F…>        [gdb]••••■ F4-Continue  ■ F5-Next(S-Skip)  ■ F6-StepIn(S-Finish)  ■ F7-RunToHere  ■ F8-Evaluate(S-Watch)  ■ F9-ToggleBreak
 silent! Shortcut! K           [Help]•••■ K★Man  ■ gf★Openfile  ■ <A-#>★Tmux_WinTab  ■ ;#★VimTab
 silent! Shortcut! ;;          [••••]•••■ Leader★<space>  ■ 2nd-leader★;  ■ <space><space>★Preview Tag  ■ ;q★Smartclose  ■ <leader>q★Exit

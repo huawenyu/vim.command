@@ -211,7 +211,7 @@ if HasPlug('vim.config')
         "map <leader>ds :call Asm() <CR>
         " For local replace
         "nnoremap <leader>vm [[ma%mb:call signature#sign#Refresh(1) <CR>
-        nnoremap <leader>vr :"Replace                   "<c-U><C-\>e SelectedReplace('n')<CR><left><left><left>
+        nnoremap <leader>vr      :"Replace                   "<c-U><C-\>e SelectedReplace('n')<CR><left><left><left>
         vnoremap <leader>vr                                  :<C-\>e SelectedReplace('v')<CR><left><left><left>
 
     " Section 'Execute'

@@ -32,11 +32,11 @@ silent! Shortcut! <space>g…   [Git]••••■ b★Blame  ■ s★Status  
 silent! Shortcut! <space>v…   [Views]••■ Same as <A-…>
 silent! Shortcut! <C-…>       [Motion]•■ <C-h,j,k,l>★Vim/Tmux-panel  ■ <C-]>★tags  ■ g<C-]>★select tags  ■ <C-i,o>★history  ■ <C-n,p>★quickfix  ■ <C-/>★Comment  ■ <C-w#>★Sel-window
 silent! Shortcut! <A-…>       [Views]••■ <A-e>★Explore<>  ■ <A-'>★Outline  ■ <A-;>★Quickfix  ■ <A-/>★Taglist  ■ <A-w>★Maximize
-silent! Shortcut! ;f…         [Mode](clangd)  ■ f★Files  ■ <c-q><cr>★Sink-to-quickfix  ■ s★Symbol  ■ s★References  ■ c★Caller  ■ •★Callee  ■ •★Diagnostics
+silent! Shortcut! ;f…         [Mode](clangd)  ■ f★Files  ■ s★Symbol  ■ s★References  ■ c★Caller  ■ h/H★Info/Macro-expand  ■ •★Diagnostics
 silent! Shortcut! ;v…         [Mode]•••■ •★(Goyo_Column,Pencil)
 silent! Shortcut! ;s…         [Mode]•••■ sv★vert-terminal  ■ sh★horizon-terminal
 silent! Shortcut! <F…>        [gdb]••••■ F4-Continue  ■ F5-Next(S-Skip)  ■ F6-StepIn(S-Finish)  ■ F7-RunToHere  ■ F8-Evaluate(S-Watch)  ■ F9-ToggleBreak
-silent! Shortcut! K           [Help]•••■ K★Man  ■ gf★Openfile  ■ <A-#>★Tmux_WinTab  ■ ;#★VimTab
+silent! Shortcut! K           [Help]•••■ K★Man  ■ gf★Openfile  ■ <A-#>★Tmux_WinTab  ■ ;#★VimTab  ■ <c-q><cr>★Sink-fzf-preview-to-quickfix
 silent! Shortcut! ;;          [••••]•••■ Leader★<space>  ■ 2nd-leader★;  ■ <space><space>★Preview Tag  ■ ;q★Smartclose  ■ <leader>q★Exit
 
 

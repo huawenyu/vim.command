@@ -39,7 +39,7 @@ silent! Shortcut! <F…>        [gdb]••••■ F4★Continue  ■ F5★Nex
 silent! Shortcut! v…          [Object]•■ vie★whole buffer  ■ vi`★Code-fence  ■ vif★Function  ■ viu★URL  ■ vij★Brace  ■ vic★Comment  ■ vib★Block  ■ vi'★Quota
 silent! Shortcut! K           [Help]•••■ K★Man  ■ gf★Openfile  ■ <A-#>★Tmux_WinTab  ■ ;#★VimTab  ■ <c-q><cr>★Sink-fzf-preview-to-quickfix
 silent! Shortcut! ;;          [••••]•••■ Leader★<space>  ■ 2nd-leader★;  ■ <space><space>★Preview Tag  ■ ;q★Smartclose  ■ <leader>q★Exit
-
+silent! Shortcut! …           [Misc]•••■ <space>ee★REPL(markdown-CodeFence, c-compile&run)
 
 
 if HasPlug('vim-table-mode')

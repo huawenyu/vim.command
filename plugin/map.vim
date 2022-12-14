@@ -21,7 +21,7 @@ endif
 
 
 silent! Shortcut! […_OR_]…    [Misc]•••■ o★enable option  ■ <space>★add blank lines  ■ e★exchange lines  ■ n★conflict
-silent! Shortcut! <space>w…   [Wiki]•••■ w★Enable  ■ h★fzfTags  ■ s★fzfText  ■ f★fzfFiles  ■ i★Index  ■ n★new page
+silent! Shortcut! <space>w…   [Wiki]•••■ w★Enable  ■ h/H★TldrText/Header  ■ s★fzfText  ■ f★fzfFiles  ■ i★Index  ■ n★new page
 silent! Shortcut! <space>s…   [Save]•••■ s★SaveAs  ■ s••★SecreenJump
 silent! Shortcut! <space>y…   [Copy]•••■ yy★CopyAsTmpfile  ■ yp★Paste-from-tmpfile
 silent! Shortcut! <space>c…   [Text]•••■ w★Wrap paragraph  ■ e★Narror Edit  ■ d★Right Trim  ■ u★Uppercase  ■ c★Capitalize  ■ l★Lowercase

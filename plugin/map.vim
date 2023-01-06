@@ -20,28 +20,6 @@ if HasPlug('c-utils.vim')
 endif
 
 
-silent! Shortcut! […_OR_]…    [Misc]•••■ o★enable option  ■ <space>★add blank lines  ■ e★exchange lines  ■ n★conflict
-silent! Shortcut! <space>w…   [Wiki]•••■ w★Enable  ■ h/H★TldrText/Header  ■ s★fzfText  ■ f★fzfFiles  ■ i★Index  ■ n★new page
-silent! Shortcut! <space>s…   [Save]•••■ s★SaveAs  ■ s••★SecreenJump
-silent! Shortcut! <space>y…   [Copy]•••■ yy★CopyAsTmpfile  ■ yp★Paste-from-tmpfile
-silent! Shortcut! <space>c…   [Text]•••■ w★Wrap paragraph  ■ e★Narror Edit  ■ d★Right Trim  ■ u★Uppercase  ■ c★Capitalize  ■ l★Lowercase
-silent! Shortcut! <space>f…   [Find](cscope)  ■ f(F)★Files(all)  ■ s(S)★Symbol(references)  ■ c(C)★Caller(callee)  ■ w★Assign  ■ t★tags  ■ b★buffers  ■ e★changes  ■ j★Jumps  ■ m★Marks  ■ <c-q><cr>★Sink-to-quickfix
-silent! Shortcut! <space>m…   [Mark]•••■ mm★colorize word  ■ ma★Make all  ■ mk★Make wad  ■ <space>ee-execute  ■ ;ee-make buffer  ■ mf★quickfix filter  ■ mc★quickfix show caller  ■ Macro record/play
-silent! Shortcut! <space>d…   [Help]•••■ t★Right trim all  ■ d★Remove search lines
-silent! Shortcut! <space>g…   [Git]••••■ b★Blame  ■ s★Status  ■ d★Diff  ■ l★Log  ■ f★Preview file
-silent! Shortcut! <space>v…   [Views]••■ Same as <A-…>
-silent! Shortcut! <C-…>       [Motion]•■ <C-h,j,k,l>★Vim/Tmux-panel  ■ <C-]>★tags  ■ g<C-]>★select tags  ■ <C-i,o>★history  ■ <C-n,p>★quickfix  ■ <C-/>★Comment  ■ <C-w#>★Sel-window
-silent! Shortcut! <A-…>       [Views]••■ <A-e>★Explore<>  ■ <A-'>★Outline  ■ <A-;>★Quickfix  ■ <A-/>★Taglist  ■ <A-w>★Maximize
-silent! Shortcut! ;f…         [Mode](clangd)  ■ f★Files  ■ s★Symbol  ■ s★References  ■ c★Caller  ■ h/H★Info/Macro-expand  ■ •★Diagnostics
-silent! Shortcut! ;v…         [Mode]•••■ •★(Goyo_Column,Pencil)
-silent! Shortcut! ;s…         [Mode]•••■ sv★term-vert  ■ sh★term-horizon
-silent! Shortcut! <F…>        [gdb]••••■ F4★Continue  ■ F5★Next(S-Skip)  ■ F6★StepIn(S-Finish)  ■ F7★RunToHere  ■ F8★Evaluate(S-Watch)  ■ F9★ToggleBreak
-silent! Shortcut! v…          [Object]•■ vie★whole buffer  ■ vi`★Code-fence  ■ vif★Function  ■ viu★URL  ■ vij★Brace  ■ vic★Comment  ■ vib★Block  ■ vi'★Quota
-silent! Shortcut! K           [Help]•••■ K★Man  ■ gf★Openfile  ■ <A-#>★Tmux_WinTab  ■ ;#★VimTab  ■ <c-q><cr>★Sink-fzf-preview-to-quickfix
-silent! Shortcut! ;;          [••••]•••■ Leader★<space>  ■ 2nd-leader★;  ■ <space><space>★Preview Tag  ■ ;q★Smartclose  ■ <leader>q★Exit
-silent! Shortcut! …           [Misc]•••■ <space>ee★REPL(markdown-CodeFence, c-compile&run)
-
-
 if HasPlug('vim-table-mode')
     nnoremap  ;vt   :TableModeToggle<cr>
 endif

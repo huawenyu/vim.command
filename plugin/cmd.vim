@@ -217,7 +217,7 @@ if HasPlug('vim.config')
     " Section 'Execute'
         " Plug : asynctasks.vim : ~/.vim_tasks.ini : wad|sysinit
         nnoremap  <leader>mk     :"(diag)Make wad                   "<c-U>AsyncStop! <bar> AsyncTask! wad<CR>
-        nnoremap  <leader>ma     :"(diag)Make all                   "<c-U>AAsyncStop! <bar> AsyncTask! sysinit<CR>
+        nnoremap  <leader>ma     :"(diag)Make all                   "<c-U>AsyncStop! <bar> AsyncTask! sysinit<CR>
 
         nnoremap  <leader>mw     :"(tool)Dictionary                 "<c-U>R! ~/tools/dict <C-R>=expand('<cword>') <cr>
         nnoremap  <leader>mf     :"(quickfix)filter                 "<c-U>call utilquickfix#QuickFixFilter() <CR>

@@ -7,19 +7,6 @@ else
 endif
 
 
-" Plugins' map {{{1
-if HasPlug('vim-workspace')
-    nnoremap <C-s> :ToggleWorkspace<cr>
-    " restore-session: vim -S
-    "nnoremap <C-s> :Obsess
-    "nnoremap <C-s> :Savews<cr>
-endif
-
-if HasPlug('c-utils.vim')
-    nnoremap <C-s>      :Savews<cr>
-endif
-
-
 if HasPlug('vim-table-mode')
     nnoremap  ;vt   :TableModeToggle<cr>
 endif

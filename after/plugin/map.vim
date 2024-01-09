@@ -78,6 +78,9 @@ endif
         if HasPlug('vim-nerdtree-tabs')
             nnoremap <silent> <a-e>                                     :NERDTreeTabsToggle<cr>
             nnoremap <silent>  <leader>ve    :"(view)Explore       "<c-U>NERDTreeTabsToggle<cr>
+        elseif HasPlug('fern.vim')
+            nnoremap <silent> <a-e>                                     :Fern . -drawer -toggle<cr>
+            nnoremap <silent>  <leader>ve    :"(view)Explore       "<c-U>Fern .<cr>
         elseif HasPlug('nerdtree')
             nnoremap <silent> <a-e>                                     :NERDTreeToggle<cr>
             nnoremap <silent>  <leader>ve    :"(view)Explore       "<c-U>NERDTreeToggle<cr>

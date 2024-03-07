@@ -25,6 +25,9 @@ if HasPlug('fzf-preview.vim')
     nnoremap <Space>fF      :"(fzf)All files            "<c-U>FZFFiles<cr>
     nnoremap <Space>fq      :"(fzf)Quickfix             "<c-U>FZFQuickFix<cr>
     nnoremap <Space>fh      :"(fzf)History              "<c-U>FZFHistory<cr>
+    if HasPlug('fzf-filemru')
+    nnoremap <Space>fH      :"(fzf)MRU                  "<c-U>FilesMru --tiebreak=end<cr>
+    endif
     nnoremap <Space>fg      :"(fzf)Grep                 "<c-U>FZFRg <c-r>=utils#GetSelected('n')<cr><cr>
     vnoremap <Space>fg                                  :<c-U>FZFRg <c-r>=utils#GetSelected('v')<cr>
 endif

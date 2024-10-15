@@ -209,7 +209,9 @@ endif
         nnoremap <silent> <leader>yy    :"Copy text to tmpfile       "<c-U>call vimuxscript#Copy() <CR>
         nnoremap <silent> <leader>yp    :"Paste text from tmpfile    "<c-U>r! cat /tmp/vim.yank<CR>
 
+        " Map `*`, `&` same to avoid ft=git conflict:
         xnoremap *      :<c-u>call utils#VSetSearch('/')<CR>/<C-R>=@/<CR>
+        xnoremap &      :<c-u>call utils#VSetSearch('/')<CR>/<C-R>=@/<CR>
         xnoremap #      :<c-u>call utils#VSetSearch('?')<CR>?<C-R>=@/<CR>
         vnoremap // y   :vim /\<<C-R>"\C/gj %
 

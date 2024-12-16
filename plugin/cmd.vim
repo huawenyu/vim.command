@@ -137,7 +137,6 @@ endif
         autocmd BufWritePre [\,:;'"\]\)\}]* throw 'Forbidden file name: ' . expand('<afile>')
 
         func! s:ftMarkdown()
-            "C0
             nnoremap <buffer>  <a-'> :VoomToggle markdown<cr>
             nnoremap <buffer>  <a-u> :VoomToggle fmr<cr>
         endfunc
@@ -148,6 +147,12 @@ endif
 
         autocmd filetype python   nnoremap <buffer> <a-'> :VoomToggle python<CR>
         autocmd filetype c,cpp    nnoremap <buffer> <a-'> :VoomToggle txt2tags<CR>
+
+        command! -nargs=* C0  setlocal autoindent cindent expandtab   tabstop=4 shiftwidth=4 softtabstop=4
+        command! -nargs=* C08 setlocal autoindent cindent expandtab   tabstop=8 shiftwidth=2 softtabstop=8
+        command! -nargs=* C2  setlocal autoindent cindent expandtab   tabstop=2 shiftwidth=2 softtabstop=2
+        command! -nargs=* C4  setlocal autoindent cindent noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
+        command! -nargs=* C8  setlocal autoindent cindent noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
 
         "autocmd filetype vim,tmux,txt    C0
         "autocmd filetype c,cpp,diff      C8

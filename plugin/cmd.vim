@@ -139,7 +139,7 @@ endif
         func! s:ftMarkdown()
             "C0
             nnoremap <buffer>  <a-'> :VoomToggle markdown<cr>
-            nnoremap <silent>  <leader>vo     :"(view)Outline          "<c-U>VoomToggle markdown<cr>
+            nnoremap <buffer>  <a-u> :VoomToggle fmr<cr>
         endfunc
         autocmd filetype markdown,vimwiki call <sid>ftMarkdown()
         "autocmd filetype vimwiki  nnoremap <buffer> <a-o> :VoomToggle vimwiki<CR>

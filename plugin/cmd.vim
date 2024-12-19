@@ -138,7 +138,6 @@ endif
 
         func! s:ftMarkdown()
             nnoremap <buffer>  <a-'> :VoomToggle markdown<cr>
-            nnoremap <buffer>  <a-u> :VoomToggle fmr<cr>
         endfunc
         autocmd filetype markdown,vimwiki call <sid>ftMarkdown()
         "autocmd filetype vimwiki  nnoremap <buffer> <a-o> :VoomToggle vimwiki<CR>

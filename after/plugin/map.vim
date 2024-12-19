@@ -92,9 +92,11 @@ endif
         nnoremap <silent>  <a-'>   :VoomToggle<cr>
         nnoremap <silent>  <a-;>   :QFix<cr>
         nnoremap <silent>  <a-/>   :call <SID>ToggleTagbar()<cr>
-        nnoremap <silent>  <leader>vo     :"(view)Outline          "<c-U>VoomToggle<cr>
+        nnoremap <silent>  <leader>v'     :"(view)Outline          "<c-U>VoomToggle<cr>
+        nnoremap <silent>  <leader>vo     :"(view)Outline          "<c-U>VoomToggle fmr<cr>
         nnoremap <silent>  <leader>vq     :"(view)Quickfix         "<c-U>QFix<cr>
         nnoremap <silent>  <leader>vt     :"(view)Taglist          "<c-U>call <SID>ToggleTagbar()<cr>
+        nnoremap <silent>  1G             :"(info)File             "<c-U>echo expand('%:p')<cr>
 
         "nnoremap <silent> <a-;> :TMToggle<CR>
         "nnoremap <silent> <a-.> :BuffergatorToggle<CR>

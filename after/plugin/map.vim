@@ -75,7 +75,10 @@ endif
             command! ZoomToggle call s:ZoomToggle()
         endif
 
-        if HasPlug('vim-nerdtree-tabs')
+        if HasPlug('neo-tree.nvim')
+            nnoremap <silent> <a-e>                                     :Neotree toggle<cr>
+            nnoremap <silent>  <leader>ve    :"(view)Explore       "<c-U>Neotree toggle<cr>
+        elseif HasPlug('vim-nerdtree-tabs')
             nnoremap <silent> <a-e>                                     :NERDTreeTabsToggle<cr>
             nnoremap <silent>  <leader>ve    :"(view)Explore       "<c-U>NERDTreeTabsToggle<cr>
         elseif HasPlug('fern.vim')

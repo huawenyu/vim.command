@@ -249,7 +249,7 @@ if CheckPlug('vim-tmux-runner', 1)
 endif
 
 
-if HasPlug('vim.config')
+if HasPlug('vimConfig')
     nnoremap <silent> ;1     1gt
     nnoremap <silent> ;2     2gt
     nnoremap <silent> ;3     3gt

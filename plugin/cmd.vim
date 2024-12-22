@@ -211,7 +211,7 @@ if HasPlug('accelerated-jk')
 endif
 
 
-if HasPlug('vim.config')
+if HasPlug('vimConfig')
     " Section 'String'
         "map <leader>ds :call Asm() <CR>
         " For local replace

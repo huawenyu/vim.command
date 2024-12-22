@@ -75,19 +75,6 @@ endif
             command! ZoomToggle call s:ZoomToggle()
         endif
 
-        if HasPlug('neo-tree.nvim')
-            nnoremap <silent> <a-e>                                     :Neotree toggle<cr>
-            nnoremap <silent>  <leader>ve    :"(view)Explore       "<c-U>Neotree toggle<cr>
-        elseif HasPlug('vim-nerdtree-tabs')
-            nnoremap <silent> <a-e>                                     :NERDTreeTabsToggle<cr>
-            nnoremap <silent>  <leader>ve    :"(view)Explore       "<c-U>NERDTreeTabsToggle<cr>
-        elseif HasPlug('fern.vim')
-            nnoremap <silent> <a-e>                                     :Fern . -drawer -toggle<cr>
-            nnoremap <silent>  <leader>ve    :"(view)Explore       "<c-U>Fern .<cr>
-        elseif HasPlug('nerdtree')
-            nnoremap <silent> <a-e>                                     :NERDTreeToggle<cr>
-            nnoremap <silent>  <leader>ve    :"(view)Explore       "<c-U>NERDTreeToggle<cr>
-        endif
 
         " Paste in insert mode: don't know who reset this, set again here
         inoremap <silent> <a-i> <c-r>"
@@ -98,7 +85,7 @@ endif
         nnoremap <silent>  <leader>v'     :"(view)Outline          "<c-U>VoomToggle<cr>
         nnoremap <silent>  <leader>vo     :"(view)Outline          "<c-U>VoomToggle fmr<cr>
         nnoremap <silent>  <leader>vq     :"(view)Quickfix         "<c-U>QFix<cr>
-        nnoremap <silent>  <leader>vt     :"(view)Taglist          "<c-U>call <SID>ToggleTagbar()<cr>
+        "nnoremap <silent>  <leader>vt     :"(view)Taglist          "<c-U>call <SID>ToggleTagbar()<cr>
         nnoremap <silent>  1G             :"(info)File             "<c-U>echo expand('%:p')<cr> \| call setreg('+', expand('%:p'))<cr>
 
         "nnoremap <silent> <a-;> :TMToggle<CR>

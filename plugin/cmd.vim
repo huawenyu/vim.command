@@ -129,6 +129,7 @@ endif
         " Set filetype base on extension
         autocmd BufNewFile,BufRead *.c.rej,*.c.orig,h.rej,*.h.orig,patch.*,*.diff,*.patch set ft=diff
         autocmd BufNewFile,BufRead *.c,*.c,*.h,*.cpp,*.C,*.CXX,*.CPP set ft=c
+        autocmd TermOpen * silent! ContextDisable
 
         "autocmd BufNewFile,BufRead *.md  setfiletype markdown
         "autocmd BufNewFile,BufRead,BufEnter *.wiki  set ft=markdown    | " Cause vimwiki file navigator keymap fail
@@ -139,7 +140,8 @@ endif
         func! s:ftMarkdown()
             nnoremap <buffer>  <a-'> :VoomToggle markdown<cr>
         endfunc
-        autocmd filetype markdown,vimwiki call <sid>ftMarkdown()
+        autocmd filetype markdown,vimwiki	silent! ContextDisable | call <sid>ftMarkdown()
+
         "autocmd filetype vimwiki  nnoremap <buffer> <a-o> :VoomToggle vimwiki<CR>
         "autocmd filetype vimwiki  nnoremap <a-n> :VimwikiMakeDiaryNote<CR>
         "autocmd filetype vimwiki  nnoremap <a-i> :VimwikiDiaryGenerateLinks<CR>
@@ -216,19 +218,19 @@ if HasPlug('vimConfig')
         "map <leader>ds :call Asm() <CR>
         " For local replace
         "nnoremap <leader>vm [[ma%mb:call signature#sign#Refresh(1) <CR>
-        nnoremap <leader>vr      :"Replace                   "<c-U><C-\>e SelectedReplace('n')<CR><left><left><left>
-        vnoremap <leader>vr                                  :<C-\>e SelectedReplace('v')<CR><left><left><left>
+        nnoremap <leader>vr      :"Replace                   theCommand"<c-U><C-\>e SelectedReplace('n')<CR><left><left><left>
+        vnoremap <leader>vr      :"Replace                   theCommand"<C-\>e SelectedReplace('v')<CR><left><left><left>
 
     " Section 'Execute'
         " Plug : asynctasks.vim : ~/.vim_tasks.ini : wad|sysinit
-        nnoremap  <leader>mk     :"(diag)Make wad                   "<c-U>AsyncStop! <bar> AsyncTask! wad<CR>
-        nnoremap  <leader>ma     :"(diag)Make all                   "<c-U>AsyncStop! <bar> AsyncTask! sysinit<CR>
+        nnoremap  <leader>mk     :"(diag)Make wad                   theCommand"<c-U>AsyncStop! <bar> AsyncTask! wad<CR>
+        nnoremap  <leader>ma     :"(diag)Make all                   theCommand"<c-U>AsyncStop! <bar> AsyncTask! sysinit<CR>
 
-        nnoremap  <leader>mw     :"(tool)Dictionary                 "<c-U>R! ~/tools/dict <C-R>=expand('<cword>') <cr>
-        nnoremap  <leader>mf     :"(quickfix)filter                 "<c-U>call utilquickfix#QuickFixFilter() <CR>
-        nnoremap  <leader>mc     :"(quickfix)add caller field       "<c-U>call utilquickfix#QuickFixFunction() <CR>
+        nnoremap  <leader>mw     :"(tool)Dictionary                 theCommand"<c-U>R! ~/tools/dict <C-R>=expand('<cword>') <cr>
+        nnoremap  <leader>mf     :"(quickfix)filter                 theCommand"<c-U>call utilquickfix#QuickFixFilter() <CR>
+        nnoremap  <leader>mc     :"(quickfix)add caller field       theCommand"<c-U>call utilquickfix#QuickFixFunction() <CR>
 
-        nnoremap  <silent>;q     :"(vim.command)SmartClose          "<c-U>SmartClose<cr>
+        nnoremap  <silent>;q     :"(vim.command)SmartClose          theCommand"<c-U>SmartClose<cr>
 
     function MyMenuExec(...)
         let strCmd = join(a:000, '')

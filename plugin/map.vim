@@ -14,22 +14,22 @@ endif
 
 " Buffer & lines
 if HasPlug('fzf.vim')
-    nnoremap <silent> <leader>fb    :"(fzf)Buffers          "<c-U>Buffers<cr>
-    vnoremap <silent> <leader>fb                            :<c-U>Buffers<cr>
-    nnoremap <silent> <leader>fl    :"(fzf)Lines            "<c-U>BLines<cr>
-    vnoremap <silent> <leader>fl                            :<c-U>BLines<cr>
+    nnoremap <silent> <leader>fb    :"(fzf)Buffers          theCommand"<c-U>Buffers<cr>
+    vnoremap <silent> <leader>fb    :"(fzf)Buffers          theCommand"<c-U>Buffers<cr>
+    nnoremap <silent> <leader>fl    :"(fzf)Lines            theCommand"<c-U>BLines<cr>
+    vnoremap <silent> <leader>fl    :"(fzf)Lines            theCommand"<c-U>BLines<cr>
 endif
 
 
 if HasPlug('fzf-preview.vim')
-    nnoremap <Space>fF      :"(fzf)All files            "<c-U>FZFFiles<cr>
-    nnoremap <Space>fq      :"(fzf)Quickfix             "<c-U>FZFQuickFix<cr>
-    nnoremap <Space>fh      :"(fzf)History              "<c-U>FZFHistory<cr>
+    nnoremap <Space>fF      :"(fzf)All files            theCommand"<c-U>FZFFiles<cr>
+    nnoremap <Space>fq      :"(fzf)Quickfix             theCommand"<c-U>FZFQuickFix<cr>
+    nnoremap <Space>fh      :"(fzf)History              theCommand"<c-U>FZFHistory<cr>
     if HasPlug('fzf-filemru')
-    nnoremap <Space>fH      :"(fzf)MRU                  "<c-U>FilesMru --tiebreak=end<cr>
+    nnoremap <Space>fH      :"(fzf)MRU                  theCommand"<c-U>FilesMru --tiebreak=end<cr>
     endif
-    nnoremap <Space>fg      :"(fzf)Grep                 "<c-U>FZFRg <c-r>=utils#GetSelected('n')<cr><cr>
-    vnoremap <Space>fg                                  :<c-U>FZFRg <c-r>=utils#GetSelected('v')<cr>
+    nnoremap <Space>fg      :"(fzf)Grep                 theCommand"<c-U>FZFRg <c-r>=utils#GetSelected('n')<cr><cr>
+    vnoremap <Space>fg      :"(fzf)Grep                 theCommand"<c-U>FZFRg <c-r>=utils#GetSelected('v')<cr>
 endif
 
 
@@ -41,8 +41,8 @@ if HasPlug('c-utils.vim')
         endif
     endfunction
 
-    nnoremap <silent> <leader><leader>  :"(*)Preview Tag at right-side-window         "<c-U>call VimMotionPreview()<cr>
-    vnoremap          <leader><leader>                                             :<c-U>call VimMotionPreview()<cr>
+    nnoremap <silent> <leader><leader>  :"(*)Preview Tag at right-side-window         theCommand"<c-U>call VimMotionPreview()<cr>
+    vnoremap          <leader><leader>  :"(*)Preview Tag at right-side-window         theCommand"<c-U>call VimMotionPreview()<cr>
 endif
 
 
@@ -262,8 +262,8 @@ if HasPlug('vimConfig')
     nnoremap <silent> ;0     10gt
 
     "nnoremap <silent> ;tt     :$tab tag <c-r>=utils#GetSelected('n')<cr><cr>
-    nnoremap <silent> ;tt      :"(*)Tag word into new tab          "<c-U>$tab split<cr>:exec("silent! tag "..utils#GetSelected('n'))<cr>
-    vnoremap <silent> ;tt                                       :<c-U>$tab split<cr>:exec("silent! tag "..utils#GetSelected('v'))<cr>
+    nnoremap <silent> ;tt      :"(*)Tag word into new tab          theCommand"<c-U>$tab split<cr>:exec("silent! tag "..utils#GetSelected('n'))<cr>
+    vnoremap <silent> ;tt      :"(*)Tag word into new tab          theCommand"<c-U>$tab split<cr>:exec("silent! tag "..utils#GetSelected('v'))<cr>
 endif
 
 if CheckPlug('taboo.vim', 1)
@@ -369,6 +369,6 @@ endif
 
 
 if CheckPlug('vim-argwrap', 1) | " {{{1
-    nnoremap <silent> <leader>fa :"(*)Toggle source/header         "<c-U>ArgWrap<CR>
+    nnoremap <silent> <leader>fa :"(*)Toggle source/header         theCommand"<c-U>ArgWrap<CR>
 endif
 

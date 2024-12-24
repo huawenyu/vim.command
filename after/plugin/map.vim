@@ -51,13 +51,13 @@ endif
 
         if HasPlug('vim-maximizer')
             nnoremap <silent> <a-w>                                             :MaximizerToggle<cr>
-            nnoremap <silent> <leader>vw     :"(view)maximize Windows      "<c-U>MaximizerToggle<cr>
+            nnoremap <silent> <leader>vw     :"(view)maximize Windows      theCommand"<c-U>MaximizerToggle<cr>
         elseif HasPlug('maximize')
             nnoremap <silent> <a-w>                                             :MaximizeWindow<cr>
-            nnoremap <silent> <leader>vw     :"(view)maximize Windows      "<c-U>MaximizeWindow<cr>
+            nnoremap <silent> <leader>vw     :"(view)maximize Windows      theCommand"<c-U>MaximizeWindow<cr>
         else
             nnoremap <silent> <a-w>                                              :ZoomToggle<cr>
-            nnoremap <silent>  <leader>vw     :"(view)maximize Windows      "<c-U>ZoomToggle<cr>
+            nnoremap <silent> <leader>vw     :"(view)maximize Windows      theCommand"<c-U>ZoomToggle<cr>
 
             " Zoom / Restore window.
             function! s:ZoomToggle() abort
@@ -82,11 +82,11 @@ endif
         nnoremap <silent>  <a-'>   :VoomToggle<cr>
         nnoremap <silent>  <a-;>   :QFix<cr>
         nnoremap <silent>  <a-/>   :call <SID>ToggleTagbar()<cr>
-        nnoremap <silent>  <leader>v'     :"(view)Outline          "<c-U>VoomToggle<cr>
-        nnoremap <silent>  <leader>vo     :"(view)Outline          "<c-U>VoomToggle fmr<cr>
-        nnoremap <silent>  <leader>vq     :"(view)Quickfix         "<c-U>QFix<cr>
-        "nnoremap <silent>  <leader>vt     :"(view)Taglist          "<c-U>call <SID>ToggleTagbar()<cr>
-        nnoremap <silent>  1G             :"(info)File             "<c-U>echo expand('%:p')<cr> \| call setreg('+', expand('%:p'))<cr>
+        nnoremap <silent>  <leader>v'     :"(view)Outline          theCommand"<c-U>VoomToggle<cr>
+        nnoremap <silent>  <leader>vo     :"(view)Outline          theCommand"<c-U>VoomToggle fmr<cr>
+        nnoremap <silent>  <leader>vq     :"(view)Quickfix         theCommand"<c-U>QFix<cr>
+        "nnoremap <silent>  <leader>vt     :"(view)Taglist          theCommand"<c-U>call <SID>ToggleTagbar()<cr>
+        nnoremap <silent>  1G             :"(info)File             theCommand"<c-U>echo expand('%:p')<cr> \| call setreg('+', expand('%:p'))<cr>
 
         "nnoremap <silent> <a-;> :TMToggle<CR>
         "nnoremap <silent> <a-.> :BuffergatorToggle<CR>
@@ -95,14 +95,14 @@ endif
         "nnoremap <silent> <a-]> :Null<CR>
         "nnoremap <silent> <a-\> :Null<CR>
 
-        nnoremap <silent>   ;vi         :"(helper)Insert outline header     "<c-U>call utils#VoomInsert(0) <CR>
-        vnoremap <silent>   ;vi                                             :<c-U>call utils#VoomInsert(1) <CR>
+        nnoremap <silent>   ;vi         :"(helper)Insert outline header     theCommand"<c-U>call utils#VoomInsert(0) <CR>
+        vnoremap <silent>   ;vi         :"(helper)Insert outline header     theCommand"<c-U>call utils#VoomInsert(1) <CR>
     " Sugar {{{2
         " bookmark/color
         if HasPlug('vim-mark')
-            nnoremap <silent> <leader>mm  :"(color)Toggle Colorize word        "<c-U>silent! call mark#MarkCurrentWord(expand('<cword>'))<cr>
+            nnoremap <silent> <leader>mm  :"(color)Toggle Colorize word        theCommand"<c-U>silent! call mark#MarkCurrentWord(expand('<cword>'))<cr>
             "vnoremap <silent> <leader>mm  :<c-u>silent! call mark#GetVisualSelection()<cr>
-            nnoremap <silent> <leader>mx  :"(color)Clear all colorize word   "<c-U>silent! call mark#ClearAll()<cr>
+            nnoremap <silent> <leader>mx  :"(color)Clear all colorize word   theCommand"<c-U>silent! call mark#ClearAll()<cr>
         endif
 
 
@@ -115,13 +115,12 @@ endif
 
 
         if HasPlug('rainbow_parentheses.vim')
-            nnoremap <silent> <leader>m[   :"Colorize brace     "<c-U>RainbowParentheses!!<cr>
+            nnoremap <silent> <leader>m[   :"Colorize brace     theCommand"<c-U>RainbowParentheses!!<cr>
         endif
 
 
     " File helper {{{2
-        nnoremap                 ;ss     :"Save file as          "<c-U>FileSaveAs<space>
-        nnoremap <silent> <leader>ss     :"Save file as          "<c-U>FileSaveAs<cr>
+        nnoremap <silent> <leader>ss     :"Save file as          theCommand"<c-U>FileSaveAs<cr>
 
         "[Cause command mode pause when press 'w', note:map](https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
         "For when you forget to sudo.. Really Write the file.
@@ -129,12 +128,12 @@ endif
 
         " Toggle source/header
         "nnoremap <silent> <leader>a  :<c-u>FuzzyOpen <C-R>=printf("%s\\.", expand('%:t:r'))<cr><cr>
-        nnoremap <silent> <leader>a  :"(*)Toggle source/header   "<c-U>call CurtineIncSw()<cr>
+        nnoremap <silent> <leader>a  :"(*)Toggle source/header   theCommand"<c-U>call CurtineIncSw()<cr>
 
         if HasPlug('vim-sleuth')
-            nnoremap <leader>fd :"Auto detect indent   "<c-U>Sleuth<cr>
+            nnoremap <leader>fd :"Auto detect indent   theCommand"<c-U>Sleuth<cr>
         elseif HasPlug('detectindent')
-            nnoremap <leader>fd :"Auto detect indent   "<c-U>DetectIndent<cr>
+            nnoremap <leader>fd :"Auto detect indent   theCommand"<c-U>DetectIndent<cr>
         endif
 
         " Set log
@@ -150,7 +149,7 @@ endif
         "     Most UNIX-like programming environments offer generic tools for formatting text. These include fmt, fold, sed, perl, and par. 
         "     vnoremap qq c<C-R>=system('wc -c | perl -pe chomp', @")<CR><ESC>
         "autocmd FileType vimwiki vnoremap <leader>ff :!fmt -c -w 100 -u -s <cr>
-        nnoremap <leader>cw     vip:"(*)Auto wrapline paragraph   "<c-U>'<,'>!fmt -c -w 100 -u -s <cr>
+        nnoremap <leader>cw     vip:"(*)Auto wrapline paragraph   theCommand"<c-U>'<,'>!fmt -c -w 100 -u -s <cr>
         vnoremap <leader>cw     :!fmt -c -w 100 -u -s <cr>
 
     " repl/execute {{{2
@@ -197,9 +196,9 @@ endif
         endif
 
 
-        vnoremap <silent> <leader>yy    :<c-u>call utils#GetSelected('v', "/tmp/vim.yank")<CR>
-        nnoremap <silent> <leader>yy    :"Copy text to tmpfile       "<c-U>call vimuxscript#Copy() <CR>
-        nnoremap <silent> <leader>yp    :"Paste text from tmpfile    "<c-U>r! cat /tmp/vim.yank<CR>
+        vnoremap <silent> <leader>yy    :"Copy text to tmpfile       theCommand"<c-U>call utils#GetSelected('v', "/tmp/vim.yank")<CR>
+        nnoremap <silent> <leader>yy    :"Copy text to tmpfile       theCommand"<c-U>call vimuxscript#Copy() <CR>
+        nnoremap <silent> <leader>yp    :"Paste text from tmpfile    theCommand"<c-U>r! cat /tmp/vim.yank<CR>
 
         " Map `*`, `&` same to avoid ft=git conflict:
         xnoremap *      :<c-u>call utils#VSetSearch('/')<CR>/<C-R>=@/<CR>
@@ -209,11 +208,11 @@ endif
 
 
     " Text/Motion {{{2
-        nnoremap <leader>cc :"Text Capitalize word        "<c-U>CapitalizeWord<CR>
-        nnoremap <leader>cu :"Text UPPERCASE word         "<c-U>UppercaseWord<CR>
-        nnoremap <leader>cl :"Text lowercase word         "<c-U>LowercaseWord<CR>
-        nnoremap <leader>c<space> :"Text Just one space        "<c-U>JustOneInnerSpace<CR>
-        nnoremap <leader>cd :"Text remove trailing spaces"<c-U>RemoveTrailingSpaces<CR>
+        nnoremap <leader>cc :"Text Capitalize word          theCommand"<c-U>CapitalizeWord<CR>
+        nnoremap <leader>cu :"Text UPPERCASE word           theCommand"<c-U>UppercaseWord<CR>
+        nnoremap <leader>cl :"Text lowercase word           theCommand"<c-U>LowercaseWord<CR>
+        nnoremap <leader>c<space> :"Text Just one space     theCommand"<c-U>JustOneInnerSpace<CR>
+        nnoremap <leader>cd :"Text remove trailing spaces   theCommand"<c-U>RemoveTrailingSpaces<CR>
 
     " Git/grep {{{2
         " Search {{{3
@@ -236,8 +235,8 @@ endif
                 "     nmap ;gr call PullAndRefresh()
                 " " --End
 
-                nnoremap <silent> <leader>gv   :"(git)GutterToggle          "<c-U>GitGutterToggle <cr>
-                nnoremap <silent> <leader>gr   :"(git)Gutter                "<c-U>GitGutter <cr>
+                nnoremap <silent> <leader>gv   :"(git)GutterToggle          theCommand"<c-U>GitGutterToggle <cr>
+                nnoremap <silent> <leader>gr   :"(git)Gutter                theCommand"<c-U>GitGutter <cr>
                 "nnoremap <silent> <leader>gf  :"(git)Gutter sink-to QuickFix "<c-U>GitGutterQuickFix \| copen <cr>
 
                 " Jump between hunks
@@ -251,23 +250,23 @@ endif
 
             if HasPlug('vim-fugitive')
                 "nnoremap <leader>bb :VCBlame<cr>
-                nnoremap <leader>gl     :"(git)Log side by side    "<c-U>GV<cr>
-                nnoremap <leader>gd     :"(git)Diff review         "<c-U>Gvdiff<cr>
-                nnoremap <leader>gD     :"(git)Diff review tabs    "<c-U>DiffReview git show
-                nnoremap <leader>gb     :"(git)Blame               "<c-U>Git blame<cr>
-                nnoremap        ;bb     :"(git)Blame               "<c-U>Git blame<cr>
-                nnoremap <leader>gs     :"(git)Status              "<c-U>Gstatus<cr>
+                nnoremap <leader>gl     :"(git)Log side by side    theCommand"<c-U>GV<cr>
+                nnoremap <leader>gd     :"(git)Diff review         theCommand"<c-U>Gvdiff<cr>
+                nnoremap <leader>gD     :"(git)Diff review tabs    theCommand"<c-U>DiffReview git show
+                nnoremap <leader>gb     :"(git)Blame               theCommand"<c-U>Git blame<cr>
+                nnoremap        ;bb     :"(git)Blame               theCommand"<c-U>Git blame<cr>
+                nnoremap <leader>gs     :"(git)Status              theCommand"<c-U>Gstatus<cr>
             endif
 
             if HasPlug('tig-explorer.vim')
-                nnoremap <leader>gL     :"(tig)Log                 "<c-U>Tig<cr>
-                nnoremap <leader>gp     :"(tig)Log --parent        "<c-U>Tig --first-parent -m<cr>
-                nnoremap <leader>gP     :"(tig)Log --parent all    "<c-U>Tig --first-parent --all<cr>
-                nnoremap <leader>gB     :"(tig)Blame               "<c-U>TigBlame<cr>
+                nnoremap <leader>gL     :"(tig)Log                 theCommand"<c-U>Tig<cr>
+                nnoremap <leader>gp     :"(tig)Log --parent        theCommand"<c-U>Tig --first-parent -m<cr>
+                nnoremap <leader>gP     :"(tig)Log --parent all    theCommand"<c-U>Tig --first-parent --all<cr>
+                nnoremap <leader>gB     :"(tig)Blame               theCommand"<c-U>TigBlame<cr>
             endif
 
-            nnoremap <leader>gc         :"(git)clean-dryrun        "<c-U>AsyncStop! <bar> AsyncTask gitclean-dryrun<cr>
-            nnoremap <leader>gx         :"(git)clean               "<c-U>AsyncStop! <bar> AsyncTask gitclean<cr>
+            nnoremap <leader>gc         :"(git)clean-dryrun        theCommand"<c-U>AsyncStop! <bar> AsyncTask gitclean-dryrun<cr>
+            nnoremap <leader>gx         :"(git)clean               theCommand"<c-U>AsyncStop! <bar> AsyncTask gitclean<cr>
 
 
 " Helper fucntion {{{1
